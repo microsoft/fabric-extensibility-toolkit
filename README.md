@@ -1,10 +1,10 @@
 
 # Microsoft Fabric Software Developer Kit
 
-Welcome to the Fabric Workload Development Kit. This comprehensive guide covers everything you need to know to create a custom Fabric workload for your organization. We’re here to assist you every step of the way, so please don’t hesitate to reach out with any questions. Happy developing!
+Welcome to the Fabric Workload Development Kit. This comprehensive guide covers everything you need to know to create a custom Fabric workload for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this Github repository. Happy developing!
 
 [!NOTE]
-This particular repoistory represents the work of the next version of the Workload Development Kit (v2).
+This particular repository represents the work of the next version of the Workload Development Kit (v2).
 
 ## Trademarks
 
@@ -24,7 +24,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
   - [What is the Workload Development Kit](#what-is-the-workload-development-kit)
 - [Build Your Own Workload](#build-your-own-workload)
   - [Get Started](#get-started)
-    - [Prerequisits](#prerequisits)
+    - [prerequisites](#prerequisites)
     - [Setting things up](#setting-things-up)
   - [Implement your custom workload](#start-coding)
   - [Publish your workload](#publish-your-workload)
@@ -59,9 +59,9 @@ You can also learn more about the new [Fabric workload architecture](./docs/WDKv
 
 ### Get Started
 
-#### Prerequisits
+#### prerequisites
 
-To run the development enviroment locally you need the follwoing components:
+To run the development enviroment locally you need the following components:
 
 * [Node.js](https://nodejs.org/en/download/)
 * [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell)

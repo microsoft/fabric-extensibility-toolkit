@@ -78,7 +78,7 @@ build/                         # GENERATED - Not committed
 ✅ Workload/Manifest/          # Template files with placeholders
 ✅ Workload/app/               # Application source code
 ❌ build/                      # Generated files (all contents)
-❌ tools/DevGatewy             # Downloaded DevGateway tool
+❌ tools/DevGateway            # Downloaded DevGateway tool
 ```
 
 **Benefits:**
