@@ -1,0 +1,19 @@
+{
+    "Workload_Display_Name": "¡Hola Fabric!",
+    "Workload_Full_Display_Name": "¡Hola Fabric!",
+    "Workload_Description": "Vea cómo construir, personalizar y publicar su primera carga de trabajo de Fabric en minutos.",
+    "Workload_Hub_Workload_Slogan": "La forma más rápida de construir, probar y publicar su primera carga de trabajo de Fabric.",
+    "Workload_Hub_Workload_Description": "Agregue una breve descripción de su carga de trabajo aquí. Explique qué hace, sus principales beneficios y para quién está dirigida. Esta es su oportunidad de brindar a los usuarios una descripción clara y concisa.\n\n**Usted puede:**\n\n• Destacar una característica clave o beneficio de su carga de trabajo.\n• Describir otra capacidad importante o caso de uso.\n• Explicar un concepto central o cómo los usuarios pueden comenzar.\n• Enumerar otro punto de venta clave o característica.",
+    "HelloWorldItem_DisplayName": "Hola Mundo",
+    "HelloWorldItem_DisplayName_Plural": "Hola Mundos",
+    "HelloWorldItem_Description": "Un elemento de Hola Mundo para comenzar su experiencia de desarrollo",
+    "HelloWorld_GetStarted_1_Title": "Título1",
+    "HelloWorld_GetStarted_2_Title": "Título2",
+    "HelloWorld_GetStarted_3_Title": "Título3",
+    "HelloWorld_GetStarted_1_Sub_Title": "Subtítulo1",
+    "HelloWorld_GetStarted_2_Sub_Title": "Subtítulo2",
+    "HelloWorld_GetStarted_3_Sub_Title": "Subtítulo3",
+    "HelloWorld_GetStarted_1_Description": "Descripción de la tarjeta 1",
+    "HelloWorld_GetStarted_2_Description": "Descripción de la tarjeta 2",
+    "HelloWorld_GetStarted_3_Description": "Descripción de la tarjeta 3"
+}

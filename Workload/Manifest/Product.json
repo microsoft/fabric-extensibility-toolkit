@@ -1,0 +1,97 @@
+{
+    "name": "Product",
+    "version": "1.100",
+    "displayName": "Workload_Display_Name",
+    "fullDisplayName": "Workload_Full_Display_Name",
+    "description": "Workload_Description",
+    "favicon": "assets/images/HelloFabricWorkloadIcon.png",
+    "icon": {
+      "name": "assets/images/HelloFabricWorkloadIcon.png"
+    },
+    "homePage": {
+      "learningMaterials": [
+        {
+          "title": "HelloWorld_GetStarted_1_Title",
+          "introduction": "HelloWorld_GetStarted_1_Sub_Title",
+          "description": "HelloWorld_GetStarted_1_Description",
+          "image": "assets/images/LearningMaterialTemplateCards.png",
+          "link": "https://aka.ms/get-started-learning-docs"
+        },
+        {
+          "title": "HelloWorld_GetStarted_2_Title",
+          "introduction": "HelloWorld_GetStarted_2_Sub_Title",
+          "description": "HelloWorld_GetStarted_2_Description",
+          "image": "assets/images/LearningMaterialTemplateCards.png",
+          "link": "https://aka.ms/get-started-learning-docs"
+        },
+        {
+          "title": "HelloWorld_GetStarted_3_Title",
+          "introduction": "HelloWorld_GetStarted_3_Sub_Title",
+          "description": "HelloWorld_GetStarted_3_Description",
+          "image": "assets/images/LearningMaterialTemplateCards.png",
+          "link": "https://aka.ms/get-started-learning-docs"
+        }
+      ],
+      "newSection": {
+        "customActions": [
+        ]},
+        "recommendedItemTypes": [
+          "HelloWorld"
+        ]
+    },
+    "createExperience": {
+      "description": "Workload_Description",
+      "cards": [
+        {
+          "title": "HelloWorldItem_DisplayName",
+          "description": "HelloWorldItem_Description",
+          "icon": {
+            "name": "assets/images/HelloWorldItem-icon.png"
+          },
+          "icon_small": {
+            "name": "assets/images/HelloWorldItem-icon.png"
+          },
+          "availableIn": [
+            "home",
+            "create-hub",
+            "workspace-plus-new",
+            "workspace-plus-new-teams"
+          ],
+          "itemType": "HelloWorld",
+          "createItemDialogConfig": {
+            "onCreationFailure": { "action": "item.onCreationFailure" },
+            "onCreationSuccess": { "action": "item.onCreationSuccess" }
+          }
+        }
+      ]
+    },
+    "productDetail": {
+      "publisher": "Name of publisher",
+      "slogan": "Workload_Hub_Workload_Slogan",
+      "description": "Workload_Hub_Workload_Description",
+      "image": {
+        "mediaType": 0,
+        "source": "assets/images/L2_page_banner.png"
+      },
+      "slideMedia": [
+        {
+          "mediaType": 1,
+          "source": "https://youtube.com/embed/UNgpBOCvwa8?si=KwsR879MaVZd5CJi"
+        },
+        {
+          "mediaType": 0,
+          "source": "assets/images/slidesPicturesTemplate.png"
+        }
+      ],
+        "supportLink": {
+          "documentation": {"url": "https://example.com/documentation"},
+          "certification": {"url": "https://example.com/certification"},
+          "help": {"url": "https://example.com/help"},
+          "privacy": {"url": "https://example.com/privacy"},
+          "terms": {"url": "https://example.com/terms"},
+          "license": {"url": "https://azuremarketplace.microsoft.com/sell"}
+      }
+    },
+    "itemJobTypes" :["storeData", "others"],
+    "compatibleItemTypes" : ["Lakehouse"]
+}
