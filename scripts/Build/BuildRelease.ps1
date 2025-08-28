@@ -1,6 +1,6 @@
 param ( 
     # The name of the workload, used for the Entra App and the workload in the Fabric portal
-    [String]$WorkloadName = "Org.MyWorkloadSample",
+    [String]$WorkloadName = "Org.MyWorkload",
     # The Entra Application ID for the frontend
     # If not provided, the user will be prompted to enter it or create a new one.
     [String]$FrontendAppId = "00000000-0000-0000-0000-000000000000",

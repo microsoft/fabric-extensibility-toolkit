@@ -501,4 +501,4 @@ For detailed API documentation, refer to:
 
 ## License
 
-This code is part of the Microsoft Fabric Workload Development Kit and follows the same licensing terms.
+This code is part of the Microsoft Fabric Extensibility Toolkit and follows the same licensing terms.

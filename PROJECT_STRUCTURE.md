@@ -1,12 +1,11 @@
-# Final Simplified Configuration Architecture
+# Project Structure
 
-## ✅ Pure .env-Based Configuration
+This document explains the structure of this repository and which files are used or created automatically. We have tried to create a structure that is easy to undersand but also flexible for a DevOps aproach. This is the reason why configuration files are used to allow the repository to be used to create different enviroments (e.g. Dev, Test and Prod). The Scripts in this repositry rely on the structure changing it could also mean that you have to adopt the sripcts. Our suggestion is to use the structure as it is as this will also enable you to get updates from us in the future.
 
-We have successfully simplified the Microsoft Fabric Workload Development Kit (WDK) v2 configuration to use only .env files.
-
-## 🏗️ Final Architecture
+## 🏗️ Configuration Architecture
 
 ### Configuration Structure
+
 ```text
 Workload/
 ├── .env.dev                  # Development configuration (COMMITTED)
@@ -19,12 +18,10 @@ Workload/
     ├── *.xsd                 # Schema definition files
     ├── assets/               # Workload assets (icons, images)
     └── items/                # Per-item configuration folder
-        └── [ItemName]/       # Individual item folder (e.g., HelloWorld/)
-            ├── [ItemName]Item.json    # Fabric JSON config (e.g., HelloWorldItem.json)
-            ├── [ItemName]Item.xml     # Fabric XML config (e.g., HelloWorldItem.xml)
-            └── ItemDefinition/        # Item schemas and structure definitions (COMMITTED)
-                ├── schemas/           # JSON/XML schemas for validation
-                └── structure/         # Item structure definitions
+        └── [ItemName]/       # Individual configuration folder for every item (e.g., HelloWorld/)
+            ├── [ItemName]Item.json    # Fabric JSON for Fabric Frontend configuration (e.g., HelloWorldItem.json)
+            └── [ItemName]Item.xml     # Fabric XML for Fabric Type configuration (e.g., HelloWorldItem.xml)
+
 
 config/
 └── templates/
@@ -38,30 +35,36 @@ build/                        # All build resources generated on-demand (NOT COM
 └── Manifest/                # Built manifest files and packages
     ├── temp/                # Temporary processed manifest files
     └── [WorkloadName].[Version].nupkg  # Generated NuGet package for deployment
-``` 
 ```
 
 ## 🚀 Workflow
 
 ### 1. Initial Project Setup (Once per project)
+
+Every project normally only needs to be set up once at the beginning. All neccesary files are created for a complete DevOps integration.
+
 ```powershell
 .\scripts\Setup\SetupWorkload.ps1
 ```
+
 - Prompts for workload name and frontend app ID
 - Generates .env.dev, .env.test, .env.prod files
 - These files are committed to the repository
 - No shared config files needed after this
 
 ### 2. Developer Environment Setup (Each developer)
+
 ```powershell
 .\scripts\Setup\SetupDevEnvironment.ps1
 ```
+
 - Reads configuration from .env.dev
 - Prompts for developer's workspace GUID
 - Generates local DevGateway configuration
 - No dependency on shared config files
 
 ### 3. Daily Development
+
 ```powershell
 # Start development
 .\scripts\Run\StartDevServer.ps1     # Uses .env.dev 
@@ -69,6 +72,7 @@ build/                        # All build resources generated on-demand (NOT COM
 ```
 
 ### 4. Build and Deployment
+
 ```powershell
 # Build frontend application
 .\scripts\Build\BuildFrontend.ps1 -Environment dev
@@ -85,6 +89,7 @@ All build outputs are generated in the `build/` directory and are environment-sp
 ## 🏗️ Build Architecture
 
 ### On-Demand Generation
+
 All build artifacts are generated on-demand from source templates and configuration:
 
 - **Frontend Build**: Application code compiled and bundled for deployment
@@ -93,12 +98,15 @@ All build artifacts are generated on-demand from source templates and configurat
 - **No Static Config**: No pre-generated configuration files are stored in the repository
 
 ### Environment-Specific Builds
+
 Each build target uses the appropriate `.env.*` file:
+
 - **Development**: Uses `.env.dev` → `build/` outputs for local testing
 - **Test/Staging**: Uses `.env.test` → `build/` outputs for staging deployment  
 - **Production**: Uses `.env.prod` → `build/` outputs for production deployment
 
 ### Build Dependencies
+
 - **Source**: `Workload/app/` and `Workload/Manifest/` templates
 - **Configuration**: Environment-specific `.env.*` files
 - **Output**: Complete deployment artifacts in `build/` directory
@@ -120,22 +128,14 @@ Each build target uses the appropriate `.env.*` file:
 
 Each Fabric item has its own folder containing:
 
-- **Fabric Configuration**: JSON/XML files required by Microsoft Fabric
-- **Item Definition**: Schemas and structure definitions specific to that item type
+- **Item Definition**: JSON/XML files required by Microsoft Fabric
 
 ### Item Structure Example
 
 ```text
 Workload/Manifest/items/HelloWorld/
 ├── HelloWorldItem.json          # Fabric JSON configuration
-├── HelloWorldItem.xml           # Fabric XML template with placeholders (e.g., {{WORKLOAD_NAME}})
-└── ItemDefinition/              # Item-specific schemas and structure
-    ├── schemas/
-    │   ├── HelloWorldItem.xsd   # XML schema validation
-    │   └── HelloWorldItem.json  # JSON schema validation
-    └── structure/
-        ├── structure.md         # Item structure documentation
-        └── requirements.md      # Implementation requirements
+└── HelloWorldItem.xml           # Fabric XML template with placeholders (e.g., {{WORKLOAD_NAME}})
 ```
 
 ### Template Processing and Environment Management
@@ -159,8 +159,6 @@ The workload has general configuration files:
 
 - **Naming Convention**: Item files follow [ItemName]Item naming pattern (e.g., HelloWorldItem.json, HelloWorldItem.xml)
 - **Template Files**: XML files use placeholders that are replaced during manifest generation
-- **Schemas**: Item-specific validation schemas stored in `items/[ItemName]/ItemDefinition/schemas/`
-- **Structure**: Item architecture and requirements stored in `items/[ItemName]/ItemDefinition/structure/`
 - **Version Control**: All ItemDefinition contents are committed for team sharing
 - **Validation**: Each item maintains its own validation rules and documentation
 
@@ -190,16 +188,3 @@ All files in the `build/` directory are generated on-demand from templates and s
 5. **Environment Clarity**: Each deployment target has its own committed file
 6. **Direct Editing**: Developers can modify .env files without complex scripts
 
-## 💡 Example .env File Structure
-
-```bash
-# Workload/.env.dev
-WORKLOAD_VERSION=1.0.0
-WORKLOAD_NAME=MyCompany.MyWorkload
-ITEM_NAMES=HelloWorld,CustomItem
-FRONTEND_APPID=12345678-1234-1234-1234-123456789abc
-FRONTEND_URL=http://localhost:60006/
-LOG_LEVEL=debug
-```
-
-This architecture achieves the original goal: **"all the configuration is done in the env files after the setup"** - providing a clean, simple, and maintainable configuration system for Microsoft Fabric Workload development.

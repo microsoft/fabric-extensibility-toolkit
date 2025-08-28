@@ -6,7 +6,7 @@ applyTo: "/Workload/app/items/[ItemName]Item/"
 
 ## Process
 
-This guide provides step-by-step instructions for AI tools to safely rename an item in the Microsoft Fabric Workload Development Kit (WDK) v2. Renaming an item requires updating implementation files, manifest configuration, routing changes, and environment variable updates.
+This guide provides step-by-step instructions for AI tools to safely rename an item in the Microsoft Fabric Extensibility Toolkit. Renaming an item requires updating implementation files, manifest configuration, routing changes, and environment variable updates.
 
 **⚠️ WARNING**: Renaming an item affects multiple files and configurations. Ensure you have backups and coordinate with your team before proceeding.
 

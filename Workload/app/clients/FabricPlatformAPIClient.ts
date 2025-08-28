@@ -212,17 +212,5 @@ export class FabricPlatformAPIClient {
  * 
  * // User token authentication (legacy)
  * const workspaceClient = new WorkspaceClient(workloadClient);
->>>>>>> origin/dev/preview/wdkv2:Workload/app/clients/FabricPlatformAPIClient.ts
- * 
- * // Service principal authentication
- * const authConfig = FabricPlatformClient.createServicePrincipalAuth(
- *   'client-id', 'client-secret', 'tenant-id'
- * );
- * const sparkController = new SparkController(authConfig);
- * const sparkLivyController = new SparkLivyController(authConfig);
- * 
- * const workspace = await workspaceController.getWorkspace(workspaceId);
- * const sparkSettings = await sparkController.getWorkspaceSparkSettings(workspaceId);
- * const batch = await sparkLivyController.getBatch(workspaceId, lakehouseId, batchId);
  * ```
  */

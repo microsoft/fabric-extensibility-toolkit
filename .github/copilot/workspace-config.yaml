@@ -1,5 +1,5 @@
 # GitHub Copilot Workspace Configuration
-# This file configures GitHub Copilot for the Microsoft Fabric WDK project
+# This file configures GitHub Copilot for the Microsoft Fabric Extensibility Toolkit project
 
 # Fabric AI Agent Integration
 # The Fabric agent provides specialized assistance for Microsoft Fabric development
@@ -7,8 +7,7 @@
 # Context Files - These files provide essential project knowledge
 context_files:
   - .ai/context/fabric.md                    # Microsoft Fabric platform overview
-  - .ai/context/fabric_workload.md           # WDK-specific development guidance
-  - .ai/agents/fabric/knowledge/wdk-development.md  # WDK patterns and best practices
+  - .ai/context/fabric_workload.md           # Extensibility Toolkit-specific development guidance
 
 # Agent Configuration
 agent_config:
@@ -27,7 +26,7 @@ relevant_patterns:
 activation_keywords:
   - fabric
   - workload  
-  - wdk
+  - extensibility-toolkit
   - onelake
   - powerbi
   - entra
@@ -74,7 +73,7 @@ knowledge_integration:
     - OneLake data storage and access patterns
   
   project_context:
-    - Current WDK implementation patterns in Workload/app/
+    - Current Extensibility Toolkit implementation patterns in Workload/app/
     - Authentication client examples and scope selection patterns
     - Manifest configuration templates and validation
     - Build and deployment automation scripts

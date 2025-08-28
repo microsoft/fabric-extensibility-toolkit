@@ -38,8 +38,8 @@ Replace development organization "Org" with your registered organization name:
 
 ```powershell
 # Example transformation:
-# Development: Org.MyWorkloadSample
-# Production:  ContosoInc.MyWorkloadSample
+# Development: Org.MyWorkload
+# Production:  ContosoInc.MyWorkload
 
 $ProductionWorkloadName = "YourOrganization.YourWorkloadName"
 ```

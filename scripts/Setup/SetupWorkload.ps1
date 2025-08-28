@@ -71,7 +71,7 @@ param (
 Write-Output "Setting up the environment..."
  if ([string]::IsNullOrWhiteSpace($WorkloadName)) {
     Write-Host "Enter your Workload Name that should be used."
-    Write-Host "To get started the Name should be in the form of Org.[YourProjectName] e.g. Org.MyWorkloadSample."
+    Write-Host "To get started the Name should be in the form of Org.[YourProjectName] e.g. Org.MyWorkload."
     Write-Host "Please use the public documentation to better understand how Workload Names are structued and used."
     $WorkloadName = Read-Host "WorkloadName"
     if ([string]::IsNullOrWhiteSpace($WorkloadName)) {

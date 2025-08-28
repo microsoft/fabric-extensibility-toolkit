@@ -84,8 +84,8 @@ GitHub Copilot recognizes and expands:
 ---
 
 **Reference**: For complete step-by-step instructions, always consult `.ai/commands/workload/deployWorkload.md` first, then apply these Copilot-specific enhancements.
-# Development: Org.MyWorkloadSample
-# Production:  ContosoInc.MyWorkloadSample
+# Development: Org.MyWorkload
+# Production:  ContosoInc.MyWorkload
 
 $ProductionWorkloadName = "YourOrganization.YourWorkloadName"
 ```

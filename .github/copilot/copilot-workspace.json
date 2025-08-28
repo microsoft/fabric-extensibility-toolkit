@@ -3,12 +3,11 @@
   "agents": [
     {
       "name": "fabric",
-      "description": "Microsoft Fabric Development Expert - Specialized assistant for Fabric platform development, WDK implementation, and workload creation",
+      "description": "Microsoft Fabric Development Expert - Specialized assistant for Fabric platform development, Extensibility Toolkit implementation, and workload creation",
       "prompt_file": "fabric-agent.md",
       "knowledge_files": [
         "../.ai/context/fabric.md",
-        "../.ai/context/fabric_workload.md",
-        "../.ai/agents/fabric/knowledge/wdk-development.md"
+        "../.ai/context/fabric_workload.md"
       ],
       "capabilities": [
         "code_generation",
@@ -36,7 +35,7 @@
       "activation_keywords": [
         "fabric",
         "workload",
-        "wdk",
+        "extensibility-toolkit",
         "onelake",
         "powerbi",
         "entra",
