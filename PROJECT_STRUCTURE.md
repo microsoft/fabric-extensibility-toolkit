@@ -1,6 +1,6 @@
 # Project Structure
 
-This document explains the structure of this repository and which files are used or created automatically. We have tried to create a structure that is easy to undersand but also flexible for a DevOps aproach. This is the reason why configuration files are used to allow the repository to be used to create different enviroments (e.g. Dev, Test and Prod). The Scripts in this repositry rely on the structure changing it could also mean that you have to adopt the sripcts. Our suggestion is to use the structure as it is as this will also enable you to get updates from us in the future.
+This document explains the structure of this repository and which files are used or created automatically. We have tried to create a structure that is easy to understand but also flexible for a DevOps approach. This is the reason why configuration files are used to allow the repository to be used to create different environments (e.g. Dev, Test and Prod). The Scripts in this repository rely on the structure changing it could also mean that you have to adopt the scripts. Our suggestion is to use the structure as it is as this will also enable you to get updates from us in the future.
 
 ## 🏗️ Configuration Architecture
 
@@ -41,7 +41,7 @@ build/                        # All build resources generated on-demand (NOT COM
 
 ### 1. Initial Project Setup (Once per project)
 
-Every project normally only needs to be set up once at the beginning. All neccesary files are created for a complete DevOps integration.
+Every project normally only needs to be set up once at the beginning. All necessary files are created for a complete DevOps integration.
 
 ```powershell
 .\scripts\Setup\SetupWorkload.ps1
