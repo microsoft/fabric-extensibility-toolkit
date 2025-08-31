@@ -138,7 +138,7 @@ Keep the DevGateway terminal open and start a new session for the DevServer.
 #### 3.2: Run the StartDevServer Script
 ```powershell
 # Navigate to project root in new terminal
-cd "c:\Dev\Fabric\WDK\Microsoft-Fabric-workload-development-sample"
+cd "c:\Dev\Fabric\Extensibility\Microsoft-Fabric-workload-development-sample"
 
 # Start the development server
 .\scripts\Run\StartDevServer.ps1

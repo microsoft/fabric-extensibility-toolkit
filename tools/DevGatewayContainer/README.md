@@ -10,7 +10,7 @@ Before you begin, ensure you have the following installed:
 - Docker
 - Docker Compose
 
->For developers using Apple Silicon processors(M-Series), make sure you enable `Use Rosetta for x86/amd64 on Apple Silicon` in Docker.
+>For developers using Apple Silicon processors (M-Series), make sure you enable `Use Rosetta for x86/amd64 on Apple Silicon` in Docker.
 
 ## Getting Started
 

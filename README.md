@@ -1,10 +1,10 @@
 
-# Microsoft Fabric Software Developer Kit
+# Microsoft Fabric Extensibility Toolkit
 
-Welcome to the Fabric Workload Development Kit. This comprehensive guide covers everything you need to know to create a custom Fabric workload for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this Github repository. Happy developing!
+Welcome to the Microsoft Fabric Extensibility Toolkit. This repository contains everything you need to start creating a new Extension for Fabric. Beside the source code itself with a HelloWorld Sample it also contains a comprehensive guide that covers everything you need to know to create custom Fabric items for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this Github repository. Happy developing!
 
 [!NOTE]
-This particular repository represents the work of the next version of the Workload Development Kit (v2).
+The Microsoft Fabric Extensibility Toolkit is an evolution of the Workload Development Kit. If you are starting from scratch we encourage customers and partners to start building using the new Extensibility Toolkit which is focusing on easy fast development and enables Fabric Fundamentals out of the box.
 
 ## Trademarks
 
@@ -15,20 +15,17 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 ## Table of contents
 
-- [Microsoft Fabric Software Developer Kit](#microsoft-fabric-software-developer-kit)
+- [Microsoft Fabric Extensibility Toolkit](#microsoft-fabric-extensibility-toolkit)
   - [Trademarks](#trademarks)
   - [Table of contents](#table-of-contents)
 - [Introduction](#introduction)
   - [What is Fabric](#what-is-fabric)
-  - [What Are Workloads](#what-are-workloads)
-  - [What is the Workload Development Kit](#what-is-the-workload-development-kit)
+  - [What is a Fabric Workload](#what-is-a-fabric-workload)
+  - [What is a Fabric Item](#what-is-a-fabric-item)
+  - [What is the Fabric Extensibility Toolkit](#what-is-the-fabric-extensibility-toolkit)
 - [Build Your Own Workload](#build-your-own-workload)
-  - [Get Started](#get-started)
-    - [prerequisites](#prerequisites)
-    - [Setting things up](#setting-things-up)
-  - [Implement your custom workload](#start-coding)
-  - [Publish your workload](#publish-your-workload)
-- [Resources](#resources)
+  - [Prerequisites](#prerequisites)
+  - [Setting things up](#setting-things-up)
 
 ## Introduction
 
@@ -43,58 +40,53 @@ Microsoft Fabric provides integration and simplicity, as well as a transparent a
 The Fabric platform is not just a tool, but a strategic asset that simplifies and enhances the analytics capabilities of any enterprise.
 More information about Fabric can be found in the [documentation](https://learn.microsoft.com/en-us/fabric/get-started/microsoft-fabric-overview).
 
-### What Are Workloads
+### What is a Fabric Workload
 
-In Microsoft Fabric, workloads signify different components that are integrated into the Fabric framework. Workloads enhance the usability of your service within the familiar Fabric workspace, eliminating the need to leave the Fabric environment for different services. [Data Factory](https://learn.microsoft.com/en-us/fabric/data-factory/data-factory-overview), [Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing), [Power BI](https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-what-is) and [Fabric Activator](https://learn.microsoft.com/en-us/fabric/real-time-intelligence/data-activator/activator-introduction) are some of the built-in Fabric workloads.
+In Microsoft Fabric, workloads are a package of different components that are integrated into the Fabric framework. Workloads enhance the usability of your service within the familiar Fabric workspace, eliminating the need to leave the Fabric environment for different services. [Data Factory](https://learn.microsoft.com/en-us/fabric/data-factory/data-factory-overview), [Data Warehouse](https://learn.microsoft.com/en-us/fabric/data-warehouse/data-warehousing) and  [Power BI](https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-what-is) are some of the built-in Fabric workloads.
 
-### What is the Workload Development Kit
+### What is a Fabric Item
 
-With the Workload Development Kit, you can create your own workload for your data applications. Publishing a Fabric Workload to the [Fabric Workload Hub](https://learn.microsoft.com/en-us/fabric/workload-development-kit/more-workloads-add) increases your application’s discoverability and user engagement. The Microsoft Fabric Workload Development Kit provides the necessary tools and interfaces to embed your data application into Microsoft Fabric.
+Items in Fabric represent the core functional building blocks that users interact with inside the Fabric platform. Each item encapsulates a specific capability or resource, such as data storage, analytics, or collaboration. Different workloads introduce different types of items, each tailored to a particular use case or service.
 
-For more information on what workloads can offer Microsoft partners, and for useful examples, head to our official [Workload Dev Kit documentation](https://learn.microsoft.com/en-us/fabric/workload-development-kit/development-kit-overview).
+Examples in Fabric include:
 
-You can also learn more about the new [Fabric workload architecture](./docs/WDKv2-Introduction.md).
+- **Lakehouse**: Combines the benefits of data lakes and data warehouses, enabling users to store, manage, and analyze large volumes of structured and unstructured data in a single, unified environment.
+- **Notebook**: Provides an interactive workspace for data exploration, analysis, and visualization using languages like Python, SQL, or R. Notebooks are ideal for data scientists and analysts to document and execute code alongside rich text and visualizations.
+- **Data Warehouse**: Offers scalable, high-performance analytics on large datasets, supporting complex queries and business intelligence workloads.
+- **Pipeline**: Automates data movement and transformation across various sources and destinations within Fabric.
+
+These are just a few examples—Fabric supports a wide range of item types, and new custom items can be created using the Extensibility Toolkit to address unique business needs.
+
+### What is the Fabric Extensibility Toolkit
+
+With the Fabric Extensibility Toolkit, you can create your own items and provide them as a workload in Fabric. Customers can create a workload for their own tenant to integrate their Data applications into the platform. Partners can build workloads and publish them into the Fabric Workload Hub which makes them available to all Fabric customers. The Microsoft Fabric Extensibility Toolkit provides you with all the necessary tools and interfaces to embed your data application into Microsoft Fabric.
+
+For more information on what workloads can offer Microsoft partners, and for useful examples, head to our official [Microsoft Fabric Extensibility Toolkit documentation](https://learn.microsoft.com/fabric/extensibility-toolkit).
 
 ## Build Your Own Workload
 
-### Get Started
+### Prerequisites
 
-#### prerequisites
+To run the development environment locally you need the following prerequisites:
 
-To run the development enviroment locally you need the following components:
+- [Node.js](https://nodejs.org/en/download/)
+- [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
+- [Dotnet](https://dotnet.microsoft.com/en-us/download) for MacOS please make sure to install the x64 version
+- [VSCode](https://code.visualstudio.com/download) or similar development environment
+- [Fabric Tenant](https://app.fabric.microsoft.com/) that you use for development and publishing the Workload later on
+- [Fabric Workspace](https://learn.microsoft.com/en-us/fabric/fundamentals/workspaces) that you can use to build your workload
+- [Fabric Capacity](https://learn.microsoft.com/en-us/fabric/enterprise/licenses) that is assigned to the workspace you are planning to use
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) (only used for Entra App creation)
+- [Entra App](https://entra.microsoft.com/) You either need an existing Entra App you can use that is [configured](./docs/How-To.md) correctly or you need permission to create a new Entra App.
 
-* [Node.js](https://nodejs.org/en/download/)
-* [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell)
-* [Dotnet](https://dotnet.microsoft.com/en-us/download) for MacOS please make sure to install the x64 version 
-* [VSCode](https://code.visualstudio.com/download) or simmilar development enviroment
-* [Fabric Tenant](https://app.fabric.microsoft.com/) that you use for development and publishing the Workload later on
-* [Fabric Workspace](https://learn.microsoft.com/en-us/fabric/fundamentals/workspaces) that you can use to build your workload
-* [Fabric Capacity](https://learn.microsoft.com/en-us/fabric/enterprise/licenses) that is assigned to the workspace you are planning to use
-* [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) (only used for Entra App creation)
-* [Entra App](https://entra.microsoft.com/) You either need an existing Entra App you can use that is [configured](./docs/WDKv2-How-To.md) corectly or you need permission to create a new Entra App.
+Alternatively we suggest to use a [Codespace](https://github.com/features/codespaces) in GitHub which has everything preconfigured:
 
-If you don't want to install all dependencies you can also create a devcontainer with the configuration provided in this repository, or create a [Codespace](https://github.com/features/codespaces) in GitHub directly. If you use a codespace please make sure that you select at least an 8 core machine and open the Codspace in VSCode locally. This way everything will work out of the box if you follow the [Setup Guide](./docs/WDKv2-Setup.md).
+If you use a codespace please make sure that you select at least an 8 core machine and open the Codespace in VSCode locally. This way everything will work out of the box if you follow the [Setup Guide](./docs/SetupGuide.md).
 
-#### Setting things up
+### Project structure
 
-To set things up follow the [Setup Guide](./docs/WDKv2-Setup.md).
+Use the [Project structure](./PROJECT_STRUCTURE.md) to get a better understanding about Extensibility projects are structured and where you can find and change it to your needs.
 
-### Start coding
+### Setting things up
 
-After you have completed the initial steps you are all set to start adopting the Workload semple to your needs.
-
-Be sure to look at what has been released with the [newest version of the WDK](./docs/WDKv2-Introduction.md) and our guide on [how to use those new features](./docs/WDKv2-How-To.md).
-
-### Publish your workload
-
-After developing your Fabric Workload according to the [certification requirements](https://learn.microsoft.com/en-us/fabric/workload-development-kit/publish-workload-requirements), you can publish it to the Workload Hub which will allow every Fabric user a chance to easily start a trial experience and then buy your workload. Use the  in-depth description of [how to publish a workload](https://learn.microsoft.com/en-us/fabric/workload-development-kit/publish-workload-flow) for the different stages and concepts provided by the platform.
-
-## Resources
-
-Here are all the resources included and referenced. These documents provide additional information and can serve as a reference:
-
-* [Quickstart Guide](/docs/WDKv2-Setup.md)
-* [OneLake](https://learn.microsoft.com/en-us/fabric/onelake/onelake-overview)
-* [One Lake APIs](https://learn.microsoft.com/en-us/fabric/onelake/onelake-access-api)
-* [Monitoring Hub Configuration Guide](https://learn.microsoft.com/en-us/fabric/workload-development-kit/monitoring-hub)
-* [Publish a workload to the Workload Hub](https://learn.microsoft.com/en-us/fabric/workload-development-kit/publish-workload-flow)
+To set things up follow the [Setup Guide](./PROJECT_SETUP.md).

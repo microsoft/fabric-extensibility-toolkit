@@ -6,7 +6,7 @@ applyTo: "/Workload/app/items/[ItemName]Item/"
 
 ## Process
 
-This guide provides step-by-step instructions for AI tools to create a new item in the Microsoft Fabric Workload Development Kit (WDK) v2. Creating a new item requires implementation files, manifest configuration, routing setup, and environment variable updates.
+This guide provides step-by-step instructions for AI tools to create a new item in the Microsoft Fabric Extensibility Toolkit. Creating a new item requires implementation files, manifest configuration, routing setup, and environment variable updates.
 
 ### Step 1: Create Item Implementation Structure
 

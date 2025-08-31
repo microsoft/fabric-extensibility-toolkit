@@ -224,7 +224,7 @@ Microsoft Fabric consists of several integrated workloads, each serving specific
 - **Power BI JavaScript API**: For embedding and integration
 - **Power BI .NET SDK**: For programmatic report and dataset operations
 
-### Workload Development Kit (WDK)
+### Extensibility Toolkit
 
 #### Purpose
 
@@ -349,7 +349,7 @@ Microsoft Fabric consists of several integrated workloads, each serving specific
 
 ### Development Patterns
 
-1. **Workload Integration**: Use the WDK for custom workload development
+1. **Workload Integration**: Use the Extensibility Toolkit for custom workload development
 2. **Git Integration**: Leverage source control for all Fabric artifacts
 3. **Environment Strategy**: Implement proper dev/test/prod workflows
 4. **Monitoring**: Implement proper logging and monitoring for custom solutions

@@ -1,8 +1,8 @@
-# Workload Development Kit (WDK) Knowledge
+# Extensibility Toolkit Knowledge
 
 ## Context
 
-The Microsoft Fabric Workload Development Kit (WDK) enables partners and customers to create custom workloads that integrate seamlessly with the Fabric platform. This knowledge applies to developing, deploying, and maintaining custom Fabric workloads.
+The Microsoft Fabric Extensibility Toolkit enables partners and customers to create custom workloads that integrate seamlessly with the Fabric platform. This knowledge applies to developing, deploying, and maintaining custom Fabric workloads.
 
 ## Key Concepts
 
@@ -132,7 +132,7 @@ const accessToken = await workloadClient.authentication.acquireAccessToken(scope
 
 ## References
 
-- [WDK Documentation](https://learn.microsoft.com/en-us/fabric/workload-development-kit/)
+- [Extensibility Toolkit Documentation](https://learn.microsoft.com/en-us/fabric/workload-development-kit/)
 - [Fabric REST APIs](https://learn.microsoft.com/en-us/rest/api/fabric/)
 - [React Development Guide](https://reactjs.org/docs/getting-started.html)
 - [Fluent UI Components](https://react.fluentui.dev/)

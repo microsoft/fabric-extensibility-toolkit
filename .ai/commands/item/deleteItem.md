@@ -6,7 +6,7 @@ applyTo: "/Workload/app/items/[ItemName]Item/"
 
 ## Process
 
-This guide provides step-by-step instructions for AI tools to safely delete an item from the Microsoft Fabric Workload Development Kit (WDK) v2. Deleting an item requires removing implementation files, manifest configuration, routing cleanup, and environment variable updates.
+This guide provides step-by-step instructions for AI tools to safely delete an item from the Microsoft Fabric Extensibility Toolkit. Deleting an item requires removing implementation files, manifest configuration, routing cleanup, and environment variable updates.
 
 **⚠️ WARNING**: Deleting an item is irreversible. Ensure you have backups if needed and verify the item is not in use.
 

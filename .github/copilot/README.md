@@ -34,7 +34,7 @@ Activate the Fabric AI Agent in GitHub Copilot by using:
 
 The Fabric agent provides expert assistance for:
 
-- **WDK Development**: Custom item creation, React/TypeScript patterns
+- **Fabric Extensibility Toolkit Development**: Custom item creation, React/TypeScript patterns
 - **Platform Integration**: OneLake, Power BI, Data Factory integration
 - **Security**: Authentication, authorization, and compliance
 - **Operations**: Deployment, CI/CD, and troubleshooting
@@ -44,7 +44,7 @@ The Fabric agent provides expert assistance for:
 
 - ✅ Public Microsoft Fabric documentation and APIs
 - ✅ Project-specific patterns from `.ai/context/` files
-- ✅ WDK implementation examples and best practices
+- ✅ Extensibility Toolkit implementation examples and best practices
 - ✅ Security and compliance guidelines
 - ✅ Current project structure and conventions
 
