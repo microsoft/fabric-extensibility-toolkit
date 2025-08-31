@@ -59,7 +59,7 @@ These are just a few examples—Fabric supports a wide range of item types, and 
 
 ### What is the Fabric Extensibility Toolkit
 
-With the Fabric Extensibility Toolkit, you can create your own items and provide them as a workload in Fabric. Customers can create a workload for their own tenant to integrate their Data applications into the platform. Partners can build workloads and publish them into the Fabric Workload Hub which makes them avaialble to all Fabric customers. The Microsoft Fabric Extensibility Toolkit provides you with all the necessary tools and interfaces to embed your data application into Microsoft Fabric.
+With the Fabric Extensibility Toolkit, you can create your own items and provide them as a workload in Fabric. Customers can create a workload for their own tenant to integrate their Data applications into the platform. Partners can build workloads and publish them into the Fabric Workload Hub which makes them available to all Fabric customers. The Microsoft Fabric Extensibility Toolkit provides you with all the necessary tools and interfaces to embed your data application into Microsoft Fabric.
 
 For more information on what workloads can offer Microsoft partners, and for useful examples, head to our official [Microsoft Fabric Extensibility Toolkit documentation](https://learn.microsoft.com/fabric/extensibilty-toolkit).
 
