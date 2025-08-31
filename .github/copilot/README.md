@@ -44,7 +44,7 @@ The Fabric agent provides expert assistance for:
 
 - ✅ Public Microsoft Fabric documentation and APIs
 - ✅ Project-specific patterns from `.ai/context/` files
-- - ✅ Extensibility Toolkit implementation examples and best practices
+- ✅ Extensibility Toolkit implementation examples and best practices
 - ✅ Security and compliance guidelines
 - ✅ Current project structure and conventions
 
