@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Stack } from "@fluentui/react";
 import { PageProps, ContextProps } from "../../App";
 import { ItemWithDefinition, getWorkloadItem } from "../../controller/ItemCRUDController";
 import { ItemEditorLoadingProgressBar } from "../../controls/ItemEditorLoadingProgressBar";
@@ -8,97 +9,73 @@ import { HelloWorldItemDefinition } from "./HelloWorldItemModel";
 import { HelloWorldItemEditorEmpty } from "./HelloWorldItemEditorEmpty";
 import { HelloWorldItemEditorGettingStarted } from "./HelloWorldItemEditorGettingStarted";
 import "../../styles.scss";
+import { HelloWorldRibbon } from "./HelloWorldRibbon";
 
 /**
  * Main editor component for HelloWorld item.
  *
  * Note: To remove the empty state, simply set defaultView to 'getting-started'
- * or modify the logic in line 62-73
  */
 export function HelloWorldItemEditor(props: PageProps) {
   const { workloadClient } = props;
   const pageContext = useParams<ContextProps>();
   const { t } = useTranslation();
+  const { pathname } = useLocation();
 
-  // State management
   const [isLoading, setIsLoading] = useState(true);
   const [item, setItem] = useState<ItemWithDefinition<HelloWorldItemDefinition>>();
   const [currentView, setCurrentView] = useState<'empty' | 'getting-started'>('empty');
 
-  // Get storage key for this specific item
-  const getStorageKey = (itemId: string) => `helloworld-editor-state-${itemId}`;
-  const { pathname } = useLocation();
-
+  /**
+   * Loads item data from URL parameters and determines the appropriate view
+   * @param pageContext - Context containing item object ID
+   * @param pathname - Current URL pathname for non-editor contexts
+   */
   async function loadDataFromUrl(pageContext: ContextProps, pathname: string): Promise<void> {
-      setIsLoading(true);
-      var item: ItemWithDefinition<HelloWorldItemDefinition> = undefined;
-      if (pageContext.itemObjectId) {
-        // for Edit scenario we get the itemObjectId and then load the item via the workloadClient SDK
-        try {
-          item = await getWorkloadItem<HelloWorldItemDefinition>(
-            workloadClient,
-            pageContext.itemObjectId,
-          );
+    setIsLoading(true);
+    var LoadedItem: ItemWithDefinition<HelloWorldItemDefinition> = undefined;
+    if (pageContext.itemObjectId) {
+      try {
+        LoadedItem = await getWorkloadItem<HelloWorldItemDefinition>(
+          workloadClient,
+          pageContext.itemObjectId,
+        );
 
-          // Ensure item definition is properly initialized without mutation
-          if (!item.definition) {
-            item = {
-              ...item,
-              definition: {
-                message: undefined,
-              }
-            };
-          }
-          setItem(item);
-        } catch (error) {
-          setItem(undefined);
+        if (!LoadedItem?.definition) {
+          LoadedItem = {
+            ...LoadedItem,
+            definition: {
+              state: undefined,
+            }
+          };
         }
-      } else {
-        console.log(`non-editor context. Current Path: ${pathname}`);
-      }
-      setIsLoading(false);
-    }
+        else {
+          console.log('LoadedItem definition: ', LoadedItem.definition);
+        }
+        setItem(LoadedItem);
+        setCurrentView(!LoadedItem?.definition?.state ? 'empty' : 'getting-started');
 
-  useEffect(() => {
-    if (pageContext?.itemObjectId) {
-      const stored = sessionStorage.getItem(getStorageKey(pageContext.itemObjectId));
-      if (stored === 'getting-started' || stored === 'empty') {
-        setCurrentView(stored);
-      } else {
-        setCurrentView('empty'); // default for new items
+      } catch (error) {
+        setItem(undefined);
       }
     } else {
-      setCurrentView('empty');
+      console.log(`non-editor context. Current Path: ${pathname}`);
     }
-  }, [pageContext?.itemObjectId]);
+    setIsLoading(false);
+  }
 
   useEffect(() => {
-        loadDataFromUrl(pageContext, pathname);
-      }, [pageContext, pathname]);
+    loadDataFromUrl(pageContext, pathname);
+  }, [pageContext, pathname]);
 
   /**
-   * Save current view state to sessionStorage
+   * Navigates from empty state to getting started view
    */
-  const saveViewState = (view: 'empty' | 'getting-started') => {
-    if (pageContext?.itemObjectId) {
-      sessionStorage.setItem(getStorageKey(pageContext.itemObjectId), view);
-    }
-  };
-
   const navigateToGettingStarted = () => {
     setCurrentView('getting-started');
-    saveViewState('getting-started');
+    console.log('Navigating to Getting Started view');
   };
 
-  /**
-   * Navigate back to Empty view
-   */
-  const navigateToEmpty = () => {
-    setCurrentView('empty');
-    saveViewState('empty');
-  };
-
-  // Show loading state
   if (isLoading) {
     return (
       <ItemEditorLoadingProgressBar
@@ -107,22 +84,24 @@ export function HelloWorldItemEditor(props: PageProps) {
     );
   }
 
-  // Render appropriate view based on state
   return (
-    <>
-    {currentView === 'empty' ? (
+    <Stack className="editor" data-testid="item-editor-inner">
+      <HelloWorldRibbon
+        currentView={currentView}
+        workloadClient={workloadClient}
+        item={item}
+        navigateToGettingStartedCallback={navigateToGettingStarted}
+      />
+      {currentView === 'empty' ? (
         <HelloWorldItemEditorEmpty
-          workloadClient={workloadClient}
-          item={item}
           onNavigateToGettingStarted={navigateToGettingStarted}
         />
       ) : (
         <HelloWorldItemEditorGettingStarted
           workloadClient={workloadClient}
           item={item}
-          onNavigateToEmpty={navigateToEmpty}
         />
       )}
-    </>
+    </Stack>
   );
 }
