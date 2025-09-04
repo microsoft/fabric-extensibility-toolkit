@@ -48,7 +48,6 @@ if (url.pathname?.startsWith(redirectUriPath)) {
 
 console.log('****Runtime: Environment Variables****');
 console.log('process.env.WORKLOAD_NAME: ' + process.env.WORKLOAD_NAME);
-console.log('process.env.ITEM_NAMES: ' + process.env.ITEM_NAMES);
 console.log('**************************************');
 
 console.log('🚀 Starting bootstrap process...');
