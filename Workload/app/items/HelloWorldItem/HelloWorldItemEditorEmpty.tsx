@@ -35,7 +35,7 @@ export function HelloWorldItemEditorEmpty({
     if (item) {
       try {
         const item_res = await callGetItem(workloadClient, item.id);
-        await callOpenSettings(workloadClient, item_res, 'About');
+        await callOpenSettings(workloadClient, item_res.item, 'About');
       } catch (error) {
         console.error('Failed to open settings:', error);
       }
