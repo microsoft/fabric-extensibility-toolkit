@@ -291,6 +291,13 @@ export interface Shortcut {
   transform?: Transform;
 }
 
+export enum ShortcutConflictPolicy {
+  Abort = "Abort",
+  GenerateUniqueName = "GenerateUniqueName",
+  CreateOrOverwrite = "CreateOrOverwrite",
+  OverwriteOnly = "OverwriteOnly"
+}
+
 export interface CreateShortcutRequest {
   path: string;
   name: string;
