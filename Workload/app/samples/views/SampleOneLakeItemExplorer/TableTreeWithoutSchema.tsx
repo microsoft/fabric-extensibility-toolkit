@@ -4,7 +4,7 @@ import { Table20Regular } from "@fluentui/react-icons";
 import { TreeItem, TreeItemLayout, Tooltip } from "@fluentui/react-components";
 
 export function TableTreeWithoutSchema(props: OneLakeItemExplorerTablesTreeProps) {
-    const {allTablesInItem: allTablesInOneLake, onSelectTableCallback} = props;
+    const {allTablesInItem: allTablesInOneLake, selectedTablePath, onSelectTableCallback} = props;
     return (
         <>
             {allTablesInOneLake &&
@@ -19,7 +19,7 @@ export function TableTreeWithoutSchema(props: OneLakeItemExplorerTablesTreeProps
                         relationship="label"
                         content={table.name}>
                             <TreeItemLayout
-                                className={(table.isSelected ? "selected" : "")}
+                                className={(selectedTablePath === table.path ? "selected" : "")}
                                 iconBefore={<Table20Regular />}>
                                 {table.name}
                             </TreeItemLayout>
