@@ -76,7 +76,6 @@ export async function initialize(params: InitParams) {
 
                 const { item: { objectId } } = data as ItemSettingContext;
                 const itemTypeName = createdItem.itemType.substring(createdItem.itemType.lastIndexOf('.') + 1);
-                path = `/${itemTypeName}Item-editor`;
 
                 return [
                     {
