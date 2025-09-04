@@ -31,7 +31,7 @@ export async function initialize(params: InitParams) {
                         workloadClient,
                         id
                     );
-                    return {title: itemResult.displayName};
+                    return {title: itemResult.item.displayName};
                 } catch (error) {
                     console.error(
                         `Error loading the Item (object ID:${id})`,

@@ -21,7 +21,6 @@ import { ApiAuthentication } from './ApiAuthentication';
 import { PageProps } from '../../App';
 import { callNavigationBeforeNavigateAway, callNavigationNavigate } from "../../controller/NavigationController";
 import "../../styles.scss";
-import { ApiArtifactCrudPublic } from './ApiArtifactCrudPublic';
 import SampleSparkTerminal from '../../samples/views/SampleSparkTerminal/SampleSparkTerminal';
 import { TabContentProps } from './ClientSDKPlaygroundModel';
 
@@ -94,9 +93,6 @@ export function ClientSDKPlayground(props: TabContentProps) {
         )}
         {selectedApiTab === 'authenticationFrontend' && (
           <ApiAuthenticationFrontend workloadClient={workloadClient} />
-        )}
-        {selectedApiTab === 'publicJSCrud' && (
-          <ApiArtifactCrudPublic workloadClient={workloadClient} />
         )}
         {selectedApiTab === 'sparkTerminal' && (
           <SampleSparkTerminal workloadClient={workloadClient} />
