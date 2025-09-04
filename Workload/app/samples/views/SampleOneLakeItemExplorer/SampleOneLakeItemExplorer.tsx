@@ -539,7 +539,10 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                     onDeleteFileCallback={deleteFileCallback}
                     onDeleteFolderCallback={deleteFolderCallback}
                     onCreateFolderCallback={createFolderCallback}
-                    onCreateShortcutCallback={createShortcutCallback} />
+                    onCreateShortcutCallback={createShortcutCallback}
+                    workloadClient={props.workloadClient}
+                    workspaceId={selectedItem?.workspaceId}
+                    itemId={selectedItem?.id} />
                 </Tree>
               </TreeItem>
             </div>

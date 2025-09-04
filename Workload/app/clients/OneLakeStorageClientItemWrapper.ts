@@ -1,4 +1,5 @@
 import { ItemReference } from "../controller/ItemCRUDController";
+import { OneLakeStorageContainerMetadata } from "./FabricPlatformTypes";
 import { OneLakeStorageClient } from "./OneLakeStorageClient";
 
 export class OneLakeStorageClientItemWrapper {
@@ -76,6 +77,22 @@ export class OneLakeStorageClientItemWrapper {
         const itemPath = this.getPath(folderPath);
         return this.client.createFolder(itemPath);
     }
+
+    /**
+     * Get metadata for a specific directory in this item's OneLake storage
+     * @param directory The directory path relative to the item
+     * @param recursive Whether to include subdirectories
+     * @param shortcutMetadata Whether to include shortcut metadata
+     * @returns Promise<OneLakeStorageContainerMetadata>
+     */
+    async getPathMetadata(
+        directory: string,
+        recursive = false,
+        shortcutMetadata = true,
+      ): Promise<OneLakeStorageContainerMetadata> {
+        const path = `${this.item.id}/${directory}`;
+        return this.client.getPathMetadata(this.item.workspaceId, path, recursive, shortcutMetadata);
+      }
 
     /**
      * Get the full OneLake path for a file in this item

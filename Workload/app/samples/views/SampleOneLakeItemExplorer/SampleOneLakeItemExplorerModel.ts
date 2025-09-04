@@ -35,15 +35,8 @@ export interface OneLakeItemExplorerFilesTreeProps {
     onDeleteFolderCallback?: (folderPath: string) => Promise<void>;
     onCreateFolderCallback?: (parentPath: string) => Promise<void>;
     onCreateShortcutCallback?: (parentPath: string) => Promise<void>;
-}
-
-export interface OneLakePath {
-    name: string;
-    isShortcut?: boolean;
-    accountType?: string;
-    isDirectory?: boolean;
-}
-
-export interface OneLakePathContainer {
-    paths: OneLakePath[];
+    // Required for dynamic shortcut content loading
+    workloadClient?: any; // WorkloadClientAPI
+    workspaceId?: string;
+    itemId?: string;
 }

@@ -4,6 +4,7 @@ import { FABRIC_BASE_SCOPES } from "./FabricPlatformScopes";
 import { EnvironmentConstants } from "../constants";
 import { OneLakeStorageClientItemWrapper } from "./OneLakeStorageClientItemWrapper";
 import { ItemReference } from "../controller/ItemCRUDController";
+import { OneLakeStorageContainerMetadata } from "./FabricPlatformTypes";
 
 
 export const FILE_FOLDER_NAME = "Files"
@@ -170,6 +171,44 @@ export class OneLakeStorageClient extends FabricPlatformClient {
       console.log(`deleteFile succeeded for filePath: ${filePath}`);
     } catch (ex: any) {
       console.error(`deleteFile failed for filePath: ${filePath}. Error: ${ex.message}`);
+    }
+  }
+
+  /**
+   * Retrieves metadata for paths and files in a OneLake directory using the OneLake DFS API.
+   * This method supports listing files, directories, and shortcuts with detailed metadata information.
+   * 
+   * @param workspaceId The Fabric workspace ID containing the OneLake item
+   * @param path The directory path within the OneLake item to query (e.g., "itemId/Files/" or "itemId/Tables/")
+   * @param recursive Whether to recursively list all subdirectories and files (default: false)
+   * @param shortcutMetadata Whether to include shortcut metadata information in the response (default: true)
+   * @returns Promise<OneLakeStorageContainerMetadata> Container object with paths array containing file/directory metadata
+   * 
+   * @remarks
+   * - The path parameter should include the item ID prefix (e.g., "myItemId/Files/subfolder")
+   * - When shortcutMetadata is true, shortcuts will include additional properties like accountType and target information but you need to call the method again with the shortcut path to get the content
+   * - Recursive mode can significantly increase response size for large directory structures
+   * - Uses the OneLake DFS API endpoint which follows ADLS Gen2 REST API conventions
+   * 
+   */
+  async getPathMetadata(
+    workspaceId: string,
+    path: string,
+    recursive = false,
+    shortcutMetadata = true,
+  ): Promise<OneLakeStorageContainerMetadata> {
+    const url = `${EnvironmentConstants.OneLakeDFSBaseUrl}/${workspaceId}/?recursive=${recursive}&resource=filesystem&directory=${encodeURIComponent(path)}&getShortcutMetadata=${shortcutMetadata}`;
+    try {
+      const accessToken = await this.getAccessToken();
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${accessToken.token}` }
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const paths: OneLakeStorageContainerMetadata = await response.json();
+      return paths;
+    } catch (ex: any) {
+      console.error(`getPathList failed: ${ex.message}`);
+      throw ex;
     }
   }
 
