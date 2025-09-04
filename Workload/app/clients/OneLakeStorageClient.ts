@@ -2,7 +2,7 @@ import { WorkloadClientAPI } from "@ms-fabric/workload-client";
 import { FabricPlatformClient } from "./FabricPlatformClient";
 import { FABRIC_BASE_SCOPES } from "./FabricPlatformScopes";
 import { EnvironmentConstants } from "../constants";
-import { OneLakeClientItemWrapper } from "./OneLakeClientItemWrapper";
+import { OneLakeStorageClientItemWrapper } from "./OneLakeStorageClientItemWrapper";
 import { ItemReference } from "../controller/ItemCRUDController";
 
 
@@ -14,8 +14,8 @@ export const TABLE_FOLDER_NAME = "Tables"
  * Provides methods for reading and writing files to OneLake storage
  * 
  */
-export class OneLakeClient extends FabricPlatformClient {
-  
+export class OneLakeStorageClient extends FabricPlatformClient {
+
   constructor(workloadClient: WorkloadClientAPI) {
     super(workloadClient, FABRIC_BASE_SCOPES.ONELAKE_STORAGE);
   }
@@ -26,7 +26,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns A OneLakeItemClient instance that is corectly configure to always use conent in the item directories in OneLake
    */
   createItemWrapper(item: ItemReference){
-    return new OneLakeClientItemWrapper(this, item);
+    return new OneLakeStorageClientItemWrapper(this, item);
   }
 
   /**
@@ -188,7 +188,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns The OneLake file path
    */
   static getFilePath(workspaceId: string, itemId: string, fileName: string): string {
-    return OneLakeClient.getPath(workspaceId, itemId, `${FILE_FOLDER_NAME}/${fileName}`);
+    return OneLakeStorageClient.getPath(workspaceId, itemId, `${FILE_FOLDER_NAME}/${fileName}`);
   }
 
   /**
@@ -199,7 +199,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns 
    */
   static getTablePath(workspaceId: string, itemId: string, tableName: string): string {
-    return OneLakeClient.getPath(workspaceId, itemId, `${TABLE_FOLDER_NAME}/${tableName}`);
+    return OneLakeStorageClient.getPath(workspaceId, itemId, `${TABLE_FOLDER_NAME}/${tableName}`);
   }
 
 
@@ -306,44 +306,44 @@ export class OneLakeClient extends FabricPlatformClient {
 // These can be removed once all code is migrated to use the OneLakeClient class
 
 export async function checkIfFileExists(workloadClient: WorkloadClientAPI, filePath: string): Promise<boolean> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.checkIfFileExists(filePath);
 }
 
 export async function writeToOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.writeFileAsBase64(filePath, content);
 }
 
 export async function readOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.readFileAsBase64(filePath);
 }
 
 export async function writeToOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.writeFileAsText(filePath, content);
 }
 
 export async function readOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.readFileAsText(filePath);
 }
 
 export async function deleteOneLakeFile(workloadClient: WorkloadClientAPI, filePath: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.deleteFile(filePath);
 }
 
 export async function createOneLakeFolder(workloadClient: WorkloadClientAPI, folderPath: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
+  const client = new OneLakeStorageClient(workloadClient);
   return client.createFolder(folderPath);
 }
 
 export function getOneLakeFilePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeClient.getFilePath(workspaceId, itemId, fileName);
+  return OneLakeStorageClient.getFilePath(workspaceId, itemId, fileName);
 }
 
 export function getOneLakePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeClient.getPath(workspaceId, itemId, fileName);
+  return OneLakeStorageClient.getPath(workspaceId, itemId, fileName);
 }

@@ -19,7 +19,7 @@ import { Item } from "../../../clients/FabricPlatformTypes";
 import { TableTreeWithSchema } from "./TableTreeWithSchema";
 import { TableTreeWithoutSchema } from "./TableTreeWithoutSchema";
 import { FileTree } from "./FileTree";
-import { getOneLakeFilePath } from "../../../clients/OneLakeClient";
+import { getOneLakeFilePath } from "../../../clients/OneLakeStorageClient";
 import { callDatahubOpen } from "../../../controller/DataHubController";
 import { ItemReference } from "../../../controller/ItemCRUDController";
 
