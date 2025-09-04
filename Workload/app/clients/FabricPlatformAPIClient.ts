@@ -204,13 +204,8 @@ export class FabricPlatformAPIClient {
  * const sessions = await fabricAPI.sparkLivy.listSessions(workspaceId, lakehouseId);
  * 
  * // Or use clients directly for more specific use cases
- * import { WorkspaceClient, SparkClient, SparkLivyClient, FabricPlatformClient } from './clients';
+ * const sparkClient = new SparkClient(workloadClient);
+ * const sparkLivyClient = new SparkLivyClient(workloadClient);
  * 
- * // User token authentication (legacy)
- * const workspaceClient = new WorkspaceClient(workloadClient);
- * import { WorkspaceClient, SparkClient, SparkLivyClient, FabricPlatformClient } from './client';
- * 
- * // User token authentication (legacy)
- * const workspaceClient = new WorkspaceClient(workloadClient);
  * ```
  */

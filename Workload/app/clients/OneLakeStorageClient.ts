@@ -78,9 +78,10 @@ export class OneLakeStorageClient extends FabricPlatformClient {
       console.error(`writeFileAsBase64: Creating a new file failed for filePath: ${filePath}. Error: ${ex.message}`);
       throw ex;
     }
-    
-    // Then append the base64 content as binary data
-    await this.appendBinaryToFile(accessToken.token, filePath, content);
+    if(content && content.length > 0) {
+      // Then append the base64 content as binary data
+      await this.appendBinaryToFile(accessToken.token, filePath, content);
+    }
   }
 
   /**
@@ -126,7 +127,9 @@ export class OneLakeStorageClient extends FabricPlatformClient {
       console.error(`writeFileAsText: Creating a new file failed for filePath: ${filePath}. Error: ${ex.message}`);
       return;
     }
-    await this.appendToFile(accessToken.token, filePath, content);
+    if(content && content.length > 0) {
+      await this.appendToFile(accessToken.token, filePath, content);
+    }
   }
 
   /**
@@ -300,50 +303,4 @@ export class OneLakeStorageClient extends FabricPlatformClient {
   private buildFlushQueryParameters(contentLength: number): string {
     return `position=${contentLength}&action=flush`;
   }
-}
-
-// Legacy function exports for backward compatibility
-// These can be removed once all code is migrated to use the OneLakeClient class
-
-export async function checkIfFileExists(workloadClient: WorkloadClientAPI, filePath: string): Promise<boolean> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.checkIfFileExists(filePath);
-}
-
-export async function writeToOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.writeFileAsBase64(filePath, content);
-}
-
-export async function readOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.readFileAsBase64(filePath);
-}
-
-export async function writeToOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.writeFileAsText(filePath, content);
-}
-
-export async function readOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.readFileAsText(filePath);
-}
-
-export async function deleteOneLakeFile(workloadClient: WorkloadClientAPI, filePath: string): Promise<void> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.deleteFile(filePath);
-}
-
-export async function createOneLakeFolder(workloadClient: WorkloadClientAPI, folderPath: string): Promise<void> {
-  const client = new OneLakeStorageClient(workloadClient);
-  return client.createFolder(folderPath);
-}
-
-export function getOneLakeFilePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeStorageClient.getFilePath(workspaceId, itemId, fileName);
-}
-
-export function getOneLakePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeStorageClient.getPath(workspaceId, itemId, fileName);
 }
