@@ -86,7 +86,8 @@ export async function getFiles(
         return {
             name: fileName,
             path: relativePath,
-            isDirectory: path.isDirectory
+            isDirectory: path.isDirectory,
+            isShortcut: path.isShortcut
         } as FileMetadata;
     });
 
