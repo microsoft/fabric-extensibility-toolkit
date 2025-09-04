@@ -31,7 +31,12 @@ export async function initialize(params: InitParams) {
                         workloadClient,
                         id
                     );
-                    return {title: itemResult.item.displayName};
+                    if (itemResult?.item?.displayName) {
+                        return { title: itemResult.item.displayName };
+                    } else {
+                        console.warn(`Item not found or missing displayName for ID: ${id}`);
+                        return { title: 'Untitled Item' }; // Provide a default title
+                    }
                 } catch (error) {
                     console.error(
                         `Error loading the Item (object ID:${id})`,
