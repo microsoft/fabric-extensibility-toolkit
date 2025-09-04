@@ -10,23 +10,23 @@ import {
   Rocket24Regular
 } from "@fluentui/react-icons";
 import { PageProps } from '../../App';
+import { CurrentView, VIEW_TYPES } from "./HelloWorldItemModel";
 import { useTranslation } from "react-i18next";
 import '../../styles.scss';
 
 /**
  * Props interface for the Empty State Ribbon component
  */
-export interface EmptyStateRibbonProps extends PageProps {
-  /** Callback to open settings */
+export interface HelloWorldItemRibbonProps extends PageProps {
+  isSaveButtonEnabled?: boolean;
+  currentView: CurrentView;
+  saveItemCallback: () => Promise<void>;
   openSettingsCallback: () => Promise<void>;
-  /** Callback to navigate to getting started */
   navigateToGettingStartedCallback: () => void;
 }
 
-/**
- * Toolbar component for the Empty State home tab
- */
-const EmptyStateHomeTabToolbar: React.FC<EmptyStateRibbonProps> = (props) => {
+
+const HelloWorldItemTabToolbar: React.FC<HelloWorldItemRibbonProps> = (props) => {
   const { t } = useTranslation();
 
 
@@ -38,6 +38,11 @@ const EmptyStateHomeTabToolbar: React.FC<EmptyStateRibbonProps> = (props) => {
     props.navigateToGettingStartedCallback();
   };
 
+  async function onSaveAsClicked() {
+    await props.saveItemCallback();
+    return;
+  }
+
   return (
     <Toolbar>
       {/* Save Button - Disabled */}
@@ -45,10 +50,11 @@ const EmptyStateHomeTabToolbar: React.FC<EmptyStateRibbonProps> = (props) => {
         content={t("ItemEditor_Ribbon_Save_Label")}
         relationship="label">
         <ToolbarButton
-          disabled={true}
+          disabled={!props.isSaveButtonEnabled}
           aria-label={t("ItemEditor_Ribbon_Save_Label")}
           data-testid="item-editor-save-btn"
           icon={<Save24Regular />}
+          onClick={onSaveAsClicked}
         />
       </Tooltip>
 
@@ -64,7 +70,8 @@ const EmptyStateHomeTabToolbar: React.FC<EmptyStateRibbonProps> = (props) => {
         />
       </Tooltip>
 
-      {/* Get Started Button - Primary action in empty state */}
+      {/* Getting Started Button */}
+      {props.currentView === VIEW_TYPES.EMPTY && (
       <Tooltip
         content={t("ItemEditor_Ribbon_GettingStarted_Label", "Getting Started")}
         relationship="label">
@@ -75,29 +82,30 @@ const EmptyStateHomeTabToolbar: React.FC<EmptyStateRibbonProps> = (props) => {
           onClick={handleGettingStartedClick}
         />
       </Tooltip>
+      )}
     </Toolbar>
   );
 };
 
 /**
- * Main Empty State Ribbon component
- * Displays the home tab with appropriate toolbar for empty state
+ * Main Ribbon component
  */
-export function EmptyStateRibbon(props: EmptyStateRibbonProps) {
+export function HelloWorldItemRibbon(props: HelloWorldItemRibbonProps) {
   const { t } = useTranslation();
 
   return (
     <div className="ribbon">
-      {/* Home Tab */}
+      {props.currentView === VIEW_TYPES.EMPTY && (
       <TabList defaultSelectedValue="home">
         <Tab value="home" data-testid="home-tab-btn">
           {t("ItemEditor_Ribbon_Home_Label")}
         </Tab>
       </TabList>
+      )}
 
       {/* Toolbar Container */}
       <div className="toolbarContainer">
-        <EmptyStateHomeTabToolbar {...props} />
+        <HelloWorldItemTabToolbar {...props} />
       </div>
     </div>
   );
