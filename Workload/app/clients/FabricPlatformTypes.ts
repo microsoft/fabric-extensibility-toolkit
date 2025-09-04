@@ -284,6 +284,10 @@ export interface OperationState {
 export type LongRunningOperationStatus = 'Undefined' | 'NotStarted' | 'Running' | 'Succeeded' | 'Failed';
 
 export interface OneLakeStoragePathMetadata {
+    contentLength: number;
+    lastModified: string;
+    creationTime: string;
+    permissions: string;
     name: string;
     isShortcut?: boolean;
     accountType?: string;
