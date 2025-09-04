@@ -10,7 +10,7 @@ import { LongRunningOperationsClient } from "./LongRunningOperationsClient";
 import { SparkLivyClient } from "./SparkLivyClient";
 import { SparkClient } from "./SparkClient";
 import { FabricPlatformClient } from "./FabricPlatformClient";
-import { OneLakeClient } from "./OneLakeClient";
+import { OneLakeStorageClient } from "./OneLakeStorageClient";
 import { ExternalDataSharesProviderClient } from "./ExternalDataSharesProviderClient";
 import { ExternalDataSharesRecipientClient } from "./ExternalDataSharesRecipientClient";
 import { TagsClient } from "./TagsClient";
@@ -31,7 +31,7 @@ export class FabricPlatformAPIClient {
   public readonly operations: LongRunningOperationsClient;
   public readonly sparkLivy: SparkLivyClient;
   public readonly spark: SparkClient;
-  public readonly oneLake: OneLakeClient;
+  public readonly oneLakeStorage: OneLakeStorageClient;
   public readonly externalDataShares: ExternalDataSharesProviderClient;
   public readonly externalDataSharesRecipient: ExternalDataSharesRecipientClient;
   public readonly tags: TagsClient;
@@ -48,7 +48,7 @@ export class FabricPlatformAPIClient {
     this.operations = new LongRunningOperationsClient(workloadClient);
     this.spark = new SparkClient(workloadClient);    
     this.sparkLivy = new SparkLivyClient(workloadClient);
-    this.oneLake = new OneLakeClient(workloadClient);
+    this.oneLakeStorage = new OneLakeStorageClient(workloadClient);
     this.externalDataShares = new ExternalDataSharesProviderClient(workloadClient);
     this.externalDataSharesRecipient = new ExternalDataSharesRecipientClient(workloadClient);
     this.tags = new TagsClient(workloadClient);
@@ -97,7 +97,7 @@ export class FabricPlatformAPIClient {
     client.operations.updateAuthenticationConfig(authConfig);
     client.sparkLivy.updateAuthenticationConfig(authConfig);
     client.spark.updateAuthenticationConfig(authConfig);
-    client.oneLake.updateAuthenticationConfig(authConfig);
+    client.oneLakeStorage.updateAuthenticationConfig(authConfig);
     client.externalDataShares.updateAuthenticationConfig(authConfig);
     client.externalDataSharesRecipient.updateAuthenticationConfig(authConfig);
     client.tags.updateAuthenticationConfig(authConfig);
@@ -130,7 +130,7 @@ export class FabricPlatformAPIClient {
     client.operations.updateAuthenticationConfig(authConfig);
     client.sparkLivy.updateAuthenticationConfig(authConfig);
     client.spark.updateAuthenticationConfig(authConfig);
-    client.oneLake.updateAuthenticationConfig(authConfig);
+    client.oneLakeStorage.updateAuthenticationConfig(authConfig);
     client.externalDataShares.updateAuthenticationConfig(authConfig);
     client.externalDataSharesRecipient.updateAuthenticationConfig(authConfig);
     client.tags.updateAuthenticationConfig(authConfig);
@@ -204,13 +204,8 @@ export class FabricPlatformAPIClient {
  * const sessions = await fabricAPI.sparkLivy.listSessions(workspaceId, lakehouseId);
  * 
  * // Or use clients directly for more specific use cases
- * import { WorkspaceClient, SparkClient, SparkLivyClient, FabricPlatformClient } from './clients';
+ * const sparkClient = new SparkClient(workloadClient);
+ * const sparkLivyClient = new SparkLivyClient(workloadClient);
  * 
- * // User token authentication (legacy)
- * const workspaceClient = new WorkspaceClient(workloadClient);
- * import { WorkspaceClient, SparkClient, SparkLivyClient, FabricPlatformClient } from './client';
- * 
- * // User token authentication (legacy)
- * const workspaceClient = new WorkspaceClient(workloadClient);
  * ```
  */

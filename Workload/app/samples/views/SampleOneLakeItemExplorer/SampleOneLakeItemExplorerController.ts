@@ -2,7 +2,7 @@ import { Item } from "../../../clients/FabricPlatformTypes";
 import { EnvironmentConstants } from "../../../constants";
 import { callAcquireFrontendAccessToken } from "../../../controller/AuthenticationController";
 import { AccessToken, WorkloadClientAPI } from "@ms-fabric/workload-client";
-import { FileMetadata, OneLakePathContainer, TableMetadata } from "./SampleOneLakeItemExplorerModel";
+import { FileMetadata, OneLakePath, OneLakePathContainer, TableMetadata } from "./SampleOneLakeItemExplorerModel";
 import { FABRIC_BASE_SCOPES } from "../../../clients/FabricPlatformScopes";
 import { FabricPlatformAPIClient } from "../../../clients";
 
@@ -26,31 +26,36 @@ export async function getTables(
         )
         .map(path => {
 
-            let pathName = path.name;
-            let parts = pathName.split('/');
-            let tableName: string;
-            let schemaName: string | null = null;
-
-            // Remove '_delta_log' if present
-            if (pathName.endsWith(deltaLogDirectory)) {
-                pathName = parts.slice(0, -1).join('/');
-                parts = pathName.split('/');
-            }
-
-            tableName = parts[parts.length - 1];
-            if (parts.length === 4) {
-                schemaName = parts[2];
-            }
-
-            return {
-                name: tableName,
-                path: pathName + '/',
-                isSelected: false,
-                schema: schemaName,
-            };
+            return convertToTableMetadata(path, deltaLogDirectory);
         });
 
     return tables;
+}
+
+
+function convertToTableMetadata(path: OneLakePath, deltaLogDirectory: string): TableMetadata {
+    let pathName = path.name;
+    let parts = pathName.split('/');
+    let tableName: string;
+    let schemaName: string | null = null;
+
+    // Remove '_delta_log' if present
+    if (pathName.endsWith(deltaLogDirectory)) {
+        pathName = parts.slice(0, -1).join('/');
+        parts = pathName.split('/');
+    }
+
+    tableName = parts[parts.length - 1];
+    if (parts.length === 4) {
+        schemaName = parts[2];
+    }
+
+    return {
+        prefix: "Tables",
+        name: tableName,
+        path: pathName + '/',
+        schema: schemaName,
+    } as TableMetadata;
 }
 
 /**
@@ -74,23 +79,29 @@ export async function getFiles(
     const directory = `${itemId}/Files/`;
     const oneLakeContainer = await getPathList(workloadClient, workspaceId, directory, true);
     const files = (oneLakeContainer.paths || []).map(path => {
-        const pathName = path.name;
-        const parts = pathName.split('/');
-
-        // Path structure: <itemId>/Files/...<Subdirectories>.../<fileName>
-        const fileName = parts[parts.length - 1];
-
-        // Remove the prefix (itemId/Files/) from the path
-        const relativePath = pathName.length > directory.length ? pathName.substring(directory.length) : "";
-
-        return {
-            name: fileName,
-            path: relativePath,
-            isDirectory: path.isDirectory
-        } as FileMetadata;
+        return convertToFileMetadata(path, directory);
     });
 
     return files;
+}
+
+function convertToFileMetadata(path: OneLakePath, directory: string) {
+    const pathName = path.name;
+    const parts = pathName.split('/');
+
+    // Path structure: <itemId>/Files/...<Subdirectories>.../<fileName>
+    const fileName = parts[parts.length - 1];
+
+    // Remove the prefix (itemId/Files/) from the path
+    const relativePath = pathName.length > directory.length ? pathName.substring(directory.length) : "";
+
+    return {
+        prefix: "Files",
+        name: fileName,
+        path: relativePath,
+        isDirectory: path.isDirectory,
+        isShortcut: path.isShortcut
+    } as FileMetadata;
 }
 
 /**

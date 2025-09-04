@@ -1,6 +1,6 @@
-import React from "react";
-import { Document20Regular, FolderRegular } from "@fluentui/react-icons";
-import { Tree, TreeItem, TreeItemLayout, Tooltip } from "@fluentui/react-components";
+import React, { useState } from "react";
+import { Document20Regular, FolderRegular, Delete20Regular, FolderAdd20Regular, Link20Regular, FolderLink20Regular } from "@fluentui/react-icons";
+import { Tree, TreeItem, TreeItemLayout, Tooltip, Menu, MenuTrigger, MenuPopover, MenuList, MenuItem } from "@fluentui/react-components";
 import { FileMetadata, OneLakeItemExplorerFilesTreeProps } from "./SampleOneLakeItemExplorerModel";
 
 interface TreeNode {
@@ -11,7 +11,8 @@ interface TreeNode {
 type FolderMap = Map<string, TreeNode>;
 
 export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
-    const {allFilesInItem: allFilesInOneLake, onSelectFileCallback} = props;
+    const {allFilesInItem: allFilesInOneLake, selectedFilePath, onSelectFileCallback, onDeleteFileCallback, onDeleteFolderCallback, onCreateFolderCallback, onCreateShortcutCallback} = props;
+    const [openMenu, setOpenMenu] = useState<string | null>(null);
 
     const buildFileTree = (files: FileMetadata[]) => {
         const root: TreeNode[] = [];
@@ -75,17 +76,103 @@ export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
         return root;
     };
 
+    const handleCreateFolder = async (metadata: FileMetadata) => {
+        if (onCreateFolderCallback) {
+            // Ensure the path includes the Files prefix since FileTree is within the Files directory
+            const fullPath = metadata ? `${metadata.prefix}/${metadata.path}` : "Files";
+            await onCreateFolderCallback(fullPath);
+        }
+    };
+
+    const handleCreateShortcut = async (metadata: FileMetadata) => {
+        if (onCreateShortcutCallback) {
+            // Ensure the path includes the Files prefix since FileTree is within the Files directory
+            const fullPath = metadata ? `${metadata.prefix}/${metadata.path}` : "Files";
+            await onCreateShortcutCallback(fullPath);
+        }
+    };
+
+    const handleDeleteFile = async (metadata: FileMetadata) => {
+        if (onDeleteFileCallback) {
+            const fullPath = metadata ? `${metadata.prefix}/${metadata.path}` : "Files";
+            await onDeleteFileCallback(fullPath);
+        }
+    };
+
+    const handleDeleteFolder = async (metadata: FileMetadata) => {
+        if (onDeleteFolderCallback) {
+            // Ensure the path includes the Files prefix since FileTree is within the Files directory
+            const fullPath = metadata ? `${metadata.prefix}/${metadata.path}` : "Files";
+            await onDeleteFolderCallback(fullPath);
+        }
+    };
+
     const renderTreeNode = (node: TreeNode): JSX.Element => {
         const { metadata, children } = node;
 
         if (metadata.isDirectory) {
+            // Use different icon for shortcut folders vs regular folders
+            const folderIcon = metadata.isShortcut ? <FolderLink20Regular /> : <FolderRegular />;
+            
             return (
                 <TreeItem key={metadata.path} itemType="branch">
-                    <Tooltip relationship="label" content={metadata.name}>
-                        <TreeItemLayout iconBefore={<FolderRegular />}>
-                            {metadata.name}
-                        </TreeItemLayout>
-                    </Tooltip>
+                    <Menu 
+                        open={openMenu === metadata.path}
+                        onOpenChange={(e, data) => setOpenMenu(data.open ? metadata.path : null)}
+                    >
+                        <MenuTrigger disableButtonEnhancement>
+                            <Tooltip relationship="label" content={metadata.name}>
+                                <TreeItemLayout 
+                                    iconBefore={folderIcon}
+                                    onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        setOpenMenu(metadata.path);
+                                    }}
+                                >
+                                    {metadata.name}
+                                </TreeItemLayout>
+                            </Tooltip>
+                        </MenuTrigger>
+                        <MenuPopover>
+                            <MenuList>
+                                {/* Only show create options for regular folders (not shortcuts) */}
+                                {onCreateFolderCallback && !metadata.isShortcut && (
+                                    <MenuItem 
+                                        icon={<FolderAdd20Regular />}
+                                        onClick={() => {
+                                            handleCreateFolder(metadata);
+                                            setOpenMenu(null);
+                                        }}
+                                    >
+                                        Create Folder
+                                    </MenuItem>
+                                )}
+                                {onCreateShortcutCallback && !metadata.isShortcut && (
+                                    <MenuItem 
+                                        icon={<Link20Regular />}
+                                        onClick={() => {
+                                            handleCreateShortcut(metadata);
+                                            setOpenMenu(null);
+                                        }}
+                                    >
+                                        Create Shortcut
+                                    </MenuItem>
+                                )}
+                                {/* Only show delete option for shortcut folders */}
+                                {onDeleteFolderCallback && metadata.isShortcut && (
+                                    <MenuItem 
+                                        icon={<Delete20Regular />}
+                                        onClick={() => {
+                                            handleDeleteFolder(metadata);
+                                            setOpenMenu(null);
+                                        }}
+                                    >
+                                        Delete Shortcut
+                                    </MenuItem>
+                                )}
+                            </MenuList>
+                        </MenuPopover>
+                    </Menu>
                     <Tree>
                         {children.map(child => renderTreeNode(child))}
                     </Tree>
@@ -96,16 +183,54 @@ export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
                 <TreeItem
                     key={metadata.path}
                     itemType="leaf"
-                    onClick={() => onSelectFileCallback(metadata)}
                 >
-                    <Tooltip relationship="label" content={metadata.name}>
-                        <TreeItemLayout
-                            className={metadata.isSelected ? "selected" : ""}
-                            iconBefore={<Document20Regular />}
-                        >
-                            {metadata.name}
-                        </TreeItemLayout>
-                    </Tooltip>
+                    <Menu 
+                        open={openMenu === metadata.path}
+                        onOpenChange={(e, data) => {
+                            // Only allow opening on right-click context menu
+                            if (data.open && e.type !== 'contextmenu') {
+                                return;
+                            }
+                            setOpenMenu(data.open ? metadata.path : null);
+                        }}
+                    >
+                        <MenuTrigger disableButtonEnhancement>
+                            <Tooltip relationship="label" content={metadata.name}>
+                                <TreeItemLayout
+                                    className={selectedFilePath === metadata.path ? "selected" : ""}
+                                    iconBefore={<Document20Regular />}
+                                    onClick={(e) => {
+                                        // Left click - select file
+                                        e.stopPropagation();
+                                        onSelectFileCallback(metadata);
+                                    }}
+                                    onContextMenu={(e) => {
+                                        // Right click - show context menu
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setOpenMenu(metadata.path);
+                                    }}
+                                >
+                                    {metadata.name}
+                                </TreeItemLayout>
+                            </Tooltip>
+                        </MenuTrigger>
+                        <MenuPopover>
+                            <MenuList>
+                                {onDeleteFileCallback && (
+                                    <MenuItem 
+                                        icon={<Delete20Regular />}
+                                        onClick={() => {
+                                            handleDeleteFile(metadata);
+                                            setOpenMenu(null);
+                                        }}
+                                    >
+                                        Delete File
+                                    </MenuItem>
+                                )}
+                            </MenuList>
+                        </MenuPopover>
+                    </Menu>
                 </TreeItem>
             );
         }
@@ -113,9 +238,44 @@ export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
 
     const fileTree = buildFileTree(allFilesInOneLake || []);
 
+    // Close menu when clicking outside
+    const handleGlobalClick = () => {
+        setOpenMenu(null);
+    };
+
+    React.useEffect(() => {
+        document.addEventListener('click', handleGlobalClick);
+        return () => {
+            document.removeEventListener('click', handleGlobalClick);
+        };
+    }, []);
+
     return (
         <>
-            {fileTree.map(node => renderTreeNode(node))}
+            {fileTree.length > 0 ? (
+                fileTree.map(node => renderTreeNode(node))
+            ) : (
+                // Show context menu option when Files folder is empty
+                (onCreateFolderCallback || onCreateShortcutCallback) && (
+                    <div 
+                        style={{ padding: "8px", color: "#666", fontStyle: "italic" }}
+                        onContextMenu={(e) => {
+                            e.preventDefault();
+                            if (onCreateFolderCallback) {
+                                handleCreateFolder(undefined);
+                            }
+                        }}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (onCreateFolderCallback) {
+                                handleCreateFolder(undefined);
+                            }
+                        }}
+                    >
+                        Right-click or click here to create a folder or shortcut
+                    </div>
+                )
+            )}
         </>
     );
 }

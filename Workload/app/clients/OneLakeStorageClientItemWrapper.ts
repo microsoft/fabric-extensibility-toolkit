@@ -1,10 +1,10 @@
 import { ItemReference } from "../controller/ItemCRUDController";
-import { OneLakeClient } from "./OneLakeClient";
+import { OneLakeStorageClient } from "./OneLakeStorageClient";
 
-export class OneLakeClientItemWrapper {
-    private client: OneLakeClient;
+export class OneLakeStorageClientItemWrapper {
+    private client: OneLakeStorageClient;
     private item: ItemReference;
-    constructor(client: OneLakeClient, item: ItemReference){
+    constructor(client: OneLakeStorageClient, item: ItemReference){
         this.client = client;
         this.item = item;
     }
@@ -83,7 +83,7 @@ export class OneLakeClientItemWrapper {
      * @returns The full OneLake path
      */
     getPath(filePath: string): string {
-        return OneLakeClient.getPath(this.item.workspaceId, this.item.id, filePath);
+        return OneLakeStorageClient.getPath(this.item.workspaceId, this.item.id, filePath);
     }
 
     /**
@@ -92,7 +92,7 @@ export class OneLakeClientItemWrapper {
      * @returns The OneLake file path
      */
     getFilePath(fileName: string): string {
-        return OneLakeClient.getFilePath(this.item.workspaceId, this.item.id, fileName);
+        return OneLakeStorageClient.getFilePath(this.item.workspaceId, this.item.id, fileName);
     }
 
     /**
@@ -101,6 +101,6 @@ export class OneLakeClientItemWrapper {
      * @returns The OneLake table path
      */
     getTablePath(tableName: string): string {
-        return OneLakeClient.getTablePath(this.item.workspaceId, this.item.id, tableName);
+        return OneLakeStorageClient.getTablePath(this.item.workspaceId, this.item.id, tableName);
     }
 }
