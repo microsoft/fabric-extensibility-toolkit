@@ -34,7 +34,7 @@ $realeaseDir = Resolve-Path $realeaseDir
 # Creating the release manifest
 # 
 ###############################################################################
-$manifestDir = Join-Path $PSScriptRoot "..\..\config\Manifest"
+$manifestDir = Join-Path $PSScriptRoot "..\..\Workload\Manifest"
 $tempDir = Join-Path $realeaseDir "temp\"
 $tempManifestDir = Join-Path $tempDir "temp\Manifest"
 $realeaseManifestDir = Join-Path $realeaseDir ""
