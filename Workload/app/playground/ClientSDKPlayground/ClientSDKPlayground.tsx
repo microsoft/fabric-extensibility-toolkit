@@ -8,8 +8,8 @@ import {
   Button,
 } from '@fluentui/react-components';
 import { Stack } from '@fluentui/react';
-import { RootState } from "../ClientSDKPlaygroundStore/Store"
-import { setSelectedTab } from "../ClientSDKPlaygroundStore/tabsSlice";
+import { RootState } from "../ClientSDKPlayground/Store/Store"
+import { setSelectedTab } from "../ClientSDKPlayground/Store/tabsSlice";
 import { ApiNotification } from './ApiNotification';
 import { ApiActionDialog } from './ActionDialog/ApiActionDialog';
 import { ApiPanelSettings } from './ApiPanelSettings';
