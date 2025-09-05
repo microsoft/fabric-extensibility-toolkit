@@ -5,39 +5,30 @@ const Webpack = require("webpack");
 const path = require("path");
 const fs = require("fs").promises;
 
-// making sure the dev configuration is set correctly!
-// TODO: once we use the manifest for publishing we can remove this.
-process.env.DEV_AAD_CONFIG_FE_APPID = process.env.FRONTEND_APPID;
-process.env.DEV_AAD_CONFIG_BE_APPID = process.env.BACKEND_APPID;
-process.env.DEV_AAD_CONFIG_BE_AUDIENCE= ""
-process.env.DEV_AAD_CONFIG_BE_REDIRECT_URI=process.env.BACKEND_URL;
 
-console.log('********************     Environment Variables    *******************');
+console.log('*******************     Workload Configuration    *******************');
 console.log('process.env.WORKLOAD_NAME: ' + process.env.WORKLOAD_NAME);
 console.log('process.env.ITEM_NAMES: ' + process.env.ITEM_NAMES);
 console.log('process.env.WORKLOAD_VERSION: ' + process.env.WORKLOAD_VERSION);
 console.log('process.env.LOG_LEVEL: ' + process.env.LOG_LEVEL);
-console.log('process.env.DEV_AAD_CONFIG_FE_APPID: ' + process.env.DEV_AAD_CONFIG_FE_APPID);
 console.log('*********************************************************************');
 
 
 module.exports = {
-    mode: "development",
+    mode: "production",
     entry: "./app/index.ts",
     output: {
         filename: "bundle.[fullhash].js",
         path: path.resolve(__dirname, "dist"),
         publicPath: '/',
     },
-    devtool: "source-map",
     plugins: [
         new CleanWebpackPlugin(),
         new Webpack.DefinePlugin({
             "process.env.WORKLOAD_NAME": JSON.stringify(process.env.WORKLOAD_NAME),
             "process.env.ITEM_NAMES": JSON.stringify(process.env.ITEM_NAMES),
             "process.env.WORKLOAD_VERSION": JSON.stringify(process.env.WORKLOAD_VERSION),
-            "process.env.LOG_LEVEL": JSON.stringify(process.env.LOG_LEVEL),
-            "NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
+            "process.env.LOG_LEVEL": JSON.stringify(process.env.LOG_LEVEL)
         }),
         new HtmlWebpackPlugin({
             template: "./app/index.html",
