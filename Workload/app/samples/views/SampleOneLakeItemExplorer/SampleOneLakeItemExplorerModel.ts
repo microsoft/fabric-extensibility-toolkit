@@ -39,4 +39,5 @@ export interface OneLakeItemExplorerFilesTreeProps {
     workloadClient?: any; // WorkloadClientAPI
     workspaceId?: string;
     itemId?: string;
+    mode?: "view" | "edit";
 }

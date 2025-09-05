@@ -41,6 +41,7 @@ export interface OneLakeItemExplorerComponentProps extends PageProps {
   onTableSelected(tableName: string, oneLakeLink: string): Promise<void>;
   onItemChanged(item: Item): Promise<void>,
   config: {
+    mode?: "view" | "edit";
     // Configuration options for the component
     initialItem?: OneLakeItemExplorerItem;
     allowedItemTypes?: string[];
@@ -430,8 +431,8 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                 <Menu
                   open={openTablesMenu}
                   onOpenChange={(e, data) => {
-                    // Only allow opening on right-click context menu
-                    if (data.open && e.type !== 'contextmenu') {
+                    // Only allow opening on right-click context menu and in edit mode
+                    if (props.config.mode !== "edit" || (data.open && e.type !== 'contextmenu')) {
                       return;
                     }
                     setOpenTablesMenu(data.open);
@@ -446,9 +447,11 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                         }
                       }}
                       onContextMenu={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setOpenTablesMenu(true);
+                        if (props.config.mode === "edit") {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setOpenTablesMenu(true);
+                        }
                       }}
                       style={{ cursor: 'pointer' }}
                     >
@@ -487,8 +490,8 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                 <Menu
                   open={openFilesMenu}
                   onOpenChange={(e, data) => {
-                    // Only allow opening on right-click context menu
-                    if (data.open && e.type !== 'contextmenu') {
+                    // Only allow opening on right-click context menu and in edit mode
+                    if (props.config.mode !== "edit" || (data.open && e.type !== 'contextmenu')) {
                       return;
                     }
                     setOpenFilesMenu(data.open);
@@ -503,9 +506,11 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                         }
                       }}
                       onContextMenu={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setOpenFilesMenu(true);
+                        if (props.config.mode === "edit") {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setOpenFilesMenu(true);
+                        }
                       }}
                       style={{ cursor: 'pointer' }}
                     >
@@ -542,7 +547,8 @@ export function OneLakeItemExplorerComponent(props: OneLakeItemExplorerComponent
                     onCreateShortcutCallback={createShortcutCallback}
                     workloadClient={props.workloadClient}
                     workspaceId={selectedItem?.workspaceId}
-                    itemId={selectedItem?.id} />
+                    itemId={selectedItem?.id}
+                    mode={props.config.mode} />
                 </Tree>
               </TreeItem>
             </div>

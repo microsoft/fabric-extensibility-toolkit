@@ -14,7 +14,7 @@ interface TreeNode {
 type FolderMap = Map<string, TreeNode>;
 
 export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
-    const {allFilesInItem: allFilesInOneLake, selectedFilePath, onSelectFileCallback, onDeleteFileCallback, onDeleteFolderCallback, onCreateFolderCallback, onCreateShortcutCallback, workloadClient, workspaceId, itemId} = props;
+    const {allFilesInItem: allFilesInOneLake, selectedFilePath, onSelectFileCallback, onDeleteFileCallback, onDeleteFolderCallback, onCreateFolderCallback, onCreateShortcutCallback, workloadClient, workspaceId, itemId, mode} = props;
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [expandedShortcuts, setExpandedShortcuts] = useState<Set<string>>(new Set());
     const [shortcutContents, setShortcutContents] = useState<Map<string, FileMetadata[]>>(new Map());
@@ -278,10 +278,12 @@ export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
                                         onSelectFileCallback(metadata);
                                     }}
                                     onContextMenu={(e) => {
-                                        // Right click - show context menu
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        setOpenMenu(metadata.path);
+                                        // Right click - show context menu (only in edit mode)
+                                        if (mode === "edit") {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            setOpenMenu(metadata.path);
+                                        }
                                     }}
                                 >
                                     {metadata.name}
@@ -336,21 +338,26 @@ export function FileTree(props: OneLakeItemExplorerFilesTreeProps) {
                 // Show context menu option when Files folder is empty
                 (onCreateFolderCallback || onCreateShortcutCallback) && (
                     <div 
-                        style={{ padding: "8px", color: "#666", fontStyle: "italic" }}
+                        style={{ 
+                            padding: "8px", 
+                            color: mode === "edit" ? "#666" : "#999", 
+                            fontStyle: "italic",
+                            cursor: mode === "edit" ? "pointer" : "default"
+                        }}
                         onContextMenu={(e) => {
                             e.preventDefault();
-                            if (onCreateFolderCallback) {
+                            if (mode === "edit" && onCreateFolderCallback) {
                                 handleCreateFolder(undefined);
                             }
                         }}
                         onClick={(e) => {
                             e.stopPropagation();
-                            if (onCreateFolderCallback) {
+                            if (mode === "edit" && onCreateFolderCallback) {
                                 handleCreateFolder(undefined);
                             }
                         }}
                     >
-                        Right-click or click here to create a folder or shortcut
+                        {mode === "edit" ? "Right-click or click here to create a folder or shortcut" : "Files folder is empty"}
                     </div>
                 )
             )}
