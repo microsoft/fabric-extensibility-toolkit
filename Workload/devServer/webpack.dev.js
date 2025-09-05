@@ -13,7 +13,7 @@ process.env.DEV_AAD_CONFIG_BE_AUDIENCE= ""
 process.env.DEV_AAD_CONFIG_BE_REDIRECT_URI=process.env.BACKEND_URL;
 
 
-console.log('********************    Development Variables    *******************');
+console.log('********************   Development Configuration   *******************');
 console.log('process.env.DEV_AAD_CONFIG_FE_APPID: ' + process.env.DEV_AAD_CONFIG_FE_APPID);
 console.log('process.env.DEV_AAD_CONFIG_BE_APPID: ' + process.env.DEV_AAD_CONFIG_BE_APPID);
 console.log('process.env.DEV_AAD_CONFIG_BE_AUDIENCE: ' + process.env.DEV_AAD_CONFIG_BE_AUDIENCE);
@@ -45,8 +45,7 @@ module.exports = merge(baseConfig, {
         },
         setupMiddlewares: function (middlewares, devServer) {
             console.log('*********************************************************************');
-            console.log('****               Server is listening on port 60006             ****');
-            console.log('****   You can now override the Fabric manifest with your own.   ****');
+            console.log('****             DevServer is listening on port 60006            ****');
             console.log('*********************************************************************');
 
             // Add JSON body parsing middleware for our APIs
