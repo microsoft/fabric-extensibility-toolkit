@@ -1,10 +1,11 @@
 import { ItemReference } from "../controller/ItemCRUDController";
-import { OneLakeClient } from "./OneLakeClient";
+import { OneLakeStorageContainerMetadata } from "./FabricPlatformTypes";
+import { OneLakeStorageClient } from "./OneLakeStorageClient";
 
-export class OneLakeClientItemWrapper {
-    private client: OneLakeClient;
+export class OneLakeStorageClientItemWrapper {
+    private client: OneLakeStorageClient;
     private item: ItemReference;
-    constructor(client: OneLakeClient, item: ItemReference){
+    constructor(client: OneLakeStorageClient, item: ItemReference){
         this.client = client;
         this.item = item;
     }
@@ -78,12 +79,28 @@ export class OneLakeClientItemWrapper {
     }
 
     /**
+     * Get metadata for a specific directory in this item's OneLake storage
+     * @param directory The directory path relative to the item
+     * @param recursive Whether to include subdirectories
+     * @param shortcutMetadata Whether to include shortcut metadata
+     * @returns Promise<OneLakeStorageContainerMetadata>
+     */
+    async getPathMetadata(
+        directory: string,
+        recursive = false,
+        shortcutMetadata = true,
+      ): Promise<OneLakeStorageContainerMetadata> {
+        const path = `${this.item.id}/${directory}`;
+        return this.client.getPathMetadata(this.item.workspaceId, path, recursive, shortcutMetadata);
+      }
+
+    /**
      * Get the full OneLake path for a file in this item
      * @param filePath The file path relative to the item
      * @returns The full OneLake path
      */
     getPath(filePath: string): string {
-        return OneLakeClient.getPath(this.item.workspaceId, this.item.id, filePath);
+        return OneLakeStorageClient.getPath(this.item.workspaceId, this.item.id, filePath);
     }
 
     /**
@@ -92,7 +109,7 @@ export class OneLakeClientItemWrapper {
      * @returns The OneLake file path
      */
     getFilePath(fileName: string): string {
-        return OneLakeClient.getFilePath(this.item.workspaceId, this.item.id, fileName);
+        return OneLakeStorageClient.getFilePath(this.item.workspaceId, this.item.id, fileName);
     }
 
     /**
@@ -101,6 +118,6 @@ export class OneLakeClientItemWrapper {
      * @returns The OneLake table path
      */
     getTablePath(tableName: string): string {
-        return OneLakeClient.getTablePath(this.item.workspaceId, this.item.id, tableName);
+        return OneLakeStorageClient.getTablePath(this.item.workspaceId, this.item.id, tableName);
     }
 }

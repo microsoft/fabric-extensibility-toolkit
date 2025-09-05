@@ -2,8 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Divider, Switch, Button } from "@fluentui/react-components";
 import { PanelRightExpand20Regular } from "@fluentui/react-icons";
-import { RootState } from "../ClientSDKPlaygroundStore/Store";
-import { setApiPanelIsLightDismiss } from "../ClientSDKPlaygroundStore/apiPanelSettingsSlice";
+import { RootState } from "./Store/Store";
+import { setApiPanelIsLightDismiss } from "./Store/apiPanelSettingsSlice";
 import {
     themeToView,
     callThemeGet,

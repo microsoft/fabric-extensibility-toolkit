@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Combobox, Input, Option, Card } from '@fluentui/react-components';
-import { RootState } from "../ClientSDKPlaygroundStore/Store";
+import { RootState } from "./Store/Store";
 import {
     setServerUrl,
     setServerResponse,
     setHttpMethod,
     setRequestBody
-} from "../ClientSDKPlaygroundStore/apiAuthenticationSlice";
+} from "./Store/apiAuthenticationSlice";
 import { PageProps } from '../../App';
 import "../../styles.scss";
 

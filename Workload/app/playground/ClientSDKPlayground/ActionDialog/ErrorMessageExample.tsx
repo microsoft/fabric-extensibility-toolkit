@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Field, Input, Button } from '@fluentui/react-components';
 import { PanelRightExpand20Regular } from '@fluentui/react-icons';
-import { RootState } from '../../ClientSDKPlaygroundStore/Store';
+import { RootState } from '../Store/Store';
 import {
     updateApiErrorTitle,
     updateApiErrorStatusCode,
@@ -11,7 +11,7 @@ import {
     updateApiErrorFailureCode,
     updateApiErrorRequestId,
     updateApiErrorStackTrace,
-} from '../../ClientSDKPlaygroundStore/actionDialogSlice';
+} from '../Store/actionDialogSlice';
 import {
     callErrorHandlingOpenDialog,
     callErrorHandlingRequestFailure,

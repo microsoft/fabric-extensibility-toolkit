@@ -283,12 +283,34 @@ export interface OperationState {
 
 export type LongRunningOperationStatus = 'Undefined' | 'NotStarted' | 'Running' | 'Succeeded' | 'Failed';
 
+export interface OneLakeStoragePathMetadata {
+    contentLength: number;
+    lastModified: string;
+    creationTime: string;
+    permissions: string;
+    name: string;
+    isShortcut?: boolean;
+    accountType?: string;
+    isDirectory?: boolean;
+}
+
+export interface OneLakeStorageContainerMetadata {
+  paths: OneLakeStoragePathMetadata[];
+}
+
 // OneLake Shortcuts types
 export interface Shortcut {
   path: string;
   name: string;
   target: Target;
   transform?: Transform;
+}
+
+export enum ShortcutConflictPolicy {
+  Abort = "Abort",
+  GenerateUniqueName = "GenerateUniqueName",
+  CreateOrOverwrite = "CreateOrOverwrite",
+  OverwriteOnly = "OverwriteOnly"
 }
 
 export interface CreateShortcutRequest {

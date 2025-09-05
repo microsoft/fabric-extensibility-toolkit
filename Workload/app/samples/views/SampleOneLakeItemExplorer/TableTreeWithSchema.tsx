@@ -5,7 +5,7 @@ import { Tree, TreeItem, TreeItemLayout, Tooltip } from "@fluentui/react-compone
 
 
 export function TableTreeWithSchema(props: OneLakeItemExplorerTablesTreeProps) {
-    const {allTablesInItem: allTablesInOneLake, onSelectTableCallback} = props;
+    const {allTablesInItem: allTablesInOneLake, selectedTablePath, onSelectTableCallback} = props;
     // group the tables by schema
     const tablesInOneLakeGroupedBySchema: { [key: string]: TableMetadata[] } =
     allTablesInOneLake.reduce((acc: { [key: string]: TableMetadata[] }, table) => {
@@ -39,7 +39,7 @@ export function TableTreeWithSchema(props: OneLakeItemExplorerTablesTreeProps) {
                                     relationship='label'
                                     content={table.name}>
                                         <TreeItemLayout
-                                            className={(table.isSelected ? "selected" : "")}
+                                            className={(selectedTablePath === table.path ? "selected" : "")}
                                             iconBefore={<Table20Regular />}>
                                             {table.name}
                                         </TreeItemLayout>

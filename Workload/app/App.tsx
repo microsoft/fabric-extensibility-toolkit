@@ -1,6 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { ClientSDKStore } from "./playground/ClientSDKPlaygroundStore/Store";
+import { ClientSDKStore } from "./playground/ClientSDKPlayground/Store/Store";
 import { Route, Router, Switch } from "react-router-dom";
 import { History } from "history";
 import { WorkloadClientAPI } from "@ms-fabric/workload-client";

@@ -9,13 +9,13 @@ import {
     Option,
 } from '@fluentui/react-components';
 import { PanelRightExpand20Regular } from '@fluentui/react-icons';
-import { RootState } from "../../ClientSDKPlaygroundStore/Store";
+import { RootState } from "../Store/Store";
 import {
     updateMessageBoxTitle,
     updateMessageBoxMessage,
     updateMessageBoxLink,
     updateButtonCount
-} from "../../ClientSDKPlaygroundStore/actionDialogSlice";
+} from "../Store/actionDialogSlice";
 import { callDialogOpenMsgBox } from "../../../controller/DialogController";
 import "../../../styles.scss";
 import { TabContentProps } from '../ClientSDKPlaygroundModel';

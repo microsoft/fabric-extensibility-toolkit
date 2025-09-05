@@ -2,12 +2,13 @@ import {
     createWorkloadClient,
     InitParams,
     ItemLikeV2,
+    ItemSettingContext,
     NotificationToastDuration,
     NotificationType
 } from '@ms-fabric/workload-client';
-
 import { callPageOpen } from './controller/PageController';
 import { callNotificationOpen } from './controller/NotificationController';
+import { t } from 'i18next';
 
 /*
 * Represents a fabric item with additional metadata and a payload.
@@ -71,29 +72,33 @@ export async function initialize(params: InitParams) {
                 console.log(`Get item settings action received with data:`, data);
                 console.log("####################################################");
 
+                const { item: { objectId } } = data as ItemSettingContext;
+                const itemTypeName = createdItem.itemType.substring(createdItem.itemType.lastIndexOf('.') + 1);
+
                 return [
                     {
                         name: 'about',
-                        displayName: 'Custom About',
+                        displayName: t('Item_About_Label'),
                         workloadSettingLocation: {
                             workloadName: sampleWorkloadName,
-                            route: `HelloWorldItem-about-page`,
+                            route: `/${itemTypeName}Item-about-page/${objectId}`,
                         },
                         workloadIframeHeight: '1000px'
                     },
                     {
                         name: 'itemCustomSettings',
-                        displayName: 'Item custom settings',
+                        displayName: t('Item_Settings_Label'),
                         icon: {
                             name: 'apps_20_regular',
                         },
                         workloadSettingLocation: {
                             workloadName: sampleWorkloadName,
-                            route: `HelloWorldItem-settings-page`,
+                            route: `/${itemTypeName}Item-settings-page/${objectId}`,
                         },
                         workloadIframeHeight: '1000px'
                     }
                 ];
+
 
             }
             case 'open.ClientSDKPlaygroundPage':

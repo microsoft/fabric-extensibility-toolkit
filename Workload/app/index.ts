@@ -16,12 +16,13 @@ function printFormattedAADErrorMessage(hashMessage: string): void {
     document.documentElement.innerHTML = "There was a problem with the consent, open browser debug console for more details";
     for (const key in formattedMessage) {
         if (Object.prototype.hasOwnProperty.call(formattedMessage, key)) {
-            console.log(`${key}: ${formattedMessage[key]}`);
+            console.error(`${key}: ${formattedMessage[key]}`);
         }
     }
 }
 
-/** This is used for authentication API as a redirect URI.
+/** 
+ * This is used for authentication API as a redirect URI.
  * Delete this code if you do not plan on using authentication API.
  * You can change the redirectUriPath to whatever suits you.
  */
@@ -39,7 +40,6 @@ if (url.pathname?.startsWith(redirectUriPath)) {
         } else {
             window.close();
         }
-
     } else {
         // close the window in case there are no errors
         window.close();
@@ -48,7 +48,6 @@ if (url.pathname?.startsWith(redirectUriPath)) {
 
 console.log('****Runtime: Environment Variables****');
 console.log('process.env.WORKLOAD_NAME: ' + process.env.WORKLOAD_NAME);
-console.log('process.env.DEFAULT_ITEM_NAME: ' + process.env.DEFAULT_ITEM_NAME);
 console.log('**************************************');
 
 console.log('🚀 Starting bootstrap process...');

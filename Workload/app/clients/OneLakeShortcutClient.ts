@@ -4,7 +4,8 @@ import { SCOPE_PAIRS } from "./FabricPlatformScopes";
 import {
   Shortcut,
   CreateShortcutRequest,
-  PaginatedResponse
+  PaginatedResponse,
+  ShortcutConflictPolicy
 } from "./FabricPlatformTypes";
 
 /**
@@ -79,11 +80,17 @@ export class OneLakeShortcutClient extends FabricPlatformClient {
   async createShortcut(
     workspaceId: string,
     itemId: string,
-    request: CreateShortcutRequest
+    request: CreateShortcutRequest,
+    conflictPolicy?: ShortcutConflictPolicy
   ): Promise<Shortcut> {
+    let url = `/workspaces/${workspaceId}/items/${itemId}/shortcuts`;
+    if (conflictPolicy) {
+      const params = new URLSearchParams({ conflictPolicy });
+      url += `?${params.toString()}`;
+    }
     return this.post<Shortcut>(
-      `/workspaces/${workspaceId}/items/${itemId}/shortcuts`,
-      request
+      url,
+      { ...request }
     );
   }
 
