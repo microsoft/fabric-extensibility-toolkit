@@ -55,7 +55,10 @@ export function DataPlayground(props: TabContentProps) {
           />
         )}
         {selectedTab === 'onelakeShortcutCreator' && (
-          <OneLakeShortcutCreator workloadClient={workloadClient} />
+          <OneLakeShortcutCreator workloadClient={workloadClient}
+            allowedSourceItemTypes={["Lakehouse", ...getConfiguredWorkloadItemTypes()]}
+            allowedTargetItemTypes={["Lakehouse", ...getConfiguredWorkloadItemTypes()]}
+          />
         )}
         {selectedTab === 'eventhouseExplorer' && (
           <EventhouseExplorerComponent workloadClient={workloadClient} />

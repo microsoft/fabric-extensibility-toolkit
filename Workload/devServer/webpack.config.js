@@ -17,6 +17,8 @@ process.env.DEV_AAD_CONFIG_BE_REDIRECT_URI=process.env.BACKEND_URL;
 console.log('********************     Environment Variables    *******************');
 console.log('process.env.WORKLOAD_NAME: ' + process.env.WORKLOAD_NAME);
 console.log('process.env.ITEM_NAMES: ' + process.env.ITEM_NAMES);
+console.log('process.env.WORKLOAD_VERSION: ' + process.env.WORKLOAD_VERSION);
+console.log('process.env.LOG_LEVEL: ' + process.env.LOG_LEVEL);
 console.log('process.env.DEV_AAD_CONFIG_FE_APPID: ' + process.env.DEV_AAD_CONFIG_FE_APPID);
 console.log('*********************************************************************');
 
@@ -34,8 +36,9 @@ module.exports = {
         new CleanWebpackPlugin(),
         new Webpack.DefinePlugin({
             "process.env.WORKLOAD_NAME": JSON.stringify(process.env.WORKLOAD_NAME),
-            "process.env.DEFAULT_ITEM_NAME": JSON.stringify(process.env.DEFAULT_ITEM_NAME),
-            "process.env.DEV_WORKSPACE_ID": JSON.stringify(process.env.DEV_WORKSPACE_ID),
+            "process.env.ITEM_NAMES": JSON.stringify(process.env.ITEM_NAMES),
+            "process.env.WORKLOAD_VERSION": JSON.stringify(process.env.WORKLOAD_VERSION),
+            "process.env.LOG_LEVEL": JSON.stringify(process.env.LOG_LEVEL),
             "NODE_ENV": JSON.stringify(process.env.NODE_ENV || "development")
         }),
         new HtmlWebpackPlugin({
