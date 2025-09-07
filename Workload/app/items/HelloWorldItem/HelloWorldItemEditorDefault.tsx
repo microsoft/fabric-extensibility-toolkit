@@ -126,7 +126,7 @@ export function HelloWorldItemEditorDefault({
                 <Card className="resource-card">
                   <div className="card-header-section">
                     <div className="card-image">
-                      <img src="/assets/items/HelloWorld/card_1.svg" alt="Getting started" />
+                      <img src="/assets/items/HelloWorldItem/card_1.svg" alt="Getting started" />
                     </div>
                     <CardHeader
                       header={<Text weight="semibold">{t('GettingStarted_Card1_Title', 'Getting to know your workload')}</Text>}
@@ -154,7 +154,7 @@ export function HelloWorldItemEditorDefault({
                 <Card className="resource-card">
                   <div className="card-header-section">
                     <div className="card-image">
-                      <img src="/assets/items/HelloWorld/card_2.svg" alt="Playground" />
+                      <img src="/assets/items/HelloWorldItem/card_2.svg" alt="Playground" />
                     </div>
                     <CardHeader
                       header={<Text weight="semibold">{t('GettingStarted_Card2_Title', 'Explore samples and playground')}</Text>}
@@ -182,7 +182,7 @@ export function HelloWorldItemEditorDefault({
                 <Card className="resource-card">
                   <div className="card-header-section">
                     <div className="card-image">
-                      <img src="/assets/items/HelloWorld/card_3.svg" alt="Fabric UX" />
+                      <img src="/assets/items/HelloWorldItem/card_3.svg" alt="Fabric UX" />
                     </div>
                     <CardHeader
                       header={<Text weight="semibold">{t('GettingStarted_Card3_Title', 'Use the Fabric UX system')}</Text>}

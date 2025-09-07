@@ -37,7 +37,7 @@ export function HelloWorldItemEditorEmpty({
       <Stack className="empty-state-content" tokens={{ childrenGap: 24 }} horizontalAlign="center">
         <Stack.Item>
           <img
-            src="/assets/items/HelloWorld/EditorEmpty.svg"
+            src="/assets/items/HelloWorldItem/EditorEmpty.svg"
             alt="Empty state illustration"
             className="empty-state-image"
           />
