@@ -5,13 +5,13 @@ import { useTranslation } from "react-i18next";
 import { PageProps, ContextProps } from "../../App";
 import { ItemWithDefinition, getWorkloadItem, callGetItem, saveItemDefinition } from "../../controller/ItemCRUDController";
 import { callOpenSettings } from "../../controller/SettingsController";
+import { callNotificationOpen } from "../../controller/NotificationController";
 import { ItemEditorLoadingProgressBar } from "../../controls/ItemEditorLoadingProgressBar";
 import { HelloWorldItemDefinition, VIEW_TYPES, CurrentView } from "./HelloWorldItemModel";
 import { HelloWorldItemEditorEmpty } from "./HelloWorldItemEditorEmpty";
 import { HelloWorldItemEditorDefault } from "./HelloWorldItemEditorDefault";
 import "../../styles.scss";
 import { HelloWorldItemRibbon } from "./HelloWorldItemRibbon";
-import { callNotificationOpen } from "../../controller/NotificationController";
 
 
 export function HelloWorldItemEditor(props: PageProps) {
