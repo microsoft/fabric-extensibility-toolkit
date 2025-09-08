@@ -478,31 +478,11 @@ export interface ErrorDetail {
   target?: string;
 }
 
-// Long Running Operations types
-export interface LongRunningOperation {
-  id: string;
-  type: string;
-  status: OperationStatus;
-  createdDateTime: string;
-  lastUpdatedDateTime: string;
-  percentComplete?: number;
-  error?: OperationError;
-  result?: any;
+export interface AsyncOperationIndicator {
+  operationId: string;
+  retryAfter?: number;
 }
 
-export type OperationStatus = 'NotStarted' | 'Running' | 'Succeeded' | 'Failed' | 'Cancelled';
-
-export interface OperationError {
-  code: string;
-  message: string;
-  details?: OperationErrorDetail[];
-}
-
-export interface OperationErrorDetail {
-  code: string;
-  message: string;
-  target?: string;
-}
 
 // Enum for batch job states
 export enum BatchState {
