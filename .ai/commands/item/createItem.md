@@ -515,7 +515,26 @@ Create an icon file: `Workload/Manifest/assets/images/[ItemName]Item-icon.png`
 - **Format**: PNG with transparency
 - **Style**: Follow Fabric design guidelines
 
-#### 8.2: Add Localization Strings
+#### 8.2: Create Editor Empty State Asset
+
+Create an empty state illustration: `Workload/app/assets/items/[ItemName]Item/EditorEmpty.svg`
+
+**Folder Structure**:
+```
+Workload/app/assets/items/
+└── [ItemName]Item/
+    └── EditorEmpty.svg
+```
+
+**Requirements**:
+- **Format**: SVG (vector format for scalability)
+- **Size**: Optimized for display in empty state components
+- **Style**: Follow Fabric design system guidelines
+- **Content**: Visual representation that communicates the item's purpose when empty
+
+**Usage**: This asset is referenced in the `[ItemName]ItemEditorEmpty.tsx` component to provide visual guidance when the item has no content yet.
+
+#### 8.3: Add Localization Strings
 
 Update `Workload/Manifest/assets/locales/en-US/translations.json` **following the HelloWorld pattern**:
 
@@ -549,7 +568,7 @@ Update `Workload/Manifest/assets/locales/en-US/translations.json` **following th
 - Add corresponding entries in other locale files (e.g., `es/translations.json`)
 - Maintain the same keys with translated values
 
-#### 8.3: Update Product.json (if needed)
+#### 8.4: Update Product.json (if needed)
 
 If your item requires specific workload-level configuration, update `Workload/Manifest/Product.json` to include references to your new item type.
 
@@ -674,6 +693,7 @@ When creating a new item, ensure all these components are created:
 
 **Asset Files**:
 - [ ] `Workload/Manifest/assets/images/[ItemName]Item-icon.png` - Item icon
+- [ ] `Workload/app/assets/items/[ItemName]Item/EditorEmpty.svg` - Empty state illustration
 - [ ] Localization entries in `Workload/Manifest/assets/locales/*/translations.json`
 
 **Code Integration**:
