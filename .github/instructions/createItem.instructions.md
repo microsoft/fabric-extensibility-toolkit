@@ -364,11 +364,91 @@ Update `Workload/Manifest/assets/locales/en-US/translations.json`:
 - Add corresponding entries in other locale files (e.g., `es/translations.json`)
 - Maintain the same keys with translated values
 
-#### 8.3: Update Product.json (if needed)
+#### 8.3: 🚨 CRITICAL: Update Product.json Configuration
 
-If your item requires specific workload-level configuration, update `Workload/Manifest/Product.json` to include references to your new item type.
+**MANDATORY STEP - DO NOT SKIP**: Update `Workload/Manifest/Product.json` to register your new item in Fabric's create experience. This step is REQUIRED for your item to appear in create dialogs.
 
-**GitHub Copilot Enhancement**: Recognizes when Product.json updates are needed and suggests configuration patterns.
+**Step 8.3.1: Add to createExperience.cards array**:
+```json
+{
+  "createExperience": {
+    "cards": [
+      {
+        "title": "HelloWorldItem_DisplayName", // ← Existing item
+        "itemType": "HelloWorld"
+      },
+      {
+        "title": "[ItemName]Item_DisplayName",           // ← ADD THIS
+        "description": "[ItemName]Item_Description",     // ← ADD THIS  
+        "icon": {
+          "name": "assets/images/[ItemName]Item-icon.png"
+        },
+        "icon_small": {
+          "name": "assets/images/[ItemName]Item-icon.png"
+        },
+        "availableIn": [
+          "home",
+          "create-hub", 
+          "workspace-plus-new",
+          "workspace-plus-new-teams"
+        ],
+        "itemType": "[ItemName]",                        // ← CRITICAL: Must match JSON manifest name
+        "createItemDialogConfig": {
+          "onCreationFailure": { "action": "item.onCreationFailure" },
+          "onCreationSuccess": { "action": "item.onCreationSuccess" }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Step 8.3.2: Add to recommendedItemTypes array**:
+```json
+{
+  "homePage": {
+    "recommendedItemTypes": [
+      "HelloWorld",        // ← Existing item
+      "[ItemName]"         // ← ADD THIS - Must match itemType above
+    ]
+  }
+}
+```
+
+**⚠️ CRITICAL NOTES**:
+- **createExperience.cards**: Controls what appears in "Create new item" dialogs
+- **recommendedItemTypes**: Controls what's featured on the workload home page  
+- **itemType field**: Must EXACTLY match the "name" field in your JSON manifest
+- **Localization**: Use translation keys (e.g., `[ItemName]Item_DisplayName`) not hardcoded text
+- **availableIn**: Controls where the create button appears in Fabric UI
+
+**❌ WRONG - Missing createExperience**:
+```json
+// DON'T DO THIS - Item won't appear in create dialogs
+{
+  "homePage": {
+    "recommendedItemTypes": ["HelloWorld", "MyItem"]  // ← Only this, missing createExperience
+  }
+}
+```
+
+**✅ CORRECT - Complete configuration**:
+```json
+// DO THIS - Item will appear everywhere it should
+{
+  "createExperience": {
+    "cards": [/* ... include your item card ... */]     // ← REQUIRED
+  },
+  "homePage": {
+    "recommendedItemTypes": ["HelloWorld", "MyItem"]    // ← ALSO REQUIRED
+  }
+}
+```
+
+**GitHub Copilot Enhancement**: 
+- Auto-detects when Product.json updates are missing
+- Suggests complete createExperience configuration patterns
+- Validates itemType consistency across manifest files
 
 ### Step 9: 🚨 CRITICAL: Update Environment Variables
 
