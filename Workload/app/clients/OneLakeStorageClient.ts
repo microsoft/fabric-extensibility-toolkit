@@ -98,9 +98,18 @@ export class OneLakeStorageClient extends FabricPlatformClient {
         headers: { Authorization: `Bearer ${accessToken.token}` }
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const content = await response.text();
+      const arrayBuffer = await response.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // Convert binary data to base64
+      let binaryString = '';
+      for (let i = 0; i < uint8Array.length; i++) {
+        binaryString += String.fromCharCode(uint8Array[i]);
+      }
+      const base64Content = btoa(binaryString);
+      
       console.log(`readFileAsBase64 succeeded for filePath: ${filePath}`);
-      return Buffer.from(content, "base64").toString("utf8");
+      return base64Content;
     } catch (ex: any) {
       console.error(`readFileAsBase64 failed for filePath: ${filePath}. Error: ${ex.message}`);
       return "";
