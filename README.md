@@ -1,7 +1,7 @@
 
 # Microsoft Fabric Extensibility Toolkit
 
-Welcome to the Microsoft Fabric Extensibility Toolkit. This repository contains everything you need to start creating a new Extension for Fabric. Beside the source code itself with a HelloWorld Sample it also contains a comprehensive guide that covers everything you need to know to create custom Fabric items for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this Github repository. Happy developing!
+Welcome to the Microsoft Fabric Extensibility Toolkit. This repository contains everything you need to start creating a new Extension for Fabric. Besides the source code itself with a HelloWorld Sample it also contains a comprehensive guide that covers everything you need to know to create custom Fabric items for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this GitHub repository. Happy developing!
 
 [!NOTE]
 The Microsoft Fabric Extensibility Toolkit is an evolution of the Workload Development Kit. If you are starting from scratch we encourage customers and partners to start building using the new Extensibility Toolkit which is focusing on easy fast development and enables Fabric Fundamentals out of the box.
