@@ -7,11 +7,11 @@ import {
     Input,
 } from "@fluentui/react-components";
 import { AlertOn24Regular } from "@fluentui/react-icons";
-import { RootState } from "../ClientSDKPlaygroundStore/Store";
+import { RootState } from "./Store/Store";
 import {
     setTitle,
     setMessage
-} from "../ClientSDKPlaygroundStore/notificationSlice";
+} from "./Store/notificationSlice";
 import {
     callNotificationOpen,
     callNotificationHide,

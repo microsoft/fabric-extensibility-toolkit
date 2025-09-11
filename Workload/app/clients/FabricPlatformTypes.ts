@@ -283,12 +283,34 @@ export interface OperationState {
 
 export type LongRunningOperationStatus = 'Undefined' | 'NotStarted' | 'Running' | 'Succeeded' | 'Failed';
 
+export interface OneLakeStoragePathMetadata {
+    contentLength: number;
+    lastModified: string;
+    creationTime: string;
+    permissions: string;
+    name: string;
+    isShortcut?: boolean;
+    accountType?: string;
+    isDirectory?: boolean;
+}
+
+export interface OneLakeStorageContainerMetadata {
+  paths: OneLakeStoragePathMetadata[];
+}
+
 // OneLake Shortcuts types
 export interface Shortcut {
   path: string;
   name: string;
   target: Target;
   transform?: Transform;
+}
+
+export enum ShortcutConflictPolicy {
+  Abort = "Abort",
+  GenerateUniqueName = "GenerateUniqueName",
+  CreateOrOverwrite = "CreateOrOverwrite",
+  OverwriteOnly = "OverwriteOnly"
 }
 
 export interface CreateShortcutRequest {
@@ -456,31 +478,11 @@ export interface ErrorDetail {
   target?: string;
 }
 
-// Long Running Operations types
-export interface LongRunningOperation {
-  id: string;
-  type: string;
-  status: OperationStatus;
-  createdDateTime: string;
-  lastUpdatedDateTime: string;
-  percentComplete?: number;
-  error?: OperationError;
-  result?: any;
+export interface AsyncOperationIndicator {
+  operationId: string;
+  retryAfter?: number;
 }
 
-export type OperationStatus = 'NotStarted' | 'Running' | 'Succeeded' | 'Failed' | 'Cancelled';
-
-export interface OperationError {
-  code: string;
-  message: string;
-  details?: OperationErrorDetail[];
-}
-
-export interface OperationErrorDetail {
-  code: string;
-  message: string;
-  target?: string;
-}
 
 // Enum for batch job states
 export enum BatchState {

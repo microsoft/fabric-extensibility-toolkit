@@ -515,7 +515,26 @@ Create an icon file: `Workload/Manifest/assets/images/[ItemName]Item-icon.png`
 - **Format**: PNG with transparency
 - **Style**: Follow Fabric design guidelines
 
-#### 8.2: Add Localization Strings
+#### 8.2: Create Editor Empty State Asset
+
+Create an empty state illustration: `Workload/app/assets/items/[ItemName]Item/EditorEmpty.svg`
+
+**Folder Structure**:
+```
+Workload/app/assets/items/
+└── [ItemName]Item/
+    └── EditorEmpty.svg
+```
+
+**Requirements**:
+- **Format**: SVG (vector format for scalability)
+- **Size**: Optimized for display in empty state components
+- **Style**: Follow Fabric design system guidelines
+- **Content**: Visual representation that communicates the item's purpose when empty
+
+**Usage**: This asset is referenced in the `[ItemName]ItemEditorEmpty.tsx` component to provide visual guidance when the item has no content yet.
+
+#### 8.3: Add Localization Strings
 
 Update `Workload/Manifest/assets/locales/en-US/translations.json` **following the HelloWorld pattern**:
 
@@ -549,11 +568,127 @@ Update `Workload/Manifest/assets/locales/en-US/translations.json` **following th
 - Add corresponding entries in other locale files (e.g., `es/translations.json`)
 - Maintain the same keys with translated values
 
-#### 8.3: Update Product.json (if needed)
+#### 8.4: 🚨 CRITICAL - Update Product.json Configuration
 
-If your item requires specific workload-level configuration, update `Workload/Manifest/Product.json` to include references to your new item type.
+**MANDATORY STEP - DO NOT SKIP**: Update `Workload/Manifest/Product.json` to register your new item in Fabric's create experience. **This step is REQUIRED for your item to appear in create dialogs.**
 
-**Note**: Remember that Product.json is a template and may use placeholders that get replaced during manifest generation.
+**Step 8.4.1 - Add to createExperience.cards array**:
+
+The `createExperience.cards` array controls what items appear in Fabric's "Create new item" dialogs. You MUST add your item here.
+
+```json
+{
+  "createExperience": {
+    "description": "Workload_Description",
+    "cards": [
+      {
+        "title": "HelloWorldItem_DisplayName",
+        "description": "HelloWorldItem_Description", 
+        "itemType": "HelloWorld"
+        // ... existing HelloWorld configuration
+      },
+      {
+        "title": "[ItemName]Item_DisplayName",           // ← ADD THIS BLOCK
+        "description": "[ItemName]Item_Description",     // ← Use localization key
+        "icon": {
+          "name": "assets/images/[ItemName]Item-icon.png"
+        },
+        "icon_small": {
+          "name": "assets/images/[ItemName]Item-icon.png"  
+        },
+        "availableIn": [
+          "home",
+          "create-hub",
+          "workspace-plus-new", 
+          "workspace-plus-new-teams"
+        ],
+        "itemType": "[ItemName]",                        // ← CRITICAL: Must match JSON manifest "name" field
+        "createItemDialogConfig": {
+          "onCreationFailure": { "action": "item.onCreationFailure" },
+          "onCreationSuccess": { "action": "item.onCreationSuccess" }
+        }
+      }
+    ]
+  }
+}
+```
+
+**Step 8.4.2 - Add to recommendedItemTypes array**:
+
+The `recommendedItemTypes` array controls which items appear on the workload home page as featured/recommended items.
+
+```json
+{
+  "homePage": {
+    "recommendedItemTypes": [
+      "HelloWorld",        // ← Existing item
+      "[ItemName]"         // ← ADD THIS - Must match itemType in createExperience
+    ]
+  }
+}
+```
+
+**⚠️ CRITICAL Requirements**:
+
+- **itemType Consistency**: The `itemType` field in `createExperience.cards` MUST exactly match:
+  - The `name` field in your `[ItemName]Item.json` manifest
+  - The entry in `recommendedItemTypes` array
+- **Localization Keys**: Use translation keys (e.g., `[ItemName]Item_DisplayName`) not hardcoded strings
+- **Icon Files**: Ensure icon files exist in `assets/images/` directory
+- **Both Arrays Required**: Items need to be in BOTH `createExperience.cards` AND `recommendedItemTypes`
+
+**❌ Common Mistakes - DO NOT DO THIS**:
+```json
+// WRONG: Missing createExperience.cards entry
+{
+  "homePage": {
+    "recommendedItemTypes": ["HelloWorld", "MyItem"]  // ← Only this, item won't appear in create dialogs
+  }
+}
+
+// WRONG: Hardcoded strings instead of localization keys  
+{
+  "title": "My Custom Item",              // ← Should be "[ItemName]Item_DisplayName"
+  "description": "Does custom things"     // ← Should be "[ItemName]Item_Description"
+}
+
+// WRONG: itemType mismatch
+{
+  "createExperience": {
+    "cards": [{ "itemType": "MyCustomItem" }]     // ← Different from manifest "name"
+  },
+  "homePage": {
+    "recommendedItemTypes": ["MyItem"]            // ← Different from createExperience
+  }
+}
+```
+
+**✅ Correct Pattern - ALWAYS DO THIS**:
+```json
+{
+  "createExperience": {
+    "cards": [
+      {
+        "title": "[ItemName]Item_DisplayName",      // ← Localization key
+        "description": "[ItemName]Item_Description", // ← Localization key
+        "itemType": "[ItemName]",                   // ← Matches manifest "name"
+        // ... complete card configuration
+      }
+    ]
+  },
+  "homePage": {
+    "recommendedItemTypes": ["[ItemName]"]         // ← Matches itemType above
+  }
+}
+```
+
+**Validation Checklist**:
+- [ ] Item added to `createExperience.cards` array
+- [ ] Item added to `recommendedItemTypes` array  
+- [ ] `itemType` matches JSON manifest `name` field exactly
+- [ ] All text uses localization keys (no hardcoded strings)
+- [ ] Icon files exist in assets directory
+- [ ] `availableIn` array includes appropriate Fabric UI locations
 
 ### Step 9: 🚨 CRITICAL - Update Environment Variables
 
@@ -670,10 +805,14 @@ When creating a new item, ensure all these components are created:
 - [ ] `[ItemName]Item.json` - JSON manifest with editor path and metadata
 
 **product Configuration File** (in `Workload/Manifest/Product.json`):
-- [ ] Update the file to include a createExperience section for the new item
+- [ ] 🚨 **CRITICAL**: Add item to `createExperience.cards` array (item won't appear in create dialogs without this)
+- [ ] 🚨 **CRITICAL**: Add item to `recommendedItemTypes` array (item won't appear on home page without this)  
+- [ ] Verify `itemType` field matches JSON manifest `name` field exactly
+- [ ] Use localization keys for title/description, not hardcoded strings
 
 **Asset Files**:
 - [ ] `Workload/Manifest/assets/images/[ItemName]Item-icon.png` - Item icon
+- [ ] `Workload/app/assets/items/[ItemName]Item/EditorEmpty.svg` - Empty state illustration
 - [ ] Localization entries in `Workload/Manifest/assets/locales/*/translations.json`
 
 **Code Integration**:
@@ -692,8 +831,11 @@ When creating a new item, ensure all these components are created:
 ### Troubleshooting
 
 **Common Issues**:
+- **🚨 MOST COMMON**: Item doesn't appear in create dialogs → Check `createExperience.cards` in Product.json
+- **Item not on home page**: Missing from `recommendedItemTypes` array in Product.json
 - **Route not found**: Ensure route path matches manifest `editor.path`
 - **Icon not loading**: Verify icon file exists in assets/images/
 - **Localization missing**: Check translation keys in all locale files
 - **Save not working**: Verify model interface is properly defined
 - **Empty state not showing**: Check onFinishEmpty callback implementation
+- **Build errors**: Check `ITEM_NAMES` environment variable includes your item

@@ -18,7 +18,12 @@ import { PageProps } from "../../../App";
 import { callDatahubOpen} from "../../../controller/DataHubController";
 import { Item } from "../../../clients/FabricPlatformTypes";
 
-export function OneLakeShortcutCreator({ workloadClient }: PageProps) {
+export interface OneLakeShortcutCreatorProps extends PageProps {
+  allowedSourceItemTypes?: string[];
+  allowedTargetItemTypes?: string[];
+}
+
+export function OneLakeShortcutCreator(props: OneLakeShortcutCreatorProps) {
   // Source and target item states
   const [shortcutName, setShortcutName] = useState<string>("");
 
@@ -36,9 +41,8 @@ export function OneLakeShortcutCreator({ workloadClient }: PageProps) {
   // Select source item using datahub
   const selectSourceItem = async () => {
     const result = await callDatahubOpen(
-      workloadClient,
-      ["Lakehouse", 
-        process.env.WORKLOAD_NAME + "." + process.env.DEFAULT_ITEM_NAME],
+      props.workloadClient,
+      ["Lakehouse", ...props.allowedSourceItemTypes],
       "Select source item for shortcut",
       false
     );
@@ -53,9 +57,8 @@ export function OneLakeShortcutCreator({ workloadClient }: PageProps) {
   // Select target item using datahub
   const selectTargetItem = async () => {
     const result = await callDatahubOpen(
-      workloadClient,
-      ["Lakehouse", 
-        process.env.WORKLOAD_NAME + "." + process.env.DEFAULT_ITEM_NAME],
+      props.workloadClient,
+      ["Lakehouse", ...props.allowedTargetItemTypes],
       "Select target item for shortcut",
       false
     );
@@ -79,7 +82,7 @@ export function OneLakeShortcutCreator({ workloadClient }: PageProps) {
 
     try {
       // Create the OneLakeShortcutClient
-      const shortcutClient = new OneLakeShortcutClient(workloadClient);
+      const shortcutClient = new OneLakeShortcutClient(props.workloadClient);
       
       // Create the shortcut request object using Fabric API types
       const target: CreatableShortcutTarget = {

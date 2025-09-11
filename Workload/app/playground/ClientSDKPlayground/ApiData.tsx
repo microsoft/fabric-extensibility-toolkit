@@ -10,7 +10,7 @@ import {
     Button,
 } from "@fluentui/react-components";
 import { Database16Regular } from "@fluentui/react-icons";
-import { RootState } from "../ClientSDKPlaygroundStore/Store";
+import { RootState } from "./Store/Store";
 import {
     initializeApiData,
     setDatahubDialogDescription,
@@ -18,7 +18,7 @@ import {
     setWorkspaceExplorerPresented,
     setMultiSelectionEnabled,
     setSelectedLinkedItem,
-} from "../ClientSDKPlaygroundStore/apiDataSlice";
+} from "./Store/apiDataSlice";
 import "../../styles.scss";
 import { TabContentProps } from "./ClientSDKPlaygroundModel";
 import { callDatahubOpen, callDatahubWizardOpen } from "../../controller/DataHubController";

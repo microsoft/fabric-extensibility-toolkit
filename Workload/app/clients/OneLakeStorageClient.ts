@@ -2,8 +2,9 @@ import { WorkloadClientAPI } from "@ms-fabric/workload-client";
 import { FabricPlatformClient } from "./FabricPlatformClient";
 import { FABRIC_BASE_SCOPES } from "./FabricPlatformScopes";
 import { EnvironmentConstants } from "../constants";
-import { OneLakeClientItemWrapper } from "./OneLakeClientItemWrapper";
+import { OneLakeStorageClientItemWrapper } from "./OneLakeStorageClientItemWrapper";
 import { ItemReference } from "../controller/ItemCRUDController";
+import { OneLakeStorageContainerMetadata } from "./FabricPlatformTypes";
 
 
 export const FILE_FOLDER_NAME = "Files"
@@ -14,8 +15,8 @@ export const TABLE_FOLDER_NAME = "Tables"
  * Provides methods for reading and writing files to OneLake storage
  * 
  */
-export class OneLakeClient extends FabricPlatformClient {
-  
+export class OneLakeStorageClient extends FabricPlatformClient {
+
   constructor(workloadClient: WorkloadClientAPI) {
     super(workloadClient, FABRIC_BASE_SCOPES.ONELAKE_STORAGE);
   }
@@ -26,7 +27,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns A OneLakeItemClient instance that is corectly configure to always use conent in the item directories in OneLake
    */
   createItemWrapper(item: ItemReference){
-    return new OneLakeClientItemWrapper(this, item);
+    return new OneLakeStorageClientItemWrapper(this, item);
   }
 
   /**
@@ -78,9 +79,10 @@ export class OneLakeClient extends FabricPlatformClient {
       console.error(`writeFileAsBase64: Creating a new file failed for filePath: ${filePath}. Error: ${ex.message}`);
       throw ex;
     }
-    
-    // Then append the base64 content as binary data
-    await this.appendBinaryToFile(accessToken.token, filePath, content);
+    if(content && content.length > 0) {
+      // Then append the base64 content as binary data
+      await this.appendBinaryToFile(accessToken.token, filePath, content);
+    }
   }
 
   /**
@@ -96,9 +98,18 @@ export class OneLakeClient extends FabricPlatformClient {
         headers: { Authorization: `Bearer ${accessToken.token}` }
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const content = await response.text();
+      const arrayBuffer = await response.arrayBuffer();
+      const uint8Array = new Uint8Array(arrayBuffer);
+      
+      // Convert binary data to base64
+      let binaryString = '';
+      for (let i = 0; i < uint8Array.length; i++) {
+        binaryString += String.fromCharCode(uint8Array[i]);
+      }
+      const base64Content = btoa(binaryString);
+      
       console.log(`readFileAsBase64 succeeded for filePath: ${filePath}`);
-      return Buffer.from(content, "base64").toString("utf8");
+      return base64Content;
     } catch (ex: any) {
       console.error(`readFileAsBase64 failed for filePath: ${filePath}. Error: ${ex.message}`);
       return "";
@@ -126,7 +137,9 @@ export class OneLakeClient extends FabricPlatformClient {
       console.error(`writeFileAsText: Creating a new file failed for filePath: ${filePath}. Error: ${ex.message}`);
       return;
     }
-    await this.appendToFile(accessToken.token, filePath, content);
+    if(content && content.length > 0) {
+      await this.appendToFile(accessToken.token, filePath, content);
+    }
   }
 
   /**
@@ -171,6 +184,44 @@ export class OneLakeClient extends FabricPlatformClient {
   }
 
   /**
+   * Retrieves metadata for paths and files in a OneLake directory using the OneLake DFS API.
+   * This method supports listing files, directories, and shortcuts with detailed metadata information.
+   * 
+   * @param workspaceId The Fabric workspace ID containing the OneLake item
+   * @param path The directory path within the OneLake item to query (e.g., "itemId/Files/" or "itemId/Tables/")
+   * @param recursive Whether to recursively list all subdirectories and files (default: false)
+   * @param shortcutMetadata Whether to include shortcut metadata information in the response (default: true)
+   * @returns Promise<OneLakeStorageContainerMetadata> Container object with paths array containing file/directory metadata
+   * 
+   * @remarks
+   * - The path parameter should include the item ID prefix (e.g., "myItemId/Files/subfolder")
+   * - When shortcutMetadata is true, shortcuts will include additional properties like accountType and target information but you need to call the method again with the shortcut path to get the content
+   * - Recursive mode can significantly increase response size for large directory structures
+   * - Uses the OneLake DFS API endpoint which follows ADLS Gen2 REST API conventions
+   * 
+   */
+  async getPathMetadata(
+    workspaceId: string,
+    path: string,
+    recursive = false,
+    shortcutMetadata = true,
+  ): Promise<OneLakeStorageContainerMetadata> {
+    const url = `${EnvironmentConstants.OneLakeDFSBaseUrl}/${workspaceId}/?recursive=${recursive}&resource=filesystem&directory=${encodeURIComponent(path)}&getShortcutMetadata=${shortcutMetadata}`;
+    try {
+      const accessToken = await this.getAccessToken();
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${accessToken.token}` }
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const paths: OneLakeStorageContainerMetadata = await response.json();
+      return paths;
+    } catch (ex: any) {
+      console.error(`getPathList failed: ${ex.message}`);
+      throw ex;
+    }
+  }
+
+  /**
    * Create a folder in OneLake by creating a placeholder file
    * @param folderPath The path to the folder
    */
@@ -188,7 +239,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns The OneLake file path
    */
   static getFilePath(workspaceId: string, itemId: string, fileName: string): string {
-    return OneLakeClient.getPath(workspaceId, itemId, `${FILE_FOLDER_NAME}/${fileName}`);
+    return OneLakeStorageClient.getPath(workspaceId, itemId, `${FILE_FOLDER_NAME}/${fileName}`);
   }
 
   /**
@@ -199,7 +250,7 @@ export class OneLakeClient extends FabricPlatformClient {
    * @returns 
    */
   static getTablePath(workspaceId: string, itemId: string, tableName: string): string {
-    return OneLakeClient.getPath(workspaceId, itemId, `${TABLE_FOLDER_NAME}/${tableName}`);
+    return OneLakeStorageClient.getPath(workspaceId, itemId, `${TABLE_FOLDER_NAME}/${tableName}`);
   }
 
 
@@ -300,50 +351,4 @@ export class OneLakeClient extends FabricPlatformClient {
   private buildFlushQueryParameters(contentLength: number): string {
     return `position=${contentLength}&action=flush`;
   }
-}
-
-// Legacy function exports for backward compatibility
-// These can be removed once all code is migrated to use the OneLakeClient class
-
-export async function checkIfFileExists(workloadClient: WorkloadClientAPI, filePath: string): Promise<boolean> {
-  const client = new OneLakeClient(workloadClient);
-  return client.checkIfFileExists(filePath);
-}
-
-export async function writeToOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
-  return client.writeFileAsBase64(filePath, content);
-}
-
-export async function readOneLakeFileAsBase64(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeClient(workloadClient);
-  return client.readFileAsBase64(filePath);
-}
-
-export async function writeToOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string, content: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
-  return client.writeFileAsText(filePath, content);
-}
-
-export async function readOneLakeFileAsText(workloadClient: WorkloadClientAPI, filePath: string): Promise<string> {
-  const client = new OneLakeClient(workloadClient);
-  return client.readFileAsText(filePath);
-}
-
-export async function deleteOneLakeFile(workloadClient: WorkloadClientAPI, filePath: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
-  return client.deleteFile(filePath);
-}
-
-export async function createOneLakeFolder(workloadClient: WorkloadClientAPI, folderPath: string): Promise<void> {
-  const client = new OneLakeClient(workloadClient);
-  return client.createFolder(folderPath);
-}
-
-export function getOneLakeFilePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeClient.getFilePath(workspaceId, itemId, fileName);
-}
-
-export function getOneLakePath(workspaceId: string, itemId: string, fileName: string): string {
-  return OneLakeClient.getPath(workspaceId, itemId, fileName);
 }

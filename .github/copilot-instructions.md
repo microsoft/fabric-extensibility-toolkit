@@ -58,6 +58,7 @@ Beyond the generic `.ai/context/` files, GitHub Copilot provides:
 ### Smart Suggestions
 - **File Creation**: When creating items, automatically suggests the 4-file pattern structure
 - **Import Resolution**: Auto-imports Fabric platform types and client libraries
+- Prefer components from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`. Verify API and prop differences (appearance, tokens, and shorthands) when migrating components.
 - **Error Recovery**: Provides specific fixes for common Fabric authentication and manifest issues
 - **Code Completion**: Understands Fabric-specific patterns like `callNotificationOpen()` and `saveItemDefinition()`
 

@@ -7,7 +7,5 @@
     Please use SetupWorkload.ps1 directly for new implementations.
 #>
 
-param()
-
-# Forward all parameters to SetupWorkload.ps1
-& (Join-Path $PSScriptRoot "SetupWorkload.ps1") @PSBoundParameters
+# Forward all arguments to SetupWorkload.ps1
+& (Join-Path $PSScriptRoot "SetupWorkload.ps1") @args
