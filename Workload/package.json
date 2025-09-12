@@ -2,11 +2,11 @@
   "name": "fabric-developer-sample",
   "version": "2.0.0",
   "description": "Microsoft Fabric - Developer Sample App",
-  "scripts": {    
+  "scripts": {
     "start": "npm run start:devServer",
     "start:devServer": "env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.config.js",
     "start:devGateway": "node ./devServer/start-devGateway.js",
-    "start:codespace": "node --max-old-space-size=4096 ./node_modules/.bin/env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.config.js --no-hot",    
+    "start:codespace": "node --max-old-space-size=4096 ./node_modules/.bin/env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.config.js --no-hot",
     "build:test": "env-cmd -f .env.test webpack --config ./devServer/webpack.config.js --output-path ../build/Frontend --progress",
     "build:prod": "env-cmd -f .env.prod webpack --config ./devServer/webpack.config.js --output-path ../build/Frontend --mode production --progress"
   },
@@ -16,6 +16,7 @@
     "@fluentui/react": "^8.110.7",
     "@fluentui/react-components": "^9.7.2",
     "@fluentui/react-icons": "2.0.226",
+    "@microsoft/connected-workbooks": "^3.4.0-beta",
     "@ms-fabric/workload-client": "^3.0.0",
     "@reduxjs/toolkit": "^2.6.0",
     "history": "^4.9.0",
@@ -34,7 +35,6 @@
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@types/react-router-dom": "^5.3.2",
-    "typescript": "^5.0.4",
     "ajv": "^8.12.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^10.0.0",
@@ -47,6 +47,7 @@
     "sass-loader": "^16.0.2",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
+    "typescript": "^5.0.4",
     "webpack": "^5.90.3",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.0"

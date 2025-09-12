@@ -1,0 +1,86 @@
+/* Lakehouse Data Selector Styles */
+
+.lakehouse-data-card {
+  background: #ffffff;
+  border: 1px solid #e1dfdd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lakehouse-title {
+  color: #323130;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.table-info-card {
+  background: #f8f9fa;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.table-info-title {
+  font-weight: 600;
+  color: #323130;
+}
+
+.table-description {
+  color: #605e5c;
+  font-style: italic;
+}
+
+.preview-title {
+  font-weight: 600;
+  color: #323130;
+}
+
+.execution-time {
+  color: #605e5c;
+}
+
+.data-preview-container {
+  max-height: 400px;
+  overflow: auto;
+  border: 1px solid #e1dfdd;
+  border-radius: 4px;
+  background: #ffffff;
+}
+
+.data-preview-container .ms-DetailsHeader {
+  background-color: #f3f2f1;
+  border-bottom: 1px solid #e1dfdd;
+  font-weight: 600;
+}
+
+.data-preview-container .ms-DetailsRow {
+  border-bottom: 1px solid #f3f2f1;
+}
+
+.data-preview-container .ms-DetailsRow:hover {
+  background-color: #f8f9fa;
+}
+
+/* Loading states */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  gap: 12px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .lakehouse-data-card {
+    padding: 16px;
+    margin-bottom: 12px;
+  }
+  
+  .data-preview-container {
+    max-height: 300px;
+  }
+}

@@ -1,0 +1,39 @@
+{
+    "name": "ExcelEmbed",
+    "version": "1.100",
+    "displayName": "ExcelEmbedItem_DisplayName",
+    "displayNamePlural": "ExcelEmbedItem_DisplayName_Plural",
+    "editor": {
+      "path": "/ExcelEmbedItem-editor"
+    },
+    "icon": {
+      "name": "assets/images/ExcelEmbedItem-icon.png"
+    },
+    "activeIcon": {
+      "name": "assets/images/ExcelEmbedItem-icon.png"
+    },
+    "contextMenuItems": [
+    ],
+    "quickActionItems": [
+    ],
+    "supportedInMonitoringHub": true,
+    "supportedInDatahubL1": true,
+    "itemJobActionConfig": {
+    },
+    "itemSettings": {
+      "getItemSettings": {
+            "action": "getItemSettings"
+      }
+    },
+    "editorTab": {
+      "onDeactivate": "item.tab.onDeactivate",
+      "canDeactivate": "item.tab.canDeactivate",
+      "canDestroy": "item.tab.canDestroy",
+      "onDestroy": "item.tab.onDestroy",
+      "onDelete": "item.tab.onDelete"
+    },
+    "createItemDialogConfig": {
+      "onCreationFailure": { "action": "item.onCreationFailure" },
+      "onCreationSuccess": { "action": "item.onCreationSuccess" }
+    }
+  }

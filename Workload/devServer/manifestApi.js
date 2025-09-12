@@ -41,7 +41,8 @@ router.get('/manifests_new/metadata', (req, res) => {
     url: "http://127.0.0.1:60006",
     devAADFEAppConfig: {
       appId: process.env.DEV_AAD_CONFIG_FE_APPID,
-    }
+    },
+    devSandboxRelaxation: true
   };
 
   res.end(JSON.stringify({ extension: devParameters }));

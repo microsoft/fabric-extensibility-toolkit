@@ -9,7 +9,28 @@
           <!-- Add your entra application here that you have created for the Workload -->
           <AppId>{{FRONTEND_APPID}}</AppId>
         </AADFEApp>
-        <EnableSandboxRelaxation>false</EnableSandboxRelaxation>
+        <!-- 
+          Official Microsoft Fabric Sandbox Relaxation (LWW Design Document)
+          
+          EnableSandboxRelaxation: Global workload-level iframe sandbox relaxation
+          
+          When true, this enables the MSAL consent flow for the following official scopes:
+          - Fabric.Extend: Base scope for iframe relaxation (required)
+          - DOWNLOAD: Enables allow-downloads sandbox attribute
+          - POP-UP: Enables allow-popups sandbox attribute  
+          - FORMS: Enables allow-forms sandbox attribute
+          
+          Architecture (per official design):
+          1. ExtensionFrontendMsalService combines Fabric.Extend + relaxed scopes
+          2. MSAL token acquisition with consent prompt (first time/declined)
+          3. NgRx store updated with sandboxRelaxed flag
+          4. addIFrame action includes sandboxRelaxed property
+          5. Angular template conditionally sets iframe sandbox attributes
+          
+          Security: Mandatory approach - iframe will NOT open without consent
+          Protects against: drive-by downloads, clickjacking, formjacking attacks
+        -->
+        <EnableSandboxRelaxation>true</EnableSandboxRelaxation>
         <Endpoints>
           <ServiceEndpoint>
             <Name>Frontend</Name>

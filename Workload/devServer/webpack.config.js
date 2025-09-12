@@ -68,6 +68,10 @@ module.exports = {
                 loader: "ts-loader",
             },
             {
+                test: /\.css$/i, // this is for loading regular css files
+                use: ["style-loader", "css-loader"],
+            },
+            {
                 test: /\.s[ac]ss$/i, // this is for loading scss
                 use: ["style-loader", "css-loader", "sass-loader"],
             },

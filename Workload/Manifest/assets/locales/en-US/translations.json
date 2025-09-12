@@ -15,5 +15,7 @@
     "HelloWorld_GetStarted_3_Sub_Title": "SubTitle3",
     "HelloWorld_GetStarted_1_Description": "Card1 description",
     "HelloWorld_GetStarted_2_Description": "Card2 description",
-    "HelloWorld_GetStarted_3_Description": "Card3 description"
+    "HelloWorld_GetStarted_3_Description": "Card3 description",
+    "ExcelEmbedItem_DisplayName": "Excel Embed",
+    "ExcelEmbedItem_DisplayName_Plural": "Excel Embeds"
 }

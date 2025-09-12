@@ -1,0 +1,110 @@
+/* Excel Embed Item Editor Styles */
+
+.excel-embed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.excel-embed-info {
+  margin-bottom: 16px;
+}
+
+.excel-embed-info .ms-MessageBar {
+  border-radius: 4px;
+}
+
+.excel-embed-features {
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 6px;
+  border-left: 4px solid #0078d4;
+  margin-top: 20px;
+}
+
+.excel-embed-features .ms-Stack {
+  margin-left: 12px;
+}
+
+.excel-embed-features .ms-Text {
+  line-height: 1.5;
+}
+
+.excel-embed-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.excel-embed-form {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 6px;
+  border: 1px solid #e1e1e1;
+  margin-bottom: 20px;
+}
+
+.excel-embed-form .ms-TextField {
+  margin-bottom: 16px;
+}
+
+.excel-embed-form .ms-Button {
+  margin-right: 12px;
+  margin-top: 8px;
+}
+
+.excel-embed-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #e1e1e1;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+  .excel-embed-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .excel-embed-container {
+    padding: 16px;
+    margin: 0 16px;
+  }
+  
+  .excel-embed-actions {
+    flex-direction: column;
+  }
+  
+  .excel-embed-features {
+    padding: 12px;
+  }
+}
+
+/* Loading and error states */
+.excel-embed-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.excel-embed-error {
+  margin: 16px 0;
+}
+
+/* Integration with Lakehouse Data Selector */
+.excel-embed-container .lakehouse-data-selector {
+  margin-bottom: 20px;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  overflow: hidden;
+}
