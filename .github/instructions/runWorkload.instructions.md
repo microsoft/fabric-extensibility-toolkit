@@ -6,6 +6,28 @@
 
 This file provides GitHub Copilot-specific enhancements for running workloads beyond the base generic process.
 
+## 🚨 CRITICAL: Directory Navigation Pattern
+
+**ALWAYS use this exact pattern when running development scripts:**
+
+```powershell
+cd scripts\Run && .\StartDevGateway.ps1
+cd scripts\Run && .\StartDevServer.ps1
+```
+
+**Why this is required:**
+- Terminal context may not reflect actual working directory
+- Ensures scripts execute from correct location regardless of checkout path
+- Prevents "script not found" errors
+- Works consistently across all environments (local, Codespaces, CI)
+
+**❌ NEVER DO:**
+- `.\scripts\Run\StartDevGateway.ps1` (may fail depending on current directory)
+- `cd scripts\Run` followed by `.\StartDevGateway.ps1` in separate commands (terminal context issues)
+
+**✅ ALWAYS DO:**
+- `cd scripts\Run && .\StartDevGateway.ps1` (navigation + execution in single command)
+
 ## 🤖 GitHub Copilot Enhanced Features
 
 ### Smart Environment Detection
@@ -96,8 +118,11 @@ GitHub Copilot recognizes and expands:
 The Development Gateway must be started first as it handles the connection to Fabric.
 
 #### 2.1: Run the StartDevGateway Script
+
+**CRITICAL**: Always navigate to scripts\Run directory first to ensure proper execution:
+
 ```powershell
-.\scripts\Run\StartDevGateway.ps1
+cd scripts\Run && .\StartDevGateway.ps1
 ```
 
 **What this script does:**
@@ -136,12 +161,11 @@ Once the Development Gateway is running, start the frontend development server.
 Keep the DevGateway terminal open and start a new session for the DevServer.
 
 #### 3.2: Run the StartDevServer Script
-```powershell
-# Navigate to project root in new terminal
-cd "c:\Dev\Fabric\Extensibility\Microsoft-Fabric-workload-development-sample"
 
-# Start the development server
-.\scripts\Run\StartDevServer.ps1
+**CRITICAL**: Always navigate to scripts\Run directory first to ensure proper execution:
+
+```powershell
+cd scripts\Run && .\StartDevServer.ps1
 ```
 
 **What this script does:**
@@ -256,10 +280,10 @@ When starting a workload, follow this checklist:
 
 **Startup Sequence:**
 - [ ] Open first terminal/PowerShell window
-- [ ] Run `.\scripts\Run\StartDevGateway.ps1`
+- [ ] Run `cd scripts\Run && .\StartDevGateway.ps1`
 - [ ] Wait for successful authentication and gateway startup
-- [ ] Open second terminal/PowerShell window
-- [ ] Run `.\scripts\Run\StartDevServer.ps1`
+- [ ] Open second terminal/PowerShell window (or use same terminal)
+- [ ] Run `cd scripts\Run && .\StartDevServer.ps1`
 - [ ] Verify both services are running without errors
 - [ ] Test workload functionality in browser
 
@@ -275,19 +299,19 @@ When starting a workload, follow this checklist:
 #### Local Development Environment
 ```powershell
 # Start DevGateway with interactive login
-.\scripts\Run\StartDevGateway.ps1
+cd scripts\Run && .\StartDevGateway.ps1
 
 # Start DevServer with full performance
-.\scripts\Run\StartDevServer.ps1
+cd scripts\Run && .\StartDevServer.ps1
 ```
 
 #### GitHub Codespaces Environment
 ```powershell
 # Start DevGateway with device code auth
-.\scripts\Run\StartDevGateway.ps1 -InteractiveLogin $false
+cd scripts\Run && .\StartDevGateway.ps1 -InteractiveLogin $false
 
 # DevServer will automatically use codespace configuration
-.\scripts\Run\StartDevServer.ps1
+cd scripts\Run && .\StartDevServer.ps1
 ```
 
 #### Automated/CI Environment
