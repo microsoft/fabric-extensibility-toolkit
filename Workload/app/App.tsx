@@ -54,12 +54,12 @@ export function App({ history, workloadClient }: AppProps) {
                     workloadClient={workloadClient} data-testid="HelloWorldItem-editor" />
             </Route>
             
-            <Route path="/HelloWorldItem-settings-page">
+            <Route path="/HelloWorldItem-settings-page/:itemObjectId">
                 <CustomItemSettings 
                     workloadClient={workloadClient}
                         data-testid="HelloWorldItem-settings-page" />
             </Route>
-            <Route path="/HelloWorldItem-about-page">
+            <Route path="/HelloWorldItem-about-page/:itemObjectId">
                 <CustomAbout  workloadClient={workloadClient} 
                     data-testid="HelloWorldItem-about-page" />
             </Route>
