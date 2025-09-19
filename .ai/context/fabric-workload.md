@@ -57,8 +57,9 @@ const accessToken = await workloadClient.authentication.acquireAccessToken(scope
 1. **Follow Naming Conventions**: Use PascalCase for item names, maintain consistency
 2. **Implement Error Handling**: Provide user-friendly error messages and recovery options
 3. **Use Fluent UI**: Leverage @fluentui/react-components for consistent visual design
-4. **State Management**: Use Redux Toolkit patterns for complex state management
-5. **Performance**: Implement lazy loading and code splitting for large applications
+4. **Toolbar Components**: ALWAYS use `Tooltip` + `ToolbarButton` pattern for toolbar actions. Import from `@fluentui/react-components` and wrap each `ToolbarButton` in a `Tooltip` for accessibility
+5. **State Management**: Use Redux Toolkit patterns for complex state management
+6. **Performance**: Implement lazy loading and code splitting for large applications
 
 ### Security Considerations
 1. **Minimal Scopes**: Request only necessary OAuth scopes for operations
