@@ -51,7 +51,7 @@ You are ready to create your first Hello World Item in Fabric.
 
 To access your workload follow the steps below:
 
-1. Navigate to `https://app.fabric.microsoft.com/workloadhub/detail/<WORKLOAD_NAME>?experience=fabric-developer`
+1. Navigate to `https://app.fabric.microsoft.com/workloadhub/detail/<WORKLOAD_NAME>.Product?experience=fabric-developer`
 2. Click the Hello World item type on the left
 3. Select the development Workspace you have configured before in the dialog to create the item
 4. The editor opens and the item is ready for use
