@@ -15,6 +15,7 @@ export { LongRunningOperationsClient } from './LongRunningOperationsClient';
 export { SparkLivyClient } from './SparkLivyClient';
 export { ExternalDataSharesProviderClient } from './ExternalDataSharesProviderClient';
 export { ExternalDataSharesRecipientClient } from './ExternalDataSharesRecipientClient';
+export { GatewayClient } from './GatewayClient';
 
 // Re-export WorkloadClientAPI for convenience
 export { WorkloadClientAPI } from '@ms-fabric/workload-client';

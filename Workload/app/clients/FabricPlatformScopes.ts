@@ -55,6 +55,10 @@ export const FABRIC_BASE_SCOPES = {
   ONELAKE_DATA_ACCESS_SECURITY_READ: "https://api.fabric.microsoft.com/OneLake.Read.All",
   ONELAKE_DATA_ACCESS_SECURITY_READWRITE: "https://api.fabric.microsoft.com/OneLake.ReadWrite.All",
 
+  // Gateway operations
+  GATEWAY_READ: "https://api.fabric.microsoft.com/Gateway.Read.All",
+  GATEWAY_READWRITE: "https://api.fabric.microsoft.com/Gateway.ReadWrite.All",
+
 };
 
 // Predefined scope combinations for different clients
@@ -231,6 +235,16 @@ export const SCOPES = {
     FABRIC_BASE_SCOPES.ONELAKE_READ,
     FABRIC_BASE_SCOPES.CONNECTION_READ
   ].join(" "),
+
+  // Gateway Client - focused on gateway management
+  GATEWAY: [
+    FABRIC_BASE_SCOPES.GATEWAY_READWRITE
+  ].join(" "),
+  
+  // Gateway Client - read-only operations
+  GATEWAY_READ: [
+    FABRIC_BASE_SCOPES.GATEWAY_READ
+  ].join(" "),
 };
 
 /**
@@ -293,6 +307,10 @@ export const SCOPE_PAIRS: Record<string, ScopePair> = {
   ONELAKE_DATA_ACCESS_SECURITY: {
     read: SCOPES.ONELAKE_DATA_ACCESS_SECURITY_READ,
     write: SCOPES.ONELAKE_DATA_ACCESS_SECURITY
+  },
+  GATEWAY: {
+    read: SCOPES.GATEWAY_READ,
+    write: SCOPES.GATEWAY
   }
 };
 
