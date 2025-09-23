@@ -8,7 +8,7 @@
         "forceConsistentCasingInFileNames": true,
         "importHelpers": true,
         "inlineSources": true,
-        "jsx": "react",
+        "jsx": "react-jsx",
         "module": "esnext",
         "moduleResolution": "node",
         "noFallthroughCasesInSwitch": true,
@@ -21,16 +21,27 @@
         "strict": true,
         "strictNullChecks": false,
         "stripInternal": true,
-        "target": "ES2017",
+        "target": "ES2020",
         "useUnknownInCatchVariables": false,
         "lib": [
-            "ES2017",
-            "DOM"
+            "ES2020",
+            "DOM",
+            "DOM.Iterable"
         ],
         "paths": {
             "src/*": [
                 "./app/*"
             ]
-        }
-    }
+        },
+        "types": ["vite/client", "node"]
+    },
+    "include": [
+        "app/**/*",
+        "vite.config.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "build"
+    ]
 }
