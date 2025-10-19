@@ -48,6 +48,9 @@ foreach ($Key in $RequiredKeys) {
     }
 }
 
+# Extract the frontend url 
+$FrontendBaseUrl = $EnvConfig['FRONTEND_URL']
+
 # Get workspace ID from user or environment variable
 if (-not $DevWorkspaceId) {
     $DevWorkspaceId = $env:FABRIC_DEV_WORKSPACE_GUID
@@ -130,7 +133,7 @@ Write-Host ""
 Write-Host "🎉 Developer environment setup completed!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📋 Configuration Summary:" -ForegroundColor Yellow
-Write-Host "  Workspace GUID: $WorkspaceGuid" -ForegroundColor Cyan
+Write-Host "  Workspace GUID: $($DevGatewayConfig['WorkspaceGuid'])" -ForegroundColor Cyan
 Write-Host "  Workload Name: $WorkloadName" -ForegroundColor Cyan
 Write-Host "  Frontend URL: $FrontendBaseUrl" -ForegroundColor Cyan
 Write-Host ""
