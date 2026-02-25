@@ -29,7 +29,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 
 ## Latest Release
 
-📋 **[v2025.11 - Standardized Base Components](docs/ReleaseNotes/2025/v2025.11.md)**
+📋 **[v2025.12 - Standardized Base Components](docs/ReleaseNotes/2025/v2025.12.md)**
 
 This release introduces comprehensive standardized base components, SCSS architecture improvements, and enhanced HelloWorld reference implementation. [View all release notes →](docs/ReleaseNotes/)
 
