@@ -1,0 +1,34 @@
+{
+    "name": "HelloWorld",
+    "version": "1.100",
+    "displayName": "HelloWorldItem_DisplayName",
+    "displayNamePlural": "HelloWorldItem_DisplayName_Plural",
+    "editor": {
+      "path": "/HelloWorldItem-editor"
+    },
+    "icon": {
+      "name": "assets/images/HelloWorldItem_Icon.png"
+    },
+    "activeIcon": {
+      "name": "assets/images/HelloWorldItem_Icon.png"
+    },
+    "contextMenuItems": [
+    ],
+    "quickActionItems": [
+    ],
+    "supportedInMonitoringHub": true,
+    "supportedInDatahubL1": true,
+    "itemJobActionConfig": {
+    },
+    "editorTab": {
+      "onDeactivate": "item.tab.onDeactivate",
+      "canDeactivate": "item.tab.canDeactivate",
+      "canDestroy": "item.tab.canDestroy",
+      "onDestroy": "item.tab.onDestroy",
+      "onDelete": "item.tab.onDelete"
+    },
+    "createItemDialogConfig": {
+      "onCreationFailure": { "action": "item.onCreationFailure" },
+      "onCreationSuccess": { "action": "item.onCreationSuccess" }
+    }
+  }

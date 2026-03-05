@@ -1,0 +1,94 @@
+/**
+ * ============================================================================
+ * Dialog Control Styles - Fabric UX System Compliant
+ * ============================================================================
+ * 
+ * Dialog component following Fabric UX System guidelines with wizard-like styling.
+ * 
+ * Provides a simple dialog interface for single-page interactions without
+ * step navigation, but maintaining the same visual style as the Wizard component.
+ * 
+ * ## Design Principles
+ * - Clear visual hierarchy with header, content, and footer
+ * - Consistent with Microsoft Fabric design language
+ * - Responsive design for various screen sizes
+ * - Accessible button and focus management
+ * 
+ * ## Usage
+ * Import this file in components that use the DialogControl:
+ * ```tsx
+ * import './Dialog.scss';
+ * ```
+ */
+
+.dialog-control {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  min-width: 400px;
+  max-height: 90vh;
+  max-width: 90vw;
+  background-color: var(--colorNeutralBackground1, #ffffff);
+
+  // Header area with title
+  &__header {
+    padding: 20px;
+    background-color: var(--colorNeutralBackground1, #ffffff);
+    border-bottom: 1px solid var(--colorNeutralStroke2, #e1dfdd);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    color: var(--colorNeutralForeground1, #323130);
+    margin: 0;
+  }
+
+  // Content area
+  &__content {
+    flex: 1 1 auto;
+    padding: 20px;
+    background-color: var(--colorNeutralBackground1, #ffffff);
+    overflow: auto;
+    min-height: 60px; // Ensure minimum content space
+  }
+
+  // Footer area with buttons
+  &__footer {
+    border-top: 1px solid var(--colorNeutralStroke2, #e1dfdd);
+    background-color: var(--colorNeutralBackground1, #ffffff);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 12px;
+    flex-shrink: 0;
+  }
+}
+
+// Responsive adjustments for smaller screens
+@media (max-width: 768px) {
+  .dialog-control {
+    min-width: 300px;
+    max-width: 95vw;
+    
+    &__content,
+    &__footer {
+      padding: 16px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-control {
+    min-width: 280px;
+    
+    &__content {
+      padding: 12px;
+    }
+    
+    &__footer {
+      padding: 8px 12px;
+      column-gap: 8px;
+    }
+  }
+}

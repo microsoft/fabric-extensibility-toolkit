@@ -16,7 +16,7 @@ import {
     callNotificationOpen,
     callNotificationHide,
 } from "../../controller/NotificationController";
-import "../../styles.scss";
+import "../Playground.scss";
 import { TabContentProps } from "./ClientSDKPlaygroundModel";
 
 export function ApiNotification(props: TabContentProps) {

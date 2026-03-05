@@ -1,4 +1,3 @@
-
 # Microsoft Fabric Extensibility Toolkit
 
 Welcome to the Microsoft Fabric Extensibility Toolkit. This repository contains everything you need to start creating a new Extension for Fabric. Besides the source code itself with a HelloWorld Sample it also contains a comprehensive guide that covers everything you need to know to create custom Fabric items for your organization. We're here to assist you every step of the way, so please don't hesitate to reach out with any questions, via "Issues" tab in this GitHub repository. Happy developing!
@@ -18,6 +17,7 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 - [Microsoft Fabric Extensibility Toolkit](#microsoft-fabric-extensibility-toolkit)
   - [Trademarks](#trademarks)
   - [Table of contents](#table-of-contents)
+  - [Latest Release](#latest-release)
 - [Introduction](#introduction)
   - [What is Fabric](#what-is-fabric)
   - [What is a Fabric Workload](#what-is-a-fabric-workload)
@@ -26,6 +26,12 @@ Any use of third-party trademarks or logos are subject to those third-party's po
 - [Build Your Own Workload](#build-your-own-workload)
   - [Prerequisites](#prerequisites)
   - [Setting things up](#setting-things-up)
+
+## Latest Release
+
+📋 **[v2025.11 - Standardized Base Components](docs/ReleaseNotes/2025/v2025.11.md)**
+
+This release introduces comprehensive standardized base components, SCSS architecture improvements, and enhanced HelloWorld reference implementation. [View all release notes →](docs/ReleaseNotes/)
 
 ## Introduction
 
@@ -90,6 +96,28 @@ If you use a codespace please make sure that you select at least an 8 core machi
 
 Use the [Project structure](./docs/Project_Structure.md) to get a better understanding about Extensibility projects are structured and where you can find and change it to your needs.
 
+### 🤖 AI Assistance
+
+If you are using GitHub Copilot or other AI assistants, please refer to the **[AI Instructions](.github/copilot-instructions.md)**. This file contains critical architectural rules and context that will help the AI generate correct code for this repository.
+
+**Key Resources for AI:**
+
+- `.github/copilot-instructions.md` - Main entry point for AI github copilot
+- `.ai/` folder - Detailed context and command references for any AI assistant
+
+### Available Components
+
+The toolkit includes pre-built components to accelerate your workload development. These components follow Fabric Design System guidelines for consistent user experiences.
+
+**[📋 View All Components →](./docs/components/README.md)**
+
+Key highlights:
+- **ItemEditor Component** - Foundation for all item editors (mandatory)
+- **OneLakeView** - OneLake integration and file browsing  
+- **Wizard Component** - Multi-step guided workflows
+
+For complete documentation, examples, and implementation guides, see the [Components Documentation](./docs/components/README.md).
+
 ### Setting things up
 
-To set things up follow the [Setup Guide](./docs/Project_Setup.md).
+To set things up follow the [Setup Guide](./docs/Project_Setup.md)

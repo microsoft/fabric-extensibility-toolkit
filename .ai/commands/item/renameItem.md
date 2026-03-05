@@ -95,7 +95,7 @@ export function [NewItemName]ItemEditorRibbon(props: [NewItemName]ItemEditorRibb
 
 Rename the manifest directory:
 ```
-Workload/Manifest/items/[OldItemName]/ → Workload/Manifest/items/[NewItemName]/
+Workload/Manifest/items/[OldItemName]Item/ → Workload/Manifest/items/[NewItemName]Item/
 ```
 
 #### 3.2: Rename and Update Manifest Files
@@ -365,7 +365,7 @@ After renaming, verify all these components have been updated:
 - [ ] No TypeScript errors about missing modules
 
 **Manifest Files**:
-- [ ] Directory renamed: `Workload/Manifest/items/[NewItemName]/`
+- [ ] Directory renamed: `Workload/Manifest/items/[NewItemName]Item/`
 - [ ] XML manifest file renamed and content updated
 - [ ] JSON manifest file renamed with correct paths and names
 - [ ] Product.json updated if referenced

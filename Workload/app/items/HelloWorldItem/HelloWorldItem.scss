@@ -1,0 +1,394 @@
+/**
+ * ============================================================================
+ * HelloWorld Item - Specific Styles
+ * ============================================================================
+ * 
+ * This file contains styles specific to the HelloWorld item.
+ * All styles are prefixed with "hello-world-" to clearly indicate they are item-specific.
+ * 
+ * ## Design Principles
+ * - Uses Fabric UX design tokens for consistency
+ * - Minimal custom styling - leverages standard patterns where possible
+ * - Item-specific: Hero section branding and getting started layout
+ * 
+ * ## What's Item-Specific Here
+ * - Hero section with branded background color
+ * - Two-column getting started layout (hero + content)
+ * - Large hero title for visual impact
+ * 
+ * ## What Uses Standards
+ * - All spacing uses design tokens (--spacing*)
+ * - All colors use design tokens (--color*)
+ * - Border radius uses design tokens (--borderRadius*)
+ * - Font sizes use design tokens where applicable (--fontSize*)
+ * - Standard card, button, and expandable patterns
+ * 
+ * ## References
+ * - Fabric Design Tokens: https://aka.ms/fabric-tokens
+ * - Fluent UI v9: https://react.fluentui.dev/
+ */
+
+// ============================================================================
+// Unified View Section - Common container for both left and center panels
+// ============================================================================
+
+.hello-world-view {
+  width: 100%;
+  height: auto; // Allow natural height growth with content
+  min-height: 100%; // Minimum height but allow growth
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: var(--spacingVerticalXL);
+  border-radius: 0;
+  flex-shrink: 0;
+  padding: var(--spacingHorizontalXXL);
+  box-sizing: border-box; /* Include padding in width/height calculations */
+}
+
+// Hero title - Intentionally large for visual impact (item-specific)
+.hello-world-title {
+  font-size: 45px;
+  font-weight: var(--fontWeightSemibold);
+  line-height: 60px;
+  color: var(--colorNeutralForegroundStatic);
+  margin: 0;
+  font-family: var(--fontFamilyBase);
+}
+
+// ============================================================================
+// Content Inner - Center panel specific layout
+// ============================================================================
+
+.hello-world-content-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalXXL);
+  flex: 1;
+  width: 100%;
+  box-sizing: border-box; /* Ensure consistent box model */
+}
+
+// ============================================================================
+// Section Header - Standard section header pattern
+// ============================================================================
+
+.hello-world-next {
+  width: 100%;
+  box-sizing: border-box; /* Ensure consistent box model */
+}
+
+.hello-world-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalS);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.hello-world-section-body {
+  padding-top: 6px;
+  
+}
+
+.hello-world-section-title {
+  color: var(--colorNeutralForeground1);
+  font-size: 22px;
+  font-family: var(--fontFamilyBase);
+  font-weight: var(--fontWeightSemibold);
+  line-height: 40px;
+  margin: 0;
+}
+
+.hello-world-next-list {
+  margin: 0;
+  margin-left: 12px;
+  padding-left: var(--spacingHorizontalXL);
+  list-style-position: outside;
+  list-style-type: decimal; // 1, 2, 3...
+}
+
+.hello-world-next-item {
+  font-size: var(--fontSizeBase300);
+  line-height: 28px;
+  color: var(--colorNeutralForegroundStatic);
+}
+
+.hello-world-step-button {
+  margin-top: var(--spacingVerticalXS);
+  display: flex;
+  justify-content: flex-start;
+
+  .fui-link {
+    font-size: var(--fontSizeBase300) !important;
+    font-weight: var(--fontWeightSemibold) !important;
+    color: var(--colorBrandForegroundLink) !important;
+    font-family: var(--fontFamilyBase) !important;
+    text-decoration: underline !important;
+    padding: 0 !important;
+    
+    &:hover {
+      color: var(--colorBrandForegroundLinkHover) !important;
+      text-decoration: underline !important;
+    }
+    
+    &:active {
+      color: var(--colorBrandForegroundLinkPressed) !important;
+      text-decoration: underline !important;
+    }
+    
+    &:focus {
+      outline: 2px solid var(--colorCompoundBrandStroke) !important;
+      outline-offset: 2px !important;
+    }
+  }
+  
+  .fui-Button {
+    background: var(--colorNeutralBackground1) !important;
+    background-color: var(--colorNeutralBackground1) !important;
+    border-color: var(--colorNeutralStroke1) !important;
+    color: var(--colorNeutralForeground1) !important;
+    
+    &:hover {
+      background: var(--colorNeutralBackground1Hover) !important;
+      background-color: var(--colorNeutralBackground1Hover) !important;
+      border-color: var(--colorNeutralStroke1Hover) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:active {
+      background: var(--colorNeutralBackground1Pressed) !important;
+      background-color: var(--colorNeutralBackground1Pressed) !important;
+      border-color: var(--colorNeutralStroke1Pressed) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:focus {
+      background: var(--colorNeutralBackground1) !important;
+      background-color: var(--colorNeutralBackground1) !important;
+      border-color: var(--colorNeutralStroke1) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+  }
+}
+
+// Separator line for getting started section
+.hello-world-separator-line {
+  width: calc(100% - 8px); // Subtract left + right margins (4px + 4px)
+  height: 1px;
+  border: none;
+  background: var(--colorNeutralStroke2, #e1e1e1);
+  margin: var(--spacingVerticalXXL, 32px) 4px; // Top/bottom: 32px (increased spacing), Left/right: 4px
+}
+
+// Hero input container and styling
+.hello-world-hero-input {
+  margin-top: var(--spacingVerticalS);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalXS);
+  width: 100%;
+}
+
+.hello-world-input-label {
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightBold);
+  color: var(--colorNeutralForegroundStatic);
+  font-family: var(--fontFamilyBase);
+  margin: 0;
+}
+
+.hello-world-section-subtitle {
+  color: var(--colorNeutralForeground1);
+  font-size: var(--fontSizeBase300);
+  font-family: var(--fontFamilyBase);
+  font-weight: var(--fontWeightRegular);
+  line-height: var(--lineHeightBase400);
+  margin: 0;
+}
+
+// ============================================================================
+// Expandable Card - Standard expandable pattern
+// ============================================================================
+
+.hello-world-expandable-card {
+  border: 1px solid var(--colorNeutralStroke1);
+  border-radius: var(--borderRadiusMedium);
+  background: var(--colorNeutralBackground1);
+  overflow: hidden;
+  max-width: 66.66%;
+}
+
+.hello-world-expand-button {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacingHorizontalS);
+  padding: var(--spacingVerticalM) var(--spacingHorizontalL);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.1s ease;
+  min-height: 44px;
+
+  &:hover {
+    background: var(--colorNeutralBackground1Hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--colorCompoundBrandStroke);
+    outline-offset: -2px;
+  }
+}
+
+.hello-world-expand-icon {
+  transition: transform 0.2s ease;
+  color: var(--colorNeutralForeground2);
+
+  &.expanded {
+    transform: rotate(180deg);
+  }
+
+  &.collapsed {
+    transform: rotate(0deg);
+  }
+}
+
+.hello-world-expand-title {
+  font-size: var(--fontSizeBase400);
+  font-weight: var(--fontWeightSemibold);
+  color: var(--colorNeutralForeground1);
+  font-family: var(--fontFamilyBase);
+}
+
+.hello-world-expand-content {
+  padding: 0 var(--spacingHorizontalL) var(--spacingVerticalL);
+  border-top: 1px solid var(--colorNeutralStroke2);
+}
+
+// ============================================================================
+// Detail Rows - Standard key-value pattern
+// ============================================================================
+
+.hello-world-detail-row {
+  display: flex;
+  justify-content: flex-start;
+  padding: var(--spacingVerticalS) 0;
+  gap: var(--spacingHorizontalXS);
+  
+  // Special handling for rows with input fields
+  &:has(.hello-world-hero-input) {
+    flex-direction: column;
+    gap: var(--spacingVerticalXS);
+  }
+}
+
+.hello-world-detail-label {
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightSemibold);
+  color: var(--colorNeutralForeground2);
+  font-family: var(--fontFamilyBase);
+
+  &::after {
+    content: ':';
+  }
+}
+
+.hello-world-detail-value {
+  font-size: var(--fontSizeBase300);
+  font-weight: var(--fontWeightRegular);
+  color: var(--colorNeutralForeground1);
+  font-family: var(--fontFamilyBase);
+  word-break: break-all;
+}
+
+// ============================================================================
+// Resource Cards - Standard grid card pattern
+// ============================================================================
+
+.hello-world-resources-section {
+  width: 100%;
+  // No height constraints - let content grow naturally
+}
+
+.hello-world-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacingHorizontalL);
+}
+
+.hello-world-resource-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--colorNeutralStroke1);
+  border-radius: var(--borderRadiusMedium);
+  background: var(--colorNeutralBackground1);
+  padding: var(--spacingVerticalL);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.hello-world-card-header-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalM);
+  margin-bottom: var(--spacingVerticalM);
+}
+
+.hello-world-card-image-container {
+  width: 100%;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--colorNeutralBackground2);
+  border-radius: var(--borderRadiusMedium);
+  margin-bottom: var(--spacingVerticalS);
+}
+
+.hello-world-card-image {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+}
+
+.hello-world-card-body {
+  flex: 1 1 auto;
+  margin-bottom: var(--spacingVerticalM);
+}
+
+.hello-world-card-list {
+  margin: 0;
+  padding-left: var(--spacingHorizontalL);
+  list-style-type: disc;
+}
+
+.hello-world-card-list-item {
+  font-size: var(--fontSizeBase300);
+  line-height: var(--lineHeightBase300);
+  color: var(--colorNeutralForeground2);
+  margin-bottom: var(--spacingVerticalS);
+  font-family: var(--fontFamilyBase);
+}
+
+.hello-world-card-footer {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: var(--spacingVerticalM);
+  border-top: 1px solid var(--colorNeutralStroke2);
+}
+
+// ============================================================================
+// Responsive Design
+// ============================================================================
+
+@media (max-width: 1200px) {
+  .hello-world-cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hello-world-resource-card {
+    max-width: 100%;
+  }
+}

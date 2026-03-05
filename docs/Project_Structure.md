@@ -18,7 +18,7 @@ Workload/
     ├── *.xsd                 # Schema definition files
     ├── assets/               # Workload assets (icons, images)
     └── items/                # Per-item configuration folder
-        └── [ItemName]/       # Individual configuration folder for every item (e.g., HelloWorld/)
+        └── [ItemName]Item/   # Individual configuration folder for every item (e.g., HelloWorld/)
             ├── [ItemName]Item.json    # Fabric JSON for Fabric Frontend configuration (e.g., HelloWorldItem.json)
             └── [ItemName]Item.xml     # Fabric XML for Fabric Type configuration (e.g., HelloWorldItem.xml)
 
@@ -133,7 +133,7 @@ Each Fabric item has its own folder containing:
 ### Item Structure Example
 
 ```text
-Workload/Manifest/items/HelloWorld/
+Workload/Manifest/items/HelloWorldItem/
 ├── HelloWorldItem.json          # Fabric JSON configuration
 └── HelloWorldItem.xml           # Fabric XML template with placeholders (e.g., {{WORKLOAD_NAME}})
 ```
@@ -175,9 +175,36 @@ All files in the `build/` directory are generated on-demand from templates and s
 
 - **Environment settings**: Edit .env files directly and commit
 - **New environments**: Copy existing .env file, modify, and commit
-- **Item configurations**: Add/modify files in Workload/Manifest/items/[ItemName]/ and commit
+- **Item configurations**: Add/modify files in Workload/Manifest/items/[ItemName]Item/ and commit
 - **Developer workspace**: Run SetupDevEnvironment.ps1 again
 - **Build artifacts**: Run build scripts to regenerate all files in build/ directory
+
+## 🧩 Application Architecture
+
+The toolkit follows a layered architecture in `Workload/app/` with clear separation of concerns:
+
+### clients/
+- **Purpose**: API wrappers for Microsoft Fabric APIs
+- **Location**: `Workload/app/clients/`
+- **Usage**: Direct API integration with authentication and error handling
+
+### controller/
+- **Purpose**: Client controller SDK abstractions for easier development
+- **Location**: `Workload/app/controller/` 
+- **Usage**: Higher-level abstractions over client APIs for common patterns
+
+### components/
+- **Purpose**: UX-compliant reusable components following Fabric design guidelines
+- **Location**: `Workload/app/components/`
+- **Documentation**: [Available Components](./components/README.md)
+- **Requirements**: 
+  - **ItemEditor**: MANDATORY for all item editors - provides view registration, ribbon integration, and consistent layouts
+  - **Other components**: Optional based on use case (OneLakeView, Wizard, etc.)
+
+### items/
+- **Purpose**: Individual item implementations using the above layers
+- **Location**: `Workload/app/items/[ItemName]/`
+- **Pattern**: Each item uses ItemEditor component + other components as needed
 
 ## 🎯 Key Benefits
 
@@ -187,4 +214,3 @@ All files in the `build/` directory are generated on-demand from templates and s
 4. **No Dependencies**: After setup, no external config files needed
 5. **Environment Clarity**: Each deployment target has its own committed file
 6. **Direct Editing**: Developers can modify .env files without complex scripts
-

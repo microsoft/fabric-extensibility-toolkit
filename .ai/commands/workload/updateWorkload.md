@@ -175,7 +175,7 @@ ITEM_NAMES=HelloWorld
 ITEM_NAMES=HelloWorld,NewCustomItem
 ```
 
-Then create the item configuration in `Workload/Manifest/items/NewCustomItem/`.
+Then create the item configuration in `Workload/Manifest/items/[NewCustomItem]Item/`.
 
 ### 3.3: Update Frontend App ID
 
@@ -207,8 +207,8 @@ FRONTEND_URL=https://prod-workload.azurestaticapps.net/
 
 When modifying item configurations, update files in:
 
-- `Workload/Manifest/items/[ItemName]/[ItemName]Item.xml` - Use placeholders like `{{WORKLOAD_NAME}}`
-- `Workload/Manifest/items/[ItemName]/[ItemName]Item.json` - JSON configuration
+- `Workload/Manifest/items/[ItemName]Item/[ItemName]Item.xml` - Use placeholders like `{{WORKLOAD_NAME}}`
+- `Workload/Manifest/items/[ItemName]Item/[ItemName]Item.json` - JSON configuration
 
 ### 4.2: Update General Workload Templates
 

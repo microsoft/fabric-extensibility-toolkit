@@ -37,7 +37,7 @@
     .\SetupWorkload.ps1 -WorkloadName "Org.MyWorkload"
     
 .EXAMPLE  
-    .\SetupWorkload.ps1 -WorkloadName "Org.MyWorkload" -FrontendAppId "12345678-1234-1234-1234-123456789012" -Force
+    .\SetupWorkload.ps1 -WorkloadName "Org.MyWorkload" -FrontendAppId "12345678-1234-1234-1234-123456789012" -Force $true
 
 .NOTES
     Run this script from the scripts/Setup directory
@@ -64,6 +64,12 @@ param (
     # The version of the workload, used for the manifest package
     [String]$WorkloadVersion = "1.0.0"
 )
+
+# Check for PowerShell 7+
+if ($PSVersionTable.PSVersion.Major -lt 7) {
+    Write-Error "This script requires PowerShell 7 or later. Please install PowerShell 7+ (https://aka.ms/powershell) and try again."
+    exit 1
+}
 
 # check if the setup has already been done and ask if you want to force it 
 
@@ -127,7 +133,7 @@ if ((Test-Path $envDevFile) -and -not $Force) {
     Write-Host "This indicates the workload has already been set up."
     Write-Host "Use -Force parameter to overwrite existing configuration, or run SetupDevEnvironment.ps1 for development setup."
     Write-Host ""
-    Write-Host "To force setup: .\SetupWorkload.ps1 -WorkloadName '$WorkloadName' -Force"
+    Write-Host "To force setup: .\SetupWorkload.ps1 -WorkloadName '$WorkloadName' -Force $true"
     exit 0
 }
 
@@ -151,12 +157,29 @@ if (-not (Test-Path $templateEnvFile)) {
 # Read the template content
 $templateContent = Get-Content $templateEnvFile -Raw
 
+# Get all item names from the Manifest/items directory
+$itemsDir = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items"
+$itemNames = "" 
+if (Test-Path $itemsDir) {
+    $items = Get-ChildItem -Path $itemsDir -Directory
+    if ($items) {
+        $itemNames = ($items | ForEach-Object { 
+            $name = $_.Name
+            if ($name.EndsWith("Item")) {
+                $name.Substring(0, $name.Length - 4)
+            } else {
+                $name
+            }
+        }) -join ","
+    }
+}
+
 # Define placeholder replacements for different environments
 $placeholders = @{
     "{{WORKLOAD_HOSTING_TYPE}}" = $HostingType
     "{{WORKLOAD_VERSION}}" = $WorkloadVersion
     "{{WORKLOAD_NAME}}" = $WorkloadName
-    "{{ITEM_NAMES}}" = "HelloWorld"  # Default items, can be updated later
+    "{{ITEM_NAMES}}" = $itemNames
     "{{FRONTEND_APPID}}" = $FrontendAppId
     "{{BACKEND_APPID}}" = $BackendAppId
 }
@@ -165,18 +188,18 @@ $placeholders = @{
 $environments = @{
     "dev" = @{
         "{{FRONTEND_URL}}" = "http://localhost:60006/"
-        "{{BACKEND_URL}}" = "http://127.0.0.1:5000/workload"
         "{{LOG_LEVEL}}" = "debug"
+        "{{ENVIRONMENT_DISPLAY_NAME_SUFFIX}}" = "-dev"
     }
     "test" = @{
-        "{{FRONTEND_URL}}" = "https://your-staging-url.azurestaticapps.net/"
-        "{{BACKEND_URL}}" = "https://your-staging-url.azurestaticapps.net/BE"
+        "{{FRONTEND_URL}}" = "https://test-fe.yourappdomain.com/"
         "{{LOG_LEVEL}}" = "info"
+        "{{ENVIRONMENT_DISPLAY_NAME_SUFFIX}}" = "-test"
     }
     "prod" = @{
-        "{{FRONTEND_URL}}" = "https://your-production-url.azurestaticapps.net/"
-        "{{BACKEND_URL}}" = "https://your-production-url.azurestaticapps.net/BE"
+        "{{FRONTEND_URL}}" = "https://prod-fe.yourappdomain.com/"
         "{{LOG_LEVEL}}" = "warn"
+        "{{ENVIRONMENT_DISPLAY_NAME_SUFFIX}}" = ""
     }
 }
 

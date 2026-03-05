@@ -7,5 +7,26 @@
     Please use SetupWorkload.ps1 directly for new implementations.
 #>
 
+[CmdletBinding()]
+param(
+    [Parameter()]
+    [string]$HostingType,
+    
+    [Parameter()]
+    [string]$WorkloadName,
+    
+    [Parameter()]
+    [string]$WorkloadDisplayName,
+    
+    [Parameter()]
+    [string]$FrontendAppId,
+    
+    [Parameter()]
+    [string]$BackendAppId,
+    
+    [Parameter()]
+    [switch]$Force
+)
+
 # Forward all arguments to SetupWorkload.ps1
-& (Join-Path $PSScriptRoot "SetupWorkload.ps1") @args
+& (Join-Path $PSScriptRoot "SetupWorkload.ps1") @PSBoundParameters

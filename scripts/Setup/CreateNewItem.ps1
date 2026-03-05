@@ -7,6 +7,23 @@ param (
 )
 
 ###############################################################################
+# Validate ItemName parameter
+###############################################################################
+if ([string]::IsNullOrWhiteSpace($ItemName)) {
+    Write-Host "📝 Item Name Required" -ForegroundColor Yellow
+    Write-Host ""
+    $ItemName = Read-Host "Enter the name of the new item (e.g., 'MyEditor')"
+    
+    if ([string]::IsNullOrWhiteSpace($ItemName)) {
+        Write-Error "Item name cannot be empty. Exiting."
+        exit 1
+    }
+}
+
+Write-Host "Creating new item: $ItemName" -ForegroundColor Green
+Write-Host ""
+
+###############################################################################
 # Functions used in the script
 # These functions copy files and replace the source item name with the new item name
 # Template placeholders like {{WORKLOAD_NAME}} are preserved for build-time replacement
@@ -109,17 +126,17 @@ if (Test-Path $srcFile) {
 Write-Host ""
 Write-Host "Creating manifest files..."
 # Item.xml file
-$srcFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${srcItemName}\${srcItemName}Item.xml"
+$srcFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${srcItemName}Item\${srcItemName}Item.xml"
 if (Test-Path $srcFile) {
-    $targetFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${itemName}\${itemName}Item.xml"
+    $targetFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${itemName}Item\${itemName}Item.xml"
     Copy-SourceItemFile -SourceFile $srcFile -DestinationFile $targetFile
 } else {
     Write-Host "${srcItemName}Item.xml not found at $srcFile" -ForegroundColor Red
 }
 # Item.json file
-$srcFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${srcItemName}\${srcItemName}Item.json"
+$srcFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${srcItemName}Item\${srcItemName}Item.json"
 if (Test-Path $srcFile) {
-    $targetFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${itemName}\${itemName}Item.json"
+    $targetFile = Join-Path $PSScriptRoot "..\..\Workload\Manifest\items\${itemName}Item\${itemName}Item.json"
     Copy-SourceItemFile -SourceFile $srcFile -DestinationFile $targetFile
     $replacements = @{
         $srcItemName = $ItemName

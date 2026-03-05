@@ -75,8 +75,8 @@ Update `.env.prod` with production values:
 # Production workload name
 WORKLOAD_NAME=YourOrganization.YourWorkloadName
 
-# Default item name
-DEFAULT_ITEM_NAME=YourDefaultItem
+# Item names (comma-separated for multiple items)
+ITEM_NAMES=YourDefaultItem,YourSecondItem
 ```
 
 ## Step 2: Build Release Package

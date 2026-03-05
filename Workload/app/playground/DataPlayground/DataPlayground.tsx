@@ -8,30 +8,30 @@ import {
 import { Stack } from '@fluentui/react';
 import { OneLakeItemExplorerComponent } from '../../samples/views/SampleOneLakeItemExplorer/SampleOneLakeItemExplorer';
 import { OneLakeShortcutCreator } from '../../samples/views/SampleOneLakeShortcutCreator/SampleOneLakeShortcutCreator';
-import "../../styles.scss";
+import "../Playground.scss";
 import { EventhouseExplorerComponent } from '../../samples/views/SampleEventhouseExplorer/SampleEventhouseExplorer';
 import { TabContentProps } from '../ClientSDKPlayground/ClientSDKPlaygroundModel';
 import { getConfiguredWorkloadItemTypes } from './../../controller/ConfigurationController';
 
 export function DataPlayground(props: TabContentProps) {
   const { workloadClient } = props;
-  const [selectedTab, setSelectedTab] = useState<TabValue>("onelakeItemExplorer");
+  const [selectedTab, setSelectedTab] = useState<TabValue>("OneLakeView");
 
   return (
-    <Stack className="editor" >
+    <Stack className="playground-container" >
       <TabList
         className="tabListContainer"
         defaultSelectedValue={selectedTab}
         data-testid="item-editor-selected-tab-btn"
         onTabSelect={(_, data: SelectTabData) => setSelectedTab(data.value)}
       >
-        <Tab value="onelakeItemExplorer">OneLake Item Explorer</Tab>
+        <Tab value="OneLakeView">OneLake Item Explorer</Tab>
         <Tab value="onelakeShortcutCreator">OneLake Shortcut Creator</Tab>
         <Tab value="eventhouseExplorer">Eventhouse Explorer</Tab>
       </TabList>
 
       <Stack className="main">
-        {selectedTab === 'onelakeItemExplorer' && (
+        {selectedTab === 'OneLakeView' && (
           <OneLakeItemExplorerComponent 
             workloadClient={workloadClient}
             onFileSelected={async (fileName: string, oneLakeLink: string) => {

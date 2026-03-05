@@ -7,6 +7,9 @@ import {
   UpdateItemRequest,
   ItemDefinitionResponse,
   UpdateItemDefinitionRequest,
+  MoveItemRequest,
+  BulkMoveItemsRequest,
+  MovedItems,
   PaginatedResponse,
   AsyncOperationIndicator
 } from "./FabricPlatformTypes";
@@ -38,17 +41,42 @@ export class ItemClient extends FabricPlatformClient {
   /**
    * Returns a list of items from the specified workspace
    * @param workspaceId The workspace ID
-   * @param continuationToken Token for pagination
+   * @param options Optional filters and pagination
+   * @param options.continuationToken Token for pagination
+   * @param options.type Filter items by type (e.g., 'Lakehouse', 'Environment', 'Notebook')
+   * @param options.recursive Include items from subfolders
+   * @param options.rootFolderId Filter items within a specific folder
    * @returns Promise<PaginatedResponse<Item>>
    */
   async listItems(
     workspaceId: string,
-    continuationToken?: string
+    options?: {
+      continuationToken?: string;
+      type?: string;
+      recursive?: boolean;
+      rootFolderId?: string;
+    }
   ): Promise<PaginatedResponse<Item>> {
     let endpoint = `/workspaces/${workspaceId}/items`;
-    if (continuationToken) {
-      endpoint += `?continuationToken=${encodeURIComponent(continuationToken)}`;
+    const params: string[] = [];
+    
+    if (options?.continuationToken) {
+      params.push(`continuationToken=${encodeURIComponent(options.continuationToken)}`);
     }
+    if (options?.type) {
+      params.push(`type=${encodeURIComponent(options.type)}`);
+    }
+    if (options?.recursive !== undefined) {
+      params.push(`recursive=${options.recursive}`);
+    }
+    if (options?.rootFolderId) {
+      params.push(`rootFolderId=${encodeURIComponent(options.rootFolderId)}`);
+    }
+    
+    if (params.length > 0) {
+      endpoint += `?${params.join('&')}`;
+    }
+    
     return this.get<PaginatedResponse<Item>>(endpoint);
   }
 
@@ -184,6 +212,27 @@ export class ItemClient extends FabricPlatformClient {
     const operationsClient = new LongRunningOperationsClient(this.workloadClient);    
     return await operationsClient.waitForSuccessAndGetResult(response);
 
+  }
+
+  /**
+   * Moves an item to a folder within the same workspace
+   * @param workspaceId The workspace ID
+   * @param itemId The item ID
+   * @param request MoveItemRequest
+   * @returns Promise<MovedItems>
+   */
+  async moveItem(workspaceId: string, itemId: string, request: MoveItemRequest): Promise<MovedItems> {
+    return this.post<MovedItems>(`/workspaces/${workspaceId}/items/${itemId}/move`, request);
+  }
+
+  /**
+   * Moves multiple items to a folder within the same workspace
+   * @param workspaceId The workspace ID
+   * @param request BulkMoveItemsRequest
+   * @returns Promise<MovedItems>
+   */
+  async bulkMoveItems(workspaceId: string, request: BulkMoveItemsRequest): Promise<MovedItems> {
+    return this.post<MovedItems>(`/workspaces/${workspaceId}/items/bulkMove`, request);
   }
 
   // ============================

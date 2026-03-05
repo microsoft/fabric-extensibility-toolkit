@@ -1,0 +1,1260 @@
+/**
+ * ============================================================================
+ * ItemEditor Component Styles - Fabric UX System Compliant
+ * ============================================================================
+ * 
+ * This stylesheet contains all ItemEditor-related styles following Microsoft 
+ * Fabric UX System guidelines. These styles provide the foundational layout
+ * and components used by ALL item editors in the toolkit.
+ * 
+ * ## What's Included
+ * - Item Editor Container Layout (.item-editor-container)
+ * - Ribbon Styles (.ribbon-container, .ribbon-*)
+ * - Empty State Components (.item-editor-view-empty)
+ * - Default View Layout (.item-editor-view)
+ * - Loading Progress Components (.item-editor-loading-*)
+ * - Ribbon Action Buttons (.ribbon-action-button)
+ * 
+ * ## Design Principles
+ * - Consistent layout structure for all item editors
+ * - Accessible navigation and interaction patterns
+ * - Responsive design for various screen sizes
+ * - High contrast and accessibility support
+ * 
+ * ## Usage
+ * This file is imported by the ItemEditor component and provides styles
+ * for all editor-related functionality. Individual items should create
+ * their own .scss files for item-specific styling.
+ * 
+ * @see {@link ./ItemEditor.tsx} - Main ItemEditor component
+ * @see {@link ./ItemEditorDefaultView.tsx} - Default view layout
+ * @see {@link ./ItemEditorEmptyView.tsx} - Empty state component
+ */
+
+// ============================================================================
+// Item Editor Layout - Used by ItemEditor component (shared by all items)
+// ============================================================================
+
+/**
+ * Provides a consistent layout for all item editors following Fabric UX guidelines:
+ * - Fixed ribbon at the top (always visible)
+ * - Optional notification area (fixed, not scrolled)
+ * - Scrollable content area (fills remaining space)
+ * - Full height to fill iframe
+ * 
+ * This is a foundational component used by ALL items, hence in ItemEditor styles.
+ * 
+ * ## Item-Specific Styling Guidelines
+ * Each item editor should have its own SCSS file (e.g., HelloWorldItem.scss) for:
+ * - Item-specific view layouts (getting started, detail pages, settings)
+ * - Custom colors, branding, and typography
+ * - Item-specific components and UI patterns
+ * 
+ * The base layout (.item-editor-container, .item-editor-container__ribbon, etc.) is provided here.
+ * Import this file via ItemEditor component, and create your item SCSS for custom styling.
+ */
+.item-editor-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh; // Fill entire viewport/iframe height
+  background: var(--colorNeutralBackground3); //colorNeutralBackground3
+  overflow: hidden; // Prevent outer scroll
+
+  // Ribbon Container - Fixed at the top
+  &__ribbon {
+    flex-shrink: 0; // Don't shrink the ribbon
+    padding: 0 var(--spacingHorizontalS, 8px) 0 var(--spacingHorizontalS, 8px);
+    background: var(--colorNeutralBackground3);
+    z-index: 1; // Keep ribbon above content during scroll
+  }
+
+  // Notification Area (Optional) - Fixed below the ribbon
+  &__notification {
+    flex-shrink: 0; // Don't shrink the notification area
+    padding: 0 var(--spacingHorizontalS, 8px);
+    background: var(--colorNeutralBackground3);
+    z-index: 1; // Keep notification above content during scroll
+  }
+
+  // Content Area - Fills remaining space and scrolls independently
+  &__content {
+    flex: 1; // Take all remaining space
+    overflow-y: auto; // Allow vertical scrolling
+    overflow-x: hidden; // Prevent horizontal scroll
+    padding: 0px var(--spacingHorizontalS, 8px) var(--spacingVerticalS, 8px) var(--spacingHorizontalS, 8px);
+    background: var(--colorNeutralBackground3);
+
+    // Custom scrollbar styling - Fabric UX guideline
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--colorNeutralStroke1, #d1d1d1);
+      border-radius: var(--borderRadiusXLarge);
+      
+      &:hover {
+        background: var(--colorNeutralStroke1Hover, #b3b3b3);
+      }
+    }
+  }
+
+  // Focus management for accessibility
+  &:focus-within {
+    outline: none;
+  }
+
+  // Skip to content link support
+  &__content:focus {
+    outline: 2px solid var(--colorCompoundBrandStroke, #0078d4);
+    outline-offset: -2px;
+  }
+}
+
+// Responsive adjustments for item editor
+@media (max-width: 768px) {
+  .item-editor-container {
+    &__ribbon {
+      padding: var(--spacingVerticalXS, 4px) var(--spacingHorizontalXS, 4px) 0 var(--spacingHorizontalXS, 4px);
+    }
+
+    &__notification {
+      padding: 0 var(--spacingHorizontalXS, 4px);
+    }
+
+    &__content {
+      padding: var(--spacingVerticalXS, 4px);
+    }
+  }
+}
+
+// High contrast mode support for item editor
+@media (prefers-contrast: high) {
+  .item-editor-container {
+    &__ribbon,
+    &__notification,
+    &__content {
+      border: 1px solid transparent; // Will be visible in high contrast mode
+    }
+  }
+}
+
+// ============================================================================
+// Ribbon Styles - Shared across items
+// ============================================================================
+
+// Ribbon header layout with tabs/back button on left and action buttons on right
+.ribbon-container .ribbon-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0;
+    min-height: 36px;
+}
+
+.ribbon-container .ribbon-header__left {
+    display: flex;
+    align-items: center;
+    flex: 1; // Take available space
+    min-width: 0; // Allow shrinking
+    min-height: 36px;
+}
+
+.ribbon-container .ribbon-header__right {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; // Don't shrink the right buttons
+    margin-left: var(--spacingHorizontalM, 12px);
+    height: 28px; // Match reduced tab height
+}
+
+// Right side action buttons styling
+.ribbon-container .ribbon-header__right .toolbarContainer {
+    margin: 0 !important; // Remove default margins
+    padding: 2px 4px !important; // Compact padding for header
+    background: transparent !important; // No background in header
+    box-shadow: none !important; // No shadow in header
+    border: 1px solid var(--colorNeutralStroke2, #e1e1e1) !important; // Subtle border
+    border-radius: var(--borderRadiusXLarge) !important;
+    height: 28px !important; // Match reduced tab height
+    max-height: 28px !important;
+    min-height: 28px !important;
+}
+
+.ribbon-container .ribbon-header__right .toolbarContainer > div[role="toolbar"] {
+    height: 24px !important; // Slightly smaller for compact header look
+    min-height: 24px !important;
+    max-height: 24px !important;
+}
+
+.ribbon-container .toolbarContainer {
+    // Fabric UX guideline: Use appropriate height for touch targets (minimum 32px)
+    height: auto; // Allow flexible height for content
+    border-radius: var(--borderRadiusXLarge); // Use Fabric design tokens
+    background: var(--colorNeutralBackground1, #ffffff);
+    box-shadow: var(--shadow4, 0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.14));
+    margin-bottom: 8px; // Space below toolbar
+    padding: 4px 8px; // Add padding for content spacing
+    display: flex;
+    align-items: center;
+    gap: 4px; // Spacing between toolbar items
+    min-height: 32px;
+
+}
+
+.ribbon-container .toolbarContainer > div[role="toolbar"] {
+  padding: 0 !important;
+  height: 28px; // Match reduced tab height
+  min-height: 28px;
+  max-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.ribbon-container button[role="tab"] {
+    // Fabric UX guideline: Tabs should have adequate padding for accessibility
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+// Fix for TabList spacing issues in ribbon with proper class structure
+.ribbon-container .ribbon-tablist-container {
+    display: flex !important;
+    width: auto !important;
+    min-height: 36px;
+}
+
+.ribbon-container .ribbon-tablist {
+    display: flex !important;
+    gap: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom: 0px solid var(--colorNeutralStroke2, #e1e1e1);
+    margin-bottom: 0 !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: auto !important;
+}
+
+.ribbon-container .ribbon-tab-item {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    margin-right: 0 !important;
+    position: relative !important;
+    min-height: 32px;
+    padding-bottom: 4px !important;
+}
+
+.ribbon-container .ribbon-tab-wrapper {
+    text-align: center !important;
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.ribbon-container .ribbon-tab-button {
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    border-radius: var(--borderRadiusXLarge) var(--borderRadiusXLarge) 0 0 !important;
+    position: relative !important;
+    min-width: auto !important;
+    max-width: none !important;
+    width: auto !important;
+    padding: 0 !important;
+    height: 100% !important; // Use full height like reference
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+}
+
+.ribbon-container .ribbon-tab-content {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 16px !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+    font-family: var(--fontFamilyBase) !important;
+    font-size: var(--fontSizeBase300) !important;
+    font-weight: var(--fontWeightRegular) !important;
+    line-height: var(--lineHeightBase300) !important;
+    color: var(--colorNeutralForeground2) !important;
+    transition: all 0.1s ease !important;
+    height: 100% !important; // Use full height like reference
+    white-space: nowrap !important;
+    user-select: none !important;
+}
+
+.ribbon-container .ribbon-tab-label {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-left: 4px !important;
+    margin-right: 4px !important;
+}
+
+// Hover state for tabs
+.ribbon-container .ribbon-tab-button:hover .ribbon-tab-content {
+    background-color: var(--colorNeutralBackground1Hover) !important;
+    color: var(--colorNeutralForeground1) !important;
+    border-radius: var(--borderRadiusXLarge) var(--borderRadiusXLarge) 0 0 !important;
+}
+
+// Selected state for tabs
+.ribbon-container .ribbon-tab-button[aria-selected="true"] .ribbon-tab-content {
+    color: var(--colorNeutralForeground1) !important;
+    font-weight: var(--fontWeightSemibold) !important;
+    border-radius: var(--borderRadiusXLarge) var(--borderRadiusXLarge) 0 0 !important;
+    position: relative !important;
+}
+
+// Selection indicator - positioned to span full tab width
+.ribbon-container .ribbon-tab-button[aria-selected="true"]::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 2px !important;
+    right: 2px !important;
+    height: 2px !important;
+    background: var(--colorCompoundBrandStroke, #0078d4) !important;
+    border-radius: 1px 1px 0 0 !important;
+}
+
+// Focus state for accessibility
+.ribbon-container .ribbon-tab-button:focus-visible {
+    outline: 2px solid var(--colorCompoundBrandStroke, #0078d4) !important;
+    outline-offset: 2px !important;
+    border-radius: var(--borderRadiusXLarge) !important;
+}
+
+// Disabled state
+.ribbon-container .ribbon-tab-button[aria-disabled="true"] .ribbon-tab-content {
+    color: var(--colorNeutralForegroundDisabled) !important;
+    cursor: not-allowed !important;
+}
+
+// CRITICAL FIX: Hide the Fluent UI reserved space that causes layout shifts
+.ribbon-container .fui-Tab__content--reserved-space {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+    opacity: 0 !important;
+}
+
+// Hide any existing Fluent UI selection indicators that use positioning
+// BUT preserve our custom selection indicator
+.ribbon-container [role="tablist"] button[role="tab"]:not([aria-selected="true"])::after,
+.ribbon-container [role="tablist"] button[role="tab"]::before,
+.ribbon-container .ribbon-tab-button:not([aria-selected="true"])::after,
+.ribbon-container .ribbon-tab-button::before,
+.ribbon-container .ribbon-tab-wrapper::after,
+.ribbon-container .ribbon-tab-wrapper::before {
+    display: none !important;
+    content: none !important;
+}
+
+// Also target any spans that might cause spacing issues in tab content
+.ribbon-container .ribbon-tab-button span.fui-Tab__content--reserved-space {
+    display: none !important;
+}
+
+// Force consistent layout for all internal Fluent UI tab elements
+.ribbon-container [role="tablist"] button[role="tab"] span {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    flex: none !important;
+}
+
+.ribbon-container [role="tablist"] button[role="tab"] .fui-Tab__content {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    flex: none !important;
+}
+
+// Back button container for detail views
+.ribbon-back-button-container {
+    display: flex;
+    align-items: center;
+    padding: 0px var(--spacingHorizontalS, 8px);
+    height: 28px; // Match reduced tab height
+    min-height: 28px;
+    max-height: 28px;
+    
+    button {
+        display: flex;
+        align-items: center;
+        gap: var(--spacingHorizontalXS, 4px);
+        height: 28px; // Match reduced tab height
+        min-height: 28px;
+        max-height: 28px;
+        padding: 0px var(--spacingHorizontalS, 8px);
+        font-weight: var(--fontWeightSemibold, 600);
+        // Match tab button styling for consistency
+        border-radius: var(--borderRadiusMedium, 4px);
+    }
+}
+
+// ============================================================================
+// Empty State Styles - Used in ItemEditorEmptyView component
+// ============================================================================
+// Note: Background, box-shadow, and border-radius are handled by ItemEditorDefaultView
+// This component only provides content layout and centering
+
+.item-editor-view-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .empty-state-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px; // Default max-width, can be overridden via inline style
+
+    .empty-state-image {
+      width: 200px;
+      height: 200px;
+      max-width: 100%; // Responsive
+      height: auto;
+      object-fit: contain;
+    }
+
+    .empty-state-text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacingVerticalS, 8px);
+      text-align: center;
+
+      .empty-state-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacingVerticalS, 8px);
+
+        h2 {
+          color: var(--colorNeutralForeground1, #242424);
+          font-size: 24px;
+          font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+          font-weight: var(--fontWeightSemibold, 600);
+          line-height: var(--lineHeightBase500, 28px);
+          margin: 0;
+          padding: 0;
+        }
+
+        .empty-state-description {
+          color: var(--colorNeutralForeground2, #424242);
+          font-size: var(--fontSizeBase300, 14px);
+          font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+          font-weight: var(--fontWeightRegular, 400);
+          line-height: var(--lineHeightBase300, 20px);
+          text-align: center;
+          margin: 0;
+          padding: 0;
+          max-width: 376px;
+        }
+      }
+    }
+
+    // Tile card layout for tasks/actions
+    .default-view-inner-container {
+      display: flex;
+      flex-wrap: nowrap; // Force single row
+      justify-content: center;
+      gap: 0; // Remove gap, use margins on individual cards
+      margin-top: var(--spacingVerticalL, 16px);
+      overflow-x: auto; // Allow horizontal scroll if needed
+      padding-bottom: 10px; // Add bottom padding to prevent shadow cutoff
+    }
+
+    .tile-card-body {
+      display: flex;
+      flex-direction: column;
+      width: 184px;
+      height: 188px;
+      flex-shrink: 0;
+      
+      margin-left: var(--spacingHorizontalXS);
+      margin-right: var(--spacingHorizontalL);
+      
+      background-color: var(--colorNeutralBackground1);
+      border: 1px solid var(--colorNeutralStroke1);
+      border-radius: var(--borderRadiusMedium);
+      box-shadow: var(--shadow4);
+      color: var(--colorNeutralForeground1);
+      cursor: pointer;
+      
+      transition: all var(--durationFast) var(--curveEasyEase);
+
+      &:focus {
+        outline: none;
+      }
+
+      .tile-card-children {
+        background-color: var(--colorBrandBackground2);
+        width: 100%;
+        height: 94px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--borderRadiusMedium) var(--borderRadiusMedium) 0 0;
+
+        svg {
+          width: 32px;
+          height: 32px;
+          fill: var(--colorBrandForeground2);
+        }
+      }
+
+      .tile-card-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: var(--spacingVerticalM) var(--spacingHorizontalM);
+        text-align: left;
+
+        .tile-card-title {
+          font-weight: var(--fontWeightSemibold);
+          font-size: var(--fontSizeBase300);
+          color: var(--colorNeutralForeground1);
+          margin-bottom: var(--spacingVerticalXS);
+        }
+
+        .tile-card-description {
+          font-size: var(--fontSizeBase200);
+          color: var(--colorNeutralForeground2);
+          line-height: var(--lineHeightBase200);
+        }
+      }
+    }
+  }
+}
+
+// Responsive adjustments for empty state
+@media (max-width: 768px) {
+  .item-editor-view-empty {
+    padding: var(--spacingVerticalL, 16px);
+
+    .empty-state-content {
+      .empty-state-image {
+        width: 150px;
+        height: 150px;
+      }
+
+      .empty-state-text-container {
+        padding: 0 var(--spacingHorizontalL, 16px);
+
+        .empty-state-header {
+          h2 {
+            font-size: var(--fontSizeBase400, 16px);
+            line-height: var(--lineHeightBase400, 22px);
+          }
+
+          .empty-state-description {
+            font-size: var(--fontSizeBase200, 12px);
+            line-height: var(--lineHeightBase200, 16px);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// View Layout Styles - Used in ItemEditorDefaultView component
+// ============================================================================
+
+/**
+ * ItemEditorDefaultView Layout System
+ * 
+ * Provides a flexible two-column layout with optional left panel and required center content.
+ * Follows Fabric UX System guidelines for editor layouts.
+ * 
+ * ## Layout Structure
+ * - Optional left panel (navigation, tree view, file list)
+ * - Required center content (main workspace/canvas)
+ * - Collapsible left panel support
+ * - Responsive overflow handling
+ * 
+ * ## Usage
+ * This is used by the ItemEditorDefaultView component, which is placed inside
+ * ItemEditor's content area (after the ribbon).
+ */
+.item-editor-view {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  // Top Section: Contains left panel and center content in a row layout
+  &__top-section {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    //gap: var(--spacingHorizontalS, 6px);
+    min-height: 0; // Allow flex shrinking
+  }
+
+  // Left Panel (Optional)
+  &__left {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--colorNeutralBackground1, #ffffff);
+    border-radius: var(--borderRadiusXLarge) 0 0 var(--borderRadiusXLarge);
+    box-shadow: var(--shadow4, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14));
+    overflow: hidden;
+    position: relative;
+
+    // Collapsed state styling
+    &.collapsed {
+      width: auto !important;
+      min-width: auto !important;
+    }
+
+    // Header with title and toggle button
+    &-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1px 0px 0px 12px;
+      min-height: 40px;
+
+      &.collapsed {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 8px 0; // 8px top & bottom, 0 left & right
+        border-bottom: none;
+        width: 40px;
+        height: 100%;
+        gap: var(--spacingVerticalS, 8px);
+        overflow: visible;
+      }
+    }
+
+    // Vertical title styling for collapsed state
+    &-title-vertical {
+      writing-mode: vertical-lr;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+      white-space: nowrap;
+      font-size: 16px !important;
+      line-height: 1.2;
+      flex: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      color: var(--colorNeutralForeground1) !important;
+      font-weight: 600 !important;
+      padding: 0;
+      align-self: center;
+      align-content: center;
+    }
+
+    // Horizontal title styling for expanded state
+    &-title-horizontal {
+      font-size: 16px !important;
+      font-weight: 600 !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+
+    // Expand button styling for collapsed state
+    &-expand-button {
+      flex-shrink: 0;
+      margin-bottom: 0;
+      align-self: center;
+      padding: 0 !important; // Remove default button padding
+    }
+
+    // Collapse button styling for expanded state
+    &-collapse-button {
+      flex-shrink: 0;
+      padding: 0 !important; // Remove default button padding
+      min-height: 32px;
+    }
+
+    // Content area with scrolling
+    &-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0;
+
+      // Custom scrollbar styling - Fabric UX guideline
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--colorNeutralStroke1, #d1d1d1);
+        border-radius: var(--borderRadiusMedium, 4px);
+        
+        &:hover {
+          background: var(--colorNeutralStroke1Hover, #b3b3b3);
+        }
+      }
+    }
+  }
+
+  // Resize Handle (for resizable panels)
+  &__resize-handle {
+    width: 0px; /* No visible width - only the hit area */
+    background: transparent;
+    cursor: col-resize;
+    position: relative;
+    flex-shrink: 0;
+    z-index: 10;
+    
+    // Hover state - show the visual indicator
+    &:hover {
+      background: transparent; /* Keep transparent, use ::after for visual */
+    }
+    
+    // Active/resizing state
+    &.resizing {
+      background: transparent; /* Keep transparent, use ::after for visual */
+    }
+    
+    // Add a minimal hit area for easier interaction
+    &::before {
+      content: '';
+      position: absolute;
+      left: -2px;
+      right: -2px;
+      top: 0;
+      bottom: 0;
+      background: transparent;
+    }
+    
+    // Visual indicator on hover only
+    &:hover::after,
+    &.resizing::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1px;
+      height: 40px;
+      background: var(--colorBrandBackground, #0078d4);
+      border-radius: 1px;
+      box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // Center Content Area (Required)
+  &__center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--colorNeutralBackground1, #ffffff);
+    border-radius: var(--borderRadiusXLarge, 8px); 
+    box-shadow: var(--shadow4, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14));
+    padding: 0;
+    min-width: 0; // Prevent flex item from overflowing
+    position: relative; // Establish positioning context
+
+    // SCROLLING RESPONSIBILITY: ItemEditor center panel handles ALL overflow
+    // Individual item components should NOT implement their own scrolling
+    overflow-y: auto; // Always scroll vertically when content exceeds height
+    overflow-x: hidden; // Never allow horizontal scrolling
+
+    &[data-testid="item-editor-view-center--with-left-panel"] {
+    border-radius: 0 var(--borderRadiusXLarge, 8px) var(--borderRadiusXLarge, 8px) 0;
+  }
+
+    // Custom scrollbar styling - Fabric UX guideline
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--colorNeutralStroke1, #d1d1d1);
+      border-radius: var(--borderRadiusMedium, 4px);
+      
+      &:hover {
+        background: var(--colorNeutralStroke1Hover, #b3b3b3);
+      }
+    }
+
+    // Child content should grow naturally - NO overflow handling at child level
+    > * {
+      max-width: 100%; // Prevent horizontal overflow
+      // NO height restrictions - let content grow naturally
+      // NO overflow properties - parent handles all scrolling
+    }
+  }
+
+  // Bottom Panel (Optional)
+  &__bottom {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--colorNeutralBackground1, #ffffff);
+    border-radius: var(--borderRadiusXLarge);
+    box-shadow: var(--shadow4, 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.14));
+    overflow: hidden;
+    margin-top: var(--spacingVerticalS, 6px);
+    padding: 0;
+    min-width: 0; // Prevent flex item from overflowing
+
+    // Allow content to scroll if needed
+    > * {
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+  }
+}
+
+// Responsive adjustments for view layout
+@media (max-width: 768px) {
+  .item-editor-view {
+    &__top-section {
+      flex-direction: column;
+      gap: var(--spacingVerticalS, 6px);
+    }
+
+    &__left {
+      width: 100% !important; // Override inline width on mobile
+      max-height: 40vh;
+
+      &-header.collapsed {
+        writing-mode: initial;
+        text-orientation: initial;
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    &__center {
+      padding: 0;
+    }
+
+    &__bottom {
+      max-height: 30vh;
+    }
+  }
+}
+
+// High contrast mode support for view
+@media (prefers-contrast: high) {
+  .item-editor-view {
+    &__left,
+    &__center,
+    &__bottom {
+      border: 1px solid transparent; // Will be visible in high contrast mode
+    }
+
+    &__left-header {
+      border-bottom: 1px solid transparent;
+    }
+  }
+}
+
+// ============================================================================
+// Loading Progress Styles - Standard Fabric UX System Pattern
+// ============================================================================
+
+/**
+ * Loading progress indicator following Fabric UX System guidelines.
+ * 
+ * This provides a standard indeterminate progress indicator for loading states
+ * that follows Microsoft Fabric design patterns.
+ * 
+ * ## Design Principles
+ * - Indeterminate state for unknown duration operations
+ * - Non-blocking interaction pattern
+ * - Accessible with proper ARIA support
+ * - Centered layout for full-page loading states
+ * 
+ * ## Usage
+ * Use this for item editor loading states and other long-running operations.
+ * 
+ * ## Example
+ * ```tsx
+ * <div className="item-editor-loading-container" role="progressbar" aria-label="Loading..." aria-busy="true">
+ *   <div className="item-editor-loading-icon">
+ *     <img src="/assets/icon.png" alt="" />
+ *   </div>
+ *   <div className="item-editor-loading-text">Loading item...</div>
+ *   <div className="item-editor-loading-progress">
+ *     <div className="item-editor-loading-progress-fill"></div>
+ *   </div>
+ * </div>
+ * ```
+ */
+.item-editor-loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  gap: var(--spacingVerticalXL);
+  background-color: var(--colorNeutralBackground2);
+}
+
+.item-editor-loading-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacingVerticalM);
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  // Support for Fluent UI icon components (rendered as SVG or span)
+  svg, span {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.item-editor-loading-text {
+  font-size: var(--fontSizeBase400);
+  font-weight: var(--fontWeightSemibold);
+  color: var(--colorNeutralForeground1);
+  font-family: var(--fontFamilyBase);
+  line-height: var(--lineHeightBase400);
+}
+
+.item-editor-loading-progress {
+  width: 300px;
+  height: 4px;
+  background-color: var(--colorNeutralBackground5);
+  border-radius: var(--borderRadiusMedium);
+  overflow: hidden;
+  position: relative;
+}
+
+.item-editor-loading-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    var(--colorBrandBackground) 45%, 
+    var(--colorBrandBackground) 65%, 
+    transparent 100%
+  ); // Add fade effect with gradient
+  width: 30%;
+  position: absolute;
+  border-radius: var(--borderRadiusMedium); // Add border radius to match container
+  animation: progress-indeterminate 2s ease-in-out infinite;
+}
+
+// Indeterminate progress animation
+@keyframes progress-indeterminate {
+  0% {
+    left: -30%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+// Responsive adjustments for loading progress
+@media (max-width: 768px) {
+  .item-editor-loading-container {
+    gap: var(--spacingVerticalL);
+  }
+
+  .item-editor-loading-icon {
+    img, svg, span {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .item-editor-loading-text {
+    font-size: var(--fontSizeBase300);
+    line-height: var(--lineHeightBase300);
+  }
+
+  .item-editor-loading-progress {
+    width: 240px;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .item-editor-loading-container {
+    border: 1px solid transparent; // Will be visible in high contrast mode
+  }
+
+  .item-editor-loading-progress {
+    border: 1px solid transparent;
+  }
+
+  .item-editor-loading-progress-fill {
+    border: 1px solid transparent;
+  }
+}
+
+// ============================================================================
+// RIBBON ACTION BUTTONS
+// ============================================================================
+
+/**
+ * Styling for ribbon action buttons - real button appearance with icon + text
+ * These are the right-side action buttons in ribbons (Trial, Share, etc.)
+ */
+
+.ribbon-action-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0 !important; // No gap between icon and text
+  height: 24px !important; // Total height: 20px content + 2px padding + 2px border = 24px
+  padding: 1px 8px !important;
+  border-radius: var(--borderRadiusMedium) !important;
+  font-size: var(--fontSizeBase200) !important;
+  font-weight: var(--fontWeightMedium) !important;
+  font-family: var(--fontFamilyBase) !important;
+  line-height: var(--lineHeightBase200) !important;
+  cursor: pointer !important;
+  transition: all var(--durationFaster) var(--curveEasyEase) !important;
+  border: 1px solid transparent !important;
+  white-space: nowrap !important;
+  margin-left: 8px !important; // Add 8px left margin
+  min-width: auto !important; // Remove any minimum width constraints
+  width: auto !important; // Let the button size to its content
+  
+  // Icon styling
+  svg, .ribbon-action-button__icon {
+    width: 20px !important; // Updated from 16px to match reference
+    height: 20px !important; // Updated from 16px to match reference
+    font-size: 20px !important; // Add font-size for icon fonts
+    flex-shrink: 0 !important;
+  }
+  
+  // Remove default icon margins from Fluent UI Button component
+  .fui-Button__icon {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+  
+  // Text styling
+  .fui-Button__label, span:not(.ribbon-action-button__dropdown-icon) {
+    font-size: var(--fontSizeBase200) !important;
+    font-weight: var(--fontWeightMedium) !important;
+    color: inherit !important;
+  }
+
+  // Secondary appearance (default)
+  &[data-appearance="secondary"] {
+    background-color: var(--colorNeutralBackground1) !important;
+    color: var(--colorNeutralForeground1) !important;
+    border-color: var(--colorNeutralStroke1) !important;
+    
+    &:hover {
+      background-color: var(--colorNeutralBackground1Hover) !important;
+      border-color: var(--colorNeutralStroke1Hover) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:active {
+      background-color: var(--colorNeutralBackground1Pressed) !important;
+      border-color: var(--colorNeutralStroke1Pressed) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:disabled {
+      background-color: var(--colorNeutralBackgroundDisabled) !important;
+      border-color: var(--colorNeutralStrokeDisabled) !important;
+      color: var(--colorNeutralForegroundDisabled) !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  // Primary appearance
+  &[data-appearance="primary"] {
+    background-color: var(--colorBrandBackground) !important;
+    color: var(--colorNeutralForegroundOnBrand) !important;
+    border-color: var(--colorBrandBackground) !important;
+    
+    &:hover {
+      background-color: var(--colorBrandBackgroundHover) !important;
+      border-color: var(--colorBrandBackgroundHover) !important;
+      color: var(--colorNeutralForegroundOnBrand) !important;
+    }
+    
+    &:active {
+      background-color: var(--colorBrandBackgroundPressed) !important;
+      border-color: var(--colorBrandBackgroundPressed) !important;
+      color: var(--colorNeutralForegroundOnBrand) !important;
+    }
+    
+    &:disabled {
+      background-color: var(--colorNeutralBackgroundDisabled) !important;
+      border-color: var(--colorNeutralStrokeDisabled) !important;
+      color: var(--colorNeutralForegroundDisabled) !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  // Subtle appearance
+  &[data-appearance="subtle"] {
+    background-color: transparent !important;
+    color: var(--colorNeutralForeground1) !important;
+    border-color: transparent !important;
+    
+    &:hover {
+      background-color: var(--colorSubtleBackgroundHover) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:active {
+      background-color: var(--colorSubtleBackgroundPressed) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:disabled {
+      background-color: transparent !important;
+      color: var(--colorNeutralForegroundDisabled) !important;
+      cursor: not-allowed !important;
+    }
+  }
+
+  // Transparent appearance
+  &[data-appearance="transparent"] {
+    background-color: transparent !important;
+    color: var(--colorNeutralForeground1) !important;
+    border-color: transparent !important;
+    
+    &:hover {
+      background-color: var(--colorTransparentBackgroundHover) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:active {
+      background-color: var(--colorTransparentBackgroundPressed) !important;
+      color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &:disabled {
+      background-color: transparent !important;
+      color: var(--colorNeutralForegroundDisabled) !important;
+      cursor: not-allowed !important;
+    }
+  }
+}
+
+// Dropdown button specific styling
+.ribbon-action-button--dropdown {
+  // Dropdown icon (chevron) styling
+  .ribbon-action-button__dropdown-icon {
+    width: 16px !important;
+    height: 16px !important;
+    margin-left: var(--spacingHorizontalXXS) !important;
+    flex-shrink: 0 !important;
+    color: inherit !important;
+  }
+  
+  // Ensure proper icon positioning for dropdown buttons
+  .fui-Button__icon {
+    margin-right: 0 !important; // Remove default margin, we handle gap via flexbox
+  }
+}
+
+// Focus ring styling for action buttons
+.ribbon-action-button:focus-visible {
+  outline: 2px solid var(--colorBrandStroke1) !important;
+  outline-offset: 2px !important;
+  border-radius: var(--borderRadiusMedium) !important;
+}
+
+// Action button container in ribbon header (right side)
+.ribbon-header__right-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: var(--spacingHorizontalXS) !important;
+  
+  .ribbon-action-button {
+    margin: 0 !important; // Reset any inherited margins
+  }
+}
+
+// High contrast mode support for action buttons
+@media (prefers-contrast: high) {
+  .ribbon-action-button {
+    border-width: 2px !important;
+    
+    &[data-appearance="secondary"] {
+      border-color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &[data-appearance="primary"] {
+      border-color: var(--colorNeutralForeground1) !important;
+    }
+    
+    &[data-appearance="subtle"], 
+    &[data-appearance="transparent"] {
+      border-color: var(--colorNeutralForeground1) !important;
+      border-style: dashed !important;
+    }
+    
+    &:focus-visible {
+      outline-color: var(--colorNeutralForeground1) !important;
+      outline-width: 3px !important;
+    }
+  }
+}
+
+// Responsive adjustments for action buttons
+@media (max-width: 768px) {
+  .ribbon-action-button {
+    padding: var(--spacingVerticalXXS) var(--spacingHorizontalXS) !important;
+    font-size: var(--fontSizeBase100) !important;
+    
+    svg, .ribbon-action-button__icon {
+      width: 14px !important;
+      height: 14px !important;
+    }
+    
+    .ribbon-action-button__dropdown-icon {
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
+  
+  .ribbon-header__right-actions {
+    gap: var(--spacingHorizontalXXS) !important;
+  }
+}

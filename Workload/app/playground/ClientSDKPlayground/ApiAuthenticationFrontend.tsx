@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import { callAcquireFrontendAccessToken } from "../../controller/AuthenticationController";
 import { PageProps } from '../../App';
 
-import "../../styles.scss";
+import "../Playground.scss";
 
 export function ApiAuthenticationFrontend({ workloadClient }: PageProps) {
     const [acquireTokenError, setAcquireTokenError] = useState<string>('');

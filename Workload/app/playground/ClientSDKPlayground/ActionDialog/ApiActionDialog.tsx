@@ -4,7 +4,7 @@ import { ActionExample } from './ActionExample';
 import { MessageBoxExample } from './MessageBoxExample';
 import { SharedStateExample } from './SharedStateExample';
 import { ErrorMessageExample } from './ErrorMessageExample';
-import "../../../styles.scss";
+import "../../Playground.scss";
 import { TabContentProps } from '../ClientSDKPlaygroundModel';
 
 export function ApiActionDialog(props: TabContentProps) {

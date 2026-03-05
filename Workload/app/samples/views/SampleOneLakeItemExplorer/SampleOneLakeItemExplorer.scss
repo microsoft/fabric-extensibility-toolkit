@@ -1,0 +1,209 @@
+/**
+ * ============================================================================
+ * Sample OneLake Item Explorer - Component Styles
+ * ============================================================================
+ * 
+ * This file contains styles specific to the OneLake Item Explorer sample component.
+ * These styles are only used by this single sample and should not be in global styles.
+ * 
+ * ## Usage
+ * Import this file in SampleOneLakeItemExplorer.tsx:
+ * ```typescript
+ * import "./SampleOneLakeItemExplorer.scss";
+ * ```
+ * 
+ * ## Design Principles
+ * - Uses Fabric UX design tokens exclusively
+ * - Follows Microsoft Fabric UX System guidelines
+ * - Component-specific naming (no global pollution)
+ * 
+ * ## References
+ * - Fabric Design Tokens: https://aka.ms/fabric-tokens
+ * - Fluent UI v9: https://react.fluentui.dev/
+ */
+
+// ============================================================================
+// Explorer Container Styles
+// ============================================================================
+
+// Main explorer container with collapsible functionality
+.explorer {
+  min-width: 200px;
+  width: 25vw;
+  height: 70vh;
+  vertical-align: middle;
+  border-radius: var(--borderRadiusMedium, 8px);
+  background: var(--colorNeutralBackground1, #ffffff);
+  box-shadow: var(--shadow4, 0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.14));
+  margin: var(--spacingVerticalXS, 4px) 0;
+  padding: var(--spacingVerticalXS, 4px);
+  display: flex;
+  flex-direction: column;
+
+  // Top header section with title and collapse button
+  .top {
+    padding: var(--spacingVerticalXS, 4px) var(--spacingHorizontalM, 12px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+      font-size: var(--fontSizeBase400, 16px);
+      font-weight: var(--fontWeightSemibold, 600);
+      color: var(--colorNeutralForeground1, #242424);
+      margin: var(--spacingVerticalM, 12px);
+      line-height: var(--lineHeightBase400, 22px);
+    }
+  }
+
+  // Selector body containing the tree view
+  .selector-body {
+    display: flex;
+    align-items: start;
+    overflow: hidden;
+    flex: 1; // Take remaining space
+
+    .tree-container {
+      width: 100%;
+      overflow-y: auto;
+      padding: var(--spacingVerticalXS, 4px);
+
+      // Custom scrollbar styling
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--colorNeutralStroke1, #d1d1d1);
+        border-radius: var(--borderRadiusMedium, 4px);
+        
+        &:hover {
+          background: var(--colorNeutralStroke1Hover, #b3b3b3);
+        }
+      }
+    }
+  }
+
+  // Individual tree items
+  .selector-tree-item {
+    display: flex;
+    width: 100%;
+    align-items: center;
+  }
+
+  // Fluent UI TreeItemLayout truncation
+  .fui-TreeItemLayout__main {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  // Empty state / main body when no item selected
+  .main-body {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    gap: var(--spacingVerticalM, 12px);
+    padding: var(--spacingVerticalXL, 24px);
+
+    .add-button {
+      margin: 0;
+      width: 51px;
+      min-width: auto;
+      height: 32px;
+      font-size: var(--fontSizeBase300, 14px);
+    }
+
+    .add {
+      font-size: var(--fontSizeBase500, 20px);
+      font-weight: var(--fontWeightSemibold, 600);
+      color: var(--colorNeutralForeground1, #242424);
+      margin: 0;
+      padding: var(--spacingVerticalXL, 24px) 0;
+    }
+  }
+}
+
+// ============================================================================
+// Explorer States
+// ============================================================================
+
+// Hidden/collapsed state of explorer
+.hidden-explorer {
+  width: max-content;
+  min-width: auto;
+  flex-shrink: 0; // Don't shrink when collapsed
+}
+
+// Vertical text orientation for collapsed state
+.vertical-text {
+  writing-mode: vertical-lr;
+  text-orientation: mixed;
+}
+
+// ============================================================================
+// Tree Component Styles
+// ============================================================================
+
+// Tree view specific styles
+.tree {
+  --spacingHorizontalXXL: var(--spacingHorizontalL, 16px);
+  
+  // Selected item highlighting
+  .selected {
+    background-color: var(--colorNeutralBackground1Selected, #f5f5f5);
+    border-radius: var(--borderRadiusSmall, 2px);
+  }
+}
+
+// ============================================================================
+// Responsive Design
+// ============================================================================
+
+@media (max-width: 768px) {
+  .explorer {
+    width: 100%;
+    min-width: 100%;
+    height: 50vh; // Reduce height on mobile
+
+    .top {
+      h1 {
+        font-size: var(--fontSizeBase300, 14px);
+        margin: var(--spacingVerticalS, 8px);
+      }
+    }
+
+    .main-body {
+      padding: var(--spacingVerticalL, 16px);
+
+      .add {
+        font-size: var(--fontSizeBase400, 16px);
+        padding: var(--spacingVerticalL, 16px) 0;
+      }
+    }
+  }
+}
+
+// ============================================================================
+// High Contrast Mode Support
+// ============================================================================
+
+@media (prefers-contrast: high) {
+  .explorer {
+    border: 2px solid transparent; // Visible in high contrast mode
+
+    .tree .selected {
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+    }
+  }
+}

@@ -4,31 +4,17 @@
     "displayName": "Workload_Display_Name",
     "fullDisplayName": "Workload_Full_Display_Name",
     "description": "Workload_Description",
-    "favicon": "assets/images/HelloFabricWorkloadIcon.png",
+    "favicon": "assets/images/Workload_Icon.png",
     "icon": {
-      "name": "assets/images/HelloFabricWorkloadIcon.png"
+      "name": "assets/images/Workload_Icon.png"
     },
     "homePage": {
       "learningMaterials": [
         {
-          "title": "HelloWorld_GetStarted_1_Title",
-          "introduction": "HelloWorld_GetStarted_1_Sub_Title",
-          "description": "HelloWorld_GetStarted_1_Description",
-          "image": "assets/images/LearningMaterialTemplateCards.png",
-          "link": "https://aka.ms/get-started-learning-docs"
-        },
-        {
-          "title": "HelloWorld_GetStarted_2_Title",
-          "introduction": "HelloWorld_GetStarted_2_Sub_Title",
-          "description": "HelloWorld_GetStarted_2_Description",
-          "image": "assets/images/LearningMaterialTemplateCards.png",
-          "link": "https://aka.ms/get-started-learning-docs"
-        },
-        {
-          "title": "HelloWorld_GetStarted_3_Title",
-          "introduction": "HelloWorld_GetStarted_3_Sub_Title",
-          "description": "HelloWorld_GetStarted_3_Description",
-          "image": "assets/images/LearningMaterialTemplateCards.png",
+          "title": "Workload_Hub_GetStarted_1_Title",
+          "introduction": "Workload_Hub_GetStarted_1_Sub_Title",
+          "description": "Workload_Hub_GetStarted_1_Description",
+          "image": "assets/images/Workload_Hub_GetStarted_1.png",
           "link": "https://aka.ms/get-started-learning-docs"
         }
       ],
@@ -46,10 +32,10 @@
           "title": "HelloWorldItem_DisplayName",
           "description": "HelloWorldItem_Description",
           "icon": {
-            "name": "assets/images/HelloWorldItem-icon.png"
+            "name": "assets/images/HelloWorldItem_Icon.png"
           },
           "icon_small": {
-            "name": "assets/images/HelloWorldItem-icon.png"
+            "name": "assets/images/HelloWorldItem_Icon.png"
           },
           "availableIn": [
             "home",
@@ -67,11 +53,11 @@
     },
     "productDetail": {
       "publisher": "Name of publisher",
-      "slogan": "Workload_Hub_Workload_Slogan",
-      "description": "Workload_Hub_Workload_Description",
+      "slogan": "Workload_Hub_Slogan",
+      "description": "Workload_Hub_Description",
       "image": {
         "mediaType": 0,
-        "source": "assets/images/L2_page_banner.png"
+        "source": "assets/images/Workload_Hub_Banner.png"
       },
       "slideMedia": [
         {
@@ -80,7 +66,7 @@
         },
         {
           "mediaType": 0,
-          "source": "assets/images/slidesPicturesTemplate.png"
+          "source": "assets/images/Workload_Hub_SlideMedia_1.png"
         }
       ],
         "supportLink": {
@@ -89,7 +75,7 @@
           "help": {"url": "https://example.com/help"},
           "privacy": {"url": "https://example.com/privacy"},
           "terms": {"url": "https://example.com/terms"},
-          "license": {"url": "https://azuremarketplace.microsoft.com/sell"}
+          "license": {"url": "https://azuremarketplace.microsoft.com"} 
       }
     },
     "itemJobTypes" :["storeData", "others"],

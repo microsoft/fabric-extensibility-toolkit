@@ -48,6 +48,9 @@ foreach ($Key in $RequiredKeys) {
     }
 }
 
+# Extract the frontend url 
+$FrontendBaseUrl = $EnvConfig['FRONTEND_URL']
+
 # Get workspace ID from user or environment variable
 if (-not $DevWorkspaceId) {
     $DevWorkspaceId = $env:FABRIC_DEV_WORKSPACE_GUID
@@ -81,6 +84,7 @@ try {
     exit 1
 }
 
+
 ###############################################################################
 # Download the DevGateway
 ###############################################################################
@@ -113,13 +117,11 @@ Write-Host "🔧 Generating DevGateway configuration..." -ForegroundColor Blue
 
 $WorkloadName = $EnvConfig['WORKLOAD_NAME']
 $WorkloadVersion = $EnvConfig['WORKLOAD_VERSION']
-$BackendBaseUrl = $EnvConfig['BACKEND_URL']
 $ManifestPath = Join-Path $ManifestDir "$WorkloadName.$WorkloadVersion.nupkg"
 
 $DevGatewayConfig = @{
     WorkspaceGuid = $DevWorkspaceId
     ManifestPackageFilePath = $ManifestPath
-    WorkloadEndpointURL = $BackendBaseUrl
 }
 
 $DevGatewayFile = Join-Path $DevGatewayDir "workload-dev-mode.json"
@@ -130,7 +132,7 @@ Write-Host ""
 Write-Host "🎉 Developer environment setup completed!" -ForegroundColor Green
 Write-Host ""
 Write-Host "📋 Configuration Summary:" -ForegroundColor Yellow
-Write-Host "  Workspace GUID: $WorkspaceGuid" -ForegroundColor Cyan
+Write-Host "  Development Workspace: $DevWorkspaceId" -ForegroundColor Cyan
 Write-Host "  Workload Name: $WorkloadName" -ForegroundColor Cyan
 Write-Host "  Frontend URL: $FrontendBaseUrl" -ForegroundColor Cyan
 Write-Host ""

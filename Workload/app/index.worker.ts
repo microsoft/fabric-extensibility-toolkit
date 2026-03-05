@@ -48,7 +48,7 @@ export async function initialize(params: InitParams) {
                 await callPageOpen(workloadClient, sampleWorkloadName, `${path}/${createdItem.objectId}`);
                 return Promise.resolve({ succeeded: true });
 
-            case 'item.onCreationFailure':
+            case 'item.onCreationFailure': {
                 const failureData = data as ItemCreationFailureData;
                 await workloadClient.notification.open(
                     {
@@ -57,60 +57,43 @@ export async function initialize(params: InitParams) {
                         message: `Failed to create item, error code: ${failureData.errorCode}, result code: ${failureData.resultCode}`
                     });
                 return;
-
-
-            case 'sample.Action':
-                return callNotificationOpen(
-                    workloadClient,
-                    'Action executed',
-                    'Action executed via API',
-                    NotificationType.Success,
-                    NotificationToastDuration.Medium);
-
+            }
             case 'getItemSettings': {
                 const { item: createdItem } = data as ItemSettingContext;
                 const itemTypeName = createdItem.itemType.substring(createdItem.itemType.lastIndexOf('.') + 1);
 
                 return [
+                    //Route to about page
                     {
                         name: 'about',
                         displayName: t('Item_About_Label'),
                         workloadSettingLocation: {
                             workloadName: sampleWorkloadName,
-                            route: `/${itemTypeName}Item-about-page/${createdItem.objectId}`,
-                        },
-                        workloadIframeHeight: '1000px'
+                            route: `/${itemTypeName}Item-about/${createdItem.objectId}`,
+                        }
                     },
+                    //Route to custom settings page
                     {
-                        name: 'itemCustomSettings',
+                        name: 'customItemSettings',
                         displayName: t('Item_Settings_Label'),
                         icon: {
                             name: 'apps_20_regular',
                         },
                         workloadSettingLocation: {
                             workloadName: sampleWorkloadName,
-                            route: `/${itemTypeName}Item-settings-page/${createdItem.objectId}`,
-                        },
-                        workloadIframeHeight: '1000px'
+                            route: `/${itemTypeName}Item-settings/${createdItem.objectId}`,
+                        }
                     }
                 ];
-
-
             }
-            case 'open.ClientSDKPlaygroundPage':
-                return workloadClient.page.open({
-                    workloadName: sampleWorkloadName,
-                    route: {
-                        path: `/client-sdk-playground`,
-                    },
-                });
-            case 'open.DataApiSamplePage':
-                return workloadClient.page.open({
-                    workloadName: sampleWorkloadName,
-                    route: {
-                        path: `/data-playground`,
-                    },
-                });
+            case 'playground.sampleAction': {
+                return callNotificationOpen(
+                    workloadClient,
+                    'Action executed',
+                    'Action executed via API',
+                    NotificationType.Success,
+                    NotificationToastDuration.Medium);
+            }
             default:
                 throw new Error('Unknown action received');
         }

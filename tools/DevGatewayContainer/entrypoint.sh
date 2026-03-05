@@ -66,5 +66,4 @@ dotnet "DevGateway/Microsoft.Fabric.Workload.DevGateway.dll" \
     -LogLevel $LOG_LEVEL \
     -DevMode:UserAuthorizationToken $token \
     -DevMode:ManifestPackageFilePath $package_file_path \
-    -DevMode:WorkspaceGuid $DEV_WORKSPACE_ID \
-    -DevMode:WorkloadEndpointUrl http://host.docker.internal:${LOCAL_BACKEND_PORT}/workload
+    -DevMode:WorkspaceGuid $DEV_WORKSPACE_ID

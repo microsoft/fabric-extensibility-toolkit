@@ -6,7 +6,6 @@ import { OneLakeStorageClientItemWrapper } from "./OneLakeStorageClientItemWrapp
 import { ItemReference } from "../controller/ItemCRUDController";
 import { OneLakeStorageContainerMetadata } from "./FabricPlatformTypes";
 
-
 export const FILE_FOLDER_NAME = "Files"
 export const TABLE_FOLDER_NAME = "Tables"
 
@@ -183,7 +182,7 @@ export class OneLakeStorageClient extends FabricPlatformClient {
     }
   }
 
-  /**
+/**
    * Retrieves metadata for paths and files in a OneLake directory using the OneLake DFS API.
    * This method supports listing files, directories, and shortcuts with detailed metadata information.
    * 

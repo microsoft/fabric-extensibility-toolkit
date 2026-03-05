@@ -9,7 +9,7 @@ import {
     setRequestBody
 } from "./Store/apiAuthenticationSlice";
 import { PageProps } from '../../App';
-import "../../styles.scss";
+import "../Playground.scss";
 
 export function ApiAuthentication({ workloadClient }: PageProps) {
     const dispatch = useDispatch();

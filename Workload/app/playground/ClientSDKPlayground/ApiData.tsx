@@ -19,19 +19,19 @@ import {
     setMultiSelectionEnabled,
     setSelectedLinkedItem,
 } from "./Store/apiDataSlice";
-import "../../styles.scss";
+import "../Playground.scss";
 import { TabContentProps } from "./ClientSDKPlaygroundModel";
 import { callDatahubOpen, callDatahubWizardOpen } from "../../controller/DataHubController";
+import { getConfiguredWorkloadItemTypes } from "../../controller/ConfigurationController";
 
 export function ApiData(props: TabContentProps) {
-    const { sampleWorkloadName, workloadClient } = props;
-    const sampleItemType = sampleWorkloadName + "." + process.env.DEFAULT_ITEM_NAME;
+    const { workloadClient } = props;
+    const sampleItemType = getConfiguredWorkloadItemTypes()[0]; // Use the first configured item type
     /* * The sampleItemType is used to filter the items in the Data Hub.
-       * It is constructed using the workload name and the default item name from the environment variables.
+       * It is constructed using the configured workload item types from the environment variables.
        * This allows the Data Hub to display only items that match this type, ensuring that the user interacts with relevant data.
        */
-    const dataHubMsgBoxTypes = ["Lakehouse", 
-        process.env.WORKLOAD_NAME + "." + process.env.DEFAULT_ITEM_NAME];
+    const dataHubMsgBoxTypes = ["Lakehouse", ...getConfiguredWorkloadItemTypes()];
     const dispatch = useDispatch();
 
     const {

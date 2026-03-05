@@ -108,8 +108,7 @@ GitHub Copilot recognizes and expands:
 ---
 
 **Reference**: For complete step-by-step instructions, always consult `.ai/commands/workload/runWorkload.md` first, then apply these Copilot-specific enhancements.
-    "ManifestPackageFilePath": "path-to-manifest-package.nupkg",
-    "WorkloadEndpointURL": "http://127.0.0.1:5000/workload"
+    "ManifestPackageFilePath": "path-to-manifest-package.nupkg"
 }
 ```
 

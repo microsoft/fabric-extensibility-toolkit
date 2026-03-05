@@ -15,9 +15,10 @@
     "ItemEditor_Ribbon_Settings_Label": "Settings",
     "ItemEditor_Saved_Notification_Title": "Item saved",
     "ItemEditor_Saved_Notification_Text": "{{itemName}} saved successfully.",
+    "ItemEditor_SaveFailed_Notification_Title": "Save failed",
+    "ItemEditor_SaveFailed_Notification_Text": "Failed to save {{itemName}}.",
     "HelloWorldItemEditor_Title": "Hello World Item Editor",
     "HelloWorldItemEditor_Definition_Message_Label": "Item Definition",
-    "HelloWorldItemEditor_LoadingProgressBar_Text": "Loading Hello World item ...",
     "HelloWorldItemEditorEmpty_Message": "Let's say hello to {{itemName}}!",
     "HelloWorldItemEditorEmpty_Button": "Save item"
 }

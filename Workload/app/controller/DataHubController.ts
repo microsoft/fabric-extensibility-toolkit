@@ -27,7 +27,11 @@ export async function callDatahubWizardOpen(
             datahubCompactViewConfig: {
                 supportedTypes: supportedTypes,
                 multiSelectionEnabled: multiSelectionEnabled,
-                workspaceNavigationEnabled: workspaceNavigationEnabled
+                workspaceNavigationEnabled: workspaceNavigationEnabled,
+                hostDetails: {
+                    experience: 'sample experience 3rd party', // Change this to reflect your team's process, e.g., "Create Shortcut for itemType" 
+                    scenario: 'sample scenario 3rd party', // Adjust this to the specific action, e.g., "Select Lakehouse" 
+                }
             } as DatahubCompactViewConfig
         } as DatahubCompactViewPageConfig,
         oneLakeExplorerPageConfig: {

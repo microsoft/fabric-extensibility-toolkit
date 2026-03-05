@@ -48,8 +48,7 @@ Get-Content "config\DevGateway\workload-dev-mode.json"
 ```json
 {  
     "WorkspaceGuid": "your-workspace-id-here",
-    "ManifestPackageFilePath": "path-to-manifest-package.nupkg",
-    "WorkloadEndpointURL": "http://127.0.0.1:5000/workload"
+    "ManifestPackageFilePath": "path-to-manifest-package.nupkg"
 }
 ```
 

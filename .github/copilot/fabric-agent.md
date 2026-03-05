@@ -81,9 +81,10 @@ You have access to both public Microsoft Fabric knowledge and project-specific c
 
 Every workload item requires exactly these components:
 ```typescript
-[ItemName]ItemModel.ts        // Data interface and state
+[ItemName]ItemDefinition.ts        // Data interface and state
 [ItemName]ItemEditor.tsx      // Main editing experience  
-[ItemName]ItemEditorEmpty.tsx // Initial setup/onboarding
+[ItemName]ItemEditorEmptyView.tsx // Initial setup/onboarding screen
+[ItemName]ItemEditorDefaultView.tsx // Default view for items to edit
 [ItemName]ItemEditorRibbon.tsx// Toolbar and commands
 ```
 

@@ -17,7 +17,7 @@ import {
 } from "@fluentui/react-components";
 import { Save24Regular } from "@fluentui/react-icons";
 import { useTranslation } from "react-i18next";
-import "../../styles.scss";
+import "../Playground.scss";
 import { TabContentProps } from "./ClientSDKPlaygroundModel";
 import { RootState } from "./Store/Store";
 import { callLanguageGet, callSettingsOnChange } from "../../controller/SettingsController";

@@ -1,0 +1,209 @@
+/**
+ * ============================================================================
+ * OneLake View Control - Core Tree Styles
+ * ============================================================================
+ * 
+ * This file contains styles specific to the OneLake View control.
+ * These styles focus on the tree functionality and should not include
+ * header, layout, or collapsible container styles.
+ * 
+ * ## Usage
+ * Import this file in OneLakeView.tsx:
+ * ```typescript
+ * import "./OneLakeView.scss";
+ * ```
+ * 
+ * ## Design Principles
+ * - Uses Fabric UX design tokens exclusively
+ * - Follows Microsoft Fabric UX System guidelines
+ * - Component-specific naming (no global pollution)
+ * - Focuses on tree functionality only
+ * 
+ * ## References
+ * - Fabric Design Tokens: https://aka.ms/fabric-tokens
+ * - Fluent UI v9: https://react.fluentui.dev/
+ */
+
+// ============================================================================
+// Core Tree Container Styles
+// ============================================================================
+
+.onelake-view__container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.onelake-view__tree {
+  --spacingHorizontalXXL: var(--spacingHorizontalL, 16px);
+  display: flex;
+  align-items: start;
+  overflow: hidden;
+  flex: 1; // Take remaining space
+  height: 100%; // Ensure full height is available
+
+  // Selected item highlighting
+  .selected {
+    background-color: var(--colorNeutralBackground1Selected, #f5f5f5);
+    border-radius: var(--borderRadiusSmall, 2px);
+  }
+}
+
+.onelake-view__tree-container {
+  width: 100%;
+  overflow-y: auto;
+  padding: var(--spacingVerticalXS, 4px);
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--colorNeutralStroke1, #d1d1d1);
+    border-radius: var(--borderRadiusMedium, 4px);
+    
+    &:hover {
+      background: var(--colorNeutralStroke1Hover, #b3b3b3);
+    }
+  }
+}
+
+.onelake-view__subtree {
+  --spacingHorizontalXXL: var(--spacingHorizontalL, 16px);
+  
+  // Selected item highlighting
+  .selected {
+    background-color: var(--colorNeutralBackground1Selected, #f5f5f5);
+    border-radius: var(--borderRadiusSmall, 2px);
+  }
+}
+
+// ============================================================================
+// Tree Item Styles
+// ============================================================================
+
+// Individual tree items
+.onelake-view__tree-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+// Fluent UI TreeItemLayout truncation
+.onelake-view__tree .fui-TreeItemLayout__main {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+// ============================================================================
+// State Styles
+// ============================================================================
+
+// Empty state
+.onelake-view__empty {
+  display: flex;
+  min-height: 200px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: var(--spacingVerticalM, 12px);
+  padding: var(--spacingVerticalXL, 24px);
+  color: var(--colorNeutralForeground2, #616161);
+  flex: 1; // Take available space
+  
+  p {
+    margin: 0;
+    font-size: var(--fontSizeBase300, 14px);
+  }
+
+  .add {
+    font-size: var(--fontSizeBase300, 14px);
+    font-weight: var(--fontWeightSemibold, 600);
+    color: var(--colorNeutralForeground1, #323130);
+  }
+
+  .add-button {
+    margin-top: var(--spacingVerticalS, 8px);
+  }
+}
+
+// Loading state
+.onelake-view__loading {
+  display: flex;
+  min-height: 200px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacingVerticalXL, 24px);
+  flex: 1; // Take available space
+}
+
+// Error state
+.onelake-view__error {
+  display: flex;
+  min-height: 200px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  gap: var(--spacingVerticalM, 12px);
+  padding: var(--spacingVerticalXL, 24px);
+  color: var(--colorPaletteRedForeground1, #d13438);
+  flex: 1; // Take available space
+  
+  p {
+    margin: 0;
+    font-size: var(--fontSizeBase300, 14px);
+    color: var(--colorNeutralForeground2, #616161);
+  }
+}
+
+// ============================================================================
+// High Contrast Mode Support
+// ============================================================================
+
+@media (prefers-contrast: high) {
+  .onelake-view__tree {
+    .selected {
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+    }
+  }
+  
+  .onelake-view__subtree {
+    .selected {
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+    }
+  }
+}
+
+// ============================================================================
+// Responsive Design
+// ============================================================================
+
+@media (max-width: 768px) {
+  .onelake-view__tree-container {
+    padding: var(--spacingVerticalXXS, 2px);
+  }
+  
+  .onelake-view__empty,
+  .onelake-view__loading,
+  .onelake-view__error {
+    padding: var(--spacingVerticalL, 16px);
+    
+    p {
+      font-size: var(--fontSizeBase200, 12px);
+    }
+  }
+}

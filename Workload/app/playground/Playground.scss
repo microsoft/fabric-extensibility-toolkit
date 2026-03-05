@@ -1,0 +1,395 @@
+/**
+ * ============================================================================
+ * Playground - Specific Styles
+ * ============================================================================
+ * 
+ * This file contains styles specific to the Playground components.
+ * These styles are shared across multiple playground views (ClientSDK, Data, etc.)
+ * 
+ * ## Usage
+ * Import this file in playground components that need these shared styles:
+ * ```typescript
+ * import "../Playground.scss";
+ * ```
+ * 
+ * ## Components Using These Styles
+ * - ClientSDKPlayground
+ * - DataPlayground
+ * 
+ * ## Design Principles
+ * - Uses Fabric UX design tokens exclusively
+ * - Follows Microsoft Fabric UX System guidelines
+ * - Consistent with global styles architecture
+ * 
+ * ## References
+ * - Fabric Design Tokens: https://aka.ms/fabric-tokens
+ * - Fluent UI v9: https://react.fluentui.dev/
+ */
+
+// ============================================================================
+// Playground Container Styles
+// ============================================================================
+
+// Main playground container - Provides consistent layout for all playground views
+.playground-container {
+  background: var(--colorNeutralBackground2, #f3f2f1);
+  padding: var(--spacingHorizontalM, 8px);
+  height: 100%;
+  overflow-y: auto; // Allow scrolling when content overflows
+}
+
+// Content cards within playground
+.playground-container .main {
+  border-radius: var(--borderRadiusMedium, 4px);
+  background: var(--colorNeutralBackground1, #ffffff); 
+  box-shadow: var(--shadow4, 0 0 2px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.14));
+  margin: 5px 0;
+  padding: var(--spacingVerticalM, 12px) var(--spacingHorizontalM, 16px);
+}
+
+// Description text formatting - preserves whitespace for formatted text
+.description {
+  white-space: pre-wrap;
+}
+
+// Section headings
+.playground-container h2 {
+  padding: 0 0 0 20px;
+}
+
+// Form fields
+.playground-container .field {
+  flex-grow: 1;
+}
+
+// Content sections
+.playground-container .section {
+  padding: 0 0 var(--spacingVerticalXXL, 24px) var(--spacingHorizontalL, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalM, 12px);
+  max-width: 600px;
+  width: 100%;
+}
+
+// ============================================================================
+// API Authentication Form Styles
+// ============================================================================
+
+// Field groups for API authentication forms
+.api-authentication-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacingVerticalM, 12px);
+  gap: var(--spacingHorizontalM, 12px);
+}
+
+.api-authentication-field-label {
+  flex: 0 0 250px;
+  font-size: var(--fontSizeBase300, 14px);
+  font-weight: var(--fontWeightSemibold, 600);
+  color: var(--colorNeutralForeground1, #242424);
+}
+
+.api-authentication-input {
+  flex: 1;
+  width: 100%; 
+  max-width: 500px;
+  min-width: 200px; // Ensure minimum usable width
+}
+
+// Textarea styling for API responses
+.api-authentication-textarea {
+  resize: both;
+  overflow: auto;
+  width: 100%;
+  max-width: 500px;
+  min-height: 100px;
+  font-size: var(--fontSizeBase300, 14px);
+  font-weight: var(--fontWeightRegular, 400);
+  font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+  line-height: var(--lineHeightBase300, 20px);
+  padding: var(--spacingVerticalS, 8px) var(--spacingHorizontalM, 12px);
+  border-radius: var(--borderRadiusMedium, 4px);
+  border: 1px solid var(--colorNeutralStroke1, #D1D1D1);
+  
+  &:hover {
+    border-color: var(--colorNeutralStroke1Hover, #B3B3B3);
+  }
+  
+  &:focus {
+    outline: 2px solid var(--colorCompoundBrandStroke, #0078D4);
+    outline-offset: -1px;
+    border-color: transparent;
+  }
+}
+
+// ============================================================================
+// Playground Form Styles
+// ============================================================================
+
+// TabList container styling
+.tabListContainer {
+  margin: var(--spacingVerticalM, 12px) 0;
+}
+
+// Section container for grouping related form elements
+.section {
+  padding: 0 0 var(--spacingVerticalXXL, 24px) var(--spacingHorizontalL, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalM, 12px);
+  max-width: 600px;
+  width: 100%;
+}
+
+// Field styling for form inputs
+.field {
+  flex-grow: 1;
+  min-width: 0; // Prevent flex items from overflowing
+}
+
+// Authentication button - Centered layout
+.authButton {
+  margin: var(--spacingVerticalL, 16px) auto var(--spacingVerticalM, 12px);
+  display: flex;
+  justify-content: center;
+  min-width: 120px; // Ensure button is usable
+}
+
+// Card components
+.card {
+  margin-bottom: var(--spacingVerticalM, 12px);
+}
+
+.card-content {
+  padding: var(--spacingVerticalXS, 4px);
+}
+
+// ============================================================================
+// Utility Classes
+// ============================================================================
+
+// Top margin utility for spacing elements
+.margin-top {
+  margin-top: var(--spacingVerticalL, 16px);
+}
+
+// ============================================================================
+// Dialog Components - Panel & Shared State
+// ============================================================================
+
+/**
+ * Shared State Dialog & Create Dialog
+ * 
+ * Standard dialog pattern for forms and user input.
+ * Uses Fabric design tokens for consistency with Microsoft Fabric UX.
+ * 
+ * Components using these styles:
+ * - PlaygroundSharedStatePage
+ * - Create dialogs in playground examples
+ * 
+ * ## Design Principles
+ * - Fixed width for optimal form layout
+ * - Uses design tokens for all spacing and typography
+ * - Accessible with proper touch targets
+ * - Right-aligned action buttons (standard dialog pattern)
+ */
+.shared-state-dialog,
+.create-dialog {
+  width: 360px;
+  padding: var(--spacingVerticalL, 16px) var(--spacingHorizontalXL, 24px) var(--spacingVerticalXL, 24px);
+  background: var(--colorNeutralBackground1, #ffffff);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalL, 16px);
+  
+  // Dialog heading - Fabric standard typography
+  h2 {
+    padding: 0;
+    margin: 0;
+    font-size: var(--fontSizeBase500, 20px);
+    font-weight: var(--fontWeightSemibold, 600);
+    line-height: var(--lineHeightBase500, 28px);
+    color: var(--colorNeutralForeground1, #242424);
+    font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+  }
+
+  // Section container for form elements
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacingVerticalM, 12px);
+  }
+  
+  // Field styling for form inputs
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacingVerticalXS, 4px);
+  }
+
+  // Button container - Right-aligned action buttons (Fabric standard)
+  .shared-state-buttons,
+  .create-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacingHorizontalS, 8px);
+    padding-top: var(--spacingVerticalS, 8px);
+    
+    // Ensure buttons have minimum touch target size (accessibility)
+    button {
+      min-width: 80px;
+      min-height: 32px;
+    }
+  }
+}
+
+/**
+ * Panel Component
+ * 
+ * Side panel pattern for secondary actions and settings.
+ * Follows Fabric panel design system.
+ * 
+ * Components using these styles:
+ * - PlaygroundPanel
+ * 
+ * ## Design Principles
+ * - Full-height panel with scrollable content
+ * - Consistent spacing using design tokens
+ * - Section-based organization with visual separation
+ * - Accessible with proper touch targets
+ */
+.panel {
+  padding: var(--spacingVerticalM, 12px) var(--spacingHorizontalL, 16px);
+  background: var(--colorNeutralBackground1, #ffffff);
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacingVerticalL, 16px);
+  
+  // Section container within panel
+  .section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacingVerticalM, 12px);
+    padding: var(--spacingVerticalS, 8px) 0;
+    
+    // Visual separator between sections (except last one)
+    &:not(:last-child) {
+      padding-bottom: var(--spacingVerticalM, 12px);
+      border-bottom: 1px solid var(--colorNeutralStroke2, #EDEBE9);
+    }
+  }
+  
+  // Field styling for form inputs in panel
+  .field {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacingVerticalXS, 4px);
+    
+    // Label styling
+    label {
+      font-size: var(--fontSizeBase300, 14px);
+      font-weight: var(--fontWeightSemibold, 600);
+      color: var(--colorNeutralForeground1, #242424);
+      line-height: var(--lineHeightBase300, 20px);
+      font-family: var(--fontFamilyBase, 'Segoe UI', sans-serif);
+    }
+  }
+
+  // Button styling within panel sections
+  button {
+    min-height: 32px; // Accessibility - minimum touch target
+    
+    &:not(:last-child) {
+      margin-bottom: var(--spacingVerticalS, 8px);
+    }
+  }
+
+  // Radio group spacing
+  .fui-RadioGroup {
+    gap: var(--spacingVerticalS, 8px);
+  }
+
+  // Divider spacing
+  .fui-Divider {
+    margin: var(--spacingVerticalM, 12px) 0;
+  }
+
+  // Custom scrollbar styling - Fabric UX guideline
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--colorNeutralStroke1, #D1D1D1);
+    border-radius: var(--borderRadiusMedium, 4px);
+    
+    &:hover {
+      background: var(--colorNeutralStroke1Hover, #B3B3B3);
+    }
+  }
+}
+
+// ============================================================================
+// Responsive Adjustments
+// ============================================================================
+
+// Ensure dialogs remain usable on smaller screens
+@media (max-width: 480px) {
+  .shared-state-dialog,
+  .create-dialog {
+    width: 100%;
+    max-width: 360px;
+    padding: var(--spacingVerticalM, 12px) var(--spacingHorizontalL, 16px);
+    
+    h2 {
+      font-size: var(--fontSizeBase400, 18px);
+      line-height: var(--lineHeightBase400, 24px);
+    }
+  }
+
+  .panel {
+    padding: var(--spacingVerticalS, 8px) var(--spacingHorizontalM, 12px);
+    
+    .section {
+      gap: var(--spacingVerticalS, 8px);
+    }
+  }
+}
+
+// ============================================================================
+// Accessibility Enhancements
+// ============================================================================
+
+// Focus visible states for keyboard navigation
+.panel,
+.shared-state-dialog,
+.create-dialog {
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--colorCompoundBrandStroke, #0078D4);
+    outline-offset: 2px;
+  }
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .panel,
+  .shared-state-dialog,
+  .create-dialog {
+    border: 1px solid transparent; // Will be visible in high contrast mode
+    
+    .section {
+      border-color: transparent;
+    }
+  }
+}

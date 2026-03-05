@@ -4,7 +4,7 @@
 
 This guide provides step-by-step instructions for AI tools on how to publish a Microsoft Fabric workload to the Fabric Workload Hub. Publishing is a manual process that involves uploading manifest packages through the Fabric Admin Portal and follows a structured workflow from testing to general availability.
 
-Based on the official Microsoft documentation: [Publish a workload to the Fabric Workload Hub](https://learn.microsoft.com/en-us/fabric/workload-development-kit/publish-workload-flow)
+Based on the official Microsoft documentation: [Publish a workload to the Fabric Workload Hub](https://learn.microsoft.com/en-us/fabric/workload-development-kit/publishing-overview)
 
 ### Publishing Architecture
 

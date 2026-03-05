@@ -1,14 +1,9 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { ClientSDKStore } from "./playground/ClientSDKPlayground/Store/Store";
 import { Route, Router, Switch } from "react-router-dom";
 import { History } from "history";
 import { WorkloadClientAPI } from "@ms-fabric/workload-client";
-import CustomItemSettings from "./items/HelloWorldItem/HelloWorldItemEditorSettingsPage";
-import CustomAbout from "./items/HelloWorldItem/HelloWorldItemEditorAboutPage";
-import { SamplePage, ClientSDKPlayground } from "./playground/ClientSDKPlayground/ClientSDKPlayground";
-import { DataPlayground } from "./playground/DataPlayground/DataPlayground";
-import { HelloWorldItemEditor} from "./items/HelloWorldItem/HelloWorldItemEditor";
+import { HelloWorldItemEditor} from "./items/HelloWorldItem";
+import { ConditionalPlaygroundRoutes } from "./playground/ConditionalPlaygroundRoutes";
 
 /*
     Add your Item Editor in the Route section of the App function below
@@ -53,30 +48,9 @@ export function App({ history, workloadClient }: AppProps) {
                 <HelloWorldItemEditor
                     workloadClient={workloadClient} data-testid="HelloWorldItem-editor" />
             </Route>
-            
-            <Route path="/HelloWorldItem-settings-page/:itemObjectId">
-                <CustomItemSettings 
-                    workloadClient={workloadClient}
-                        data-testid="HelloWorldItem-settings-page" />
-            </Route>
-            <Route path="/HelloWorldItem-about-page/:itemObjectId">
-                <CustomAbout  workloadClient={workloadClient} 
-                    data-testid="HelloWorldItem-about-page" />
-            </Route>
 
-             {/* Playground routes  can be deleted if not needed */}
-            <Route path="/client-sdk-playground">
-                <Provider store={ClientSDKStore}>
-                    <ClientSDKPlayground workloadClient={workloadClient} />
-                </Provider>
-            </Route>
-            <Route path="/data-playground">
-                <DataPlayground workloadClient={workloadClient} />
-            </Route>
-
-            <Route path="/sample-page">
-                <SamplePage workloadClient={workloadClient} />
-            </Route>
+            {/* Conditionally loaded playground routes (only in development) */}
+            <ConditionalPlaygroundRoutes workloadClient={workloadClient} />
         </Switch>
     </Router>;
 }

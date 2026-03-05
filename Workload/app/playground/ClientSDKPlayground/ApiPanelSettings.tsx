@@ -8,7 +8,7 @@ import {
     themeToView,
     callThemeGet,
 } from "../../controller/ThemeController";
-import "../../styles.scss";
+import "../Playground.scss";
 import { TabContentProps } from "./ClientSDKPlaygroundModel";
 import { callSettingsGet, settingsToView } from "../../controller/SettingsController";
 import { callDialogOpenMsgBox } from "../../controller/DialogController";
@@ -25,7 +25,7 @@ export function ApiPanelSettings(props: TabContentProps) {
         callPanelOpen(
             workloadClient,
             sampleWorkloadName,
-            "/panel",
+            "/playground-panel",
             apiPanelIsLightDismiss
         );
     }

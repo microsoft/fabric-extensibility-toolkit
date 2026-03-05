@@ -72,10 +72,10 @@ param (
     The Azure subscription ID to use.
 
 .EXAMPLE
-    .\Deploy.ps1 -WebAppName "my-fabric-workload" -ResourceGroupName "fabric-workload-rg"
+    .\DeployToAzureWebApp.ps1 -WebAppName "my-fabric-workload" -ResourceGroupName "fabric-workload-rg"
 
 .EXAMPLE
-    .\Deploy.ps1 -WebAppName "my-fabric-workload" -ResourceGroupName "fabric-workload-rg" -SlotName "staging" -Force $true
+    .\DeployToAzureWebApp.ps1 -WebAppName "my-fabric-workload" -ResourceGroupName "fabric-workload-rg" -SlotName "staging" -Force $true
 
 .NOTES
     Requires Azure CLI to be installed and authenticated.

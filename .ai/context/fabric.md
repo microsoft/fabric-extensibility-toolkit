@@ -353,7 +353,7 @@ Microsoft Fabric consists of several integrated workloads, each serving specific
 2. **Git Integration**: Leverage source control for all Fabric artifacts
 3. **Environment Strategy**: Implement proper dev/test/prod workflows
 4. **Monitoring**: Implement proper logging and monitoring for custom solutions
-5. **UI Components**: Prefer controls from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`. Verify API and prop differences (appearance, tokens, and shorthands) when migrating components.
+5. **UI Components**: Prefer components from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`. Verify API and prop differences (appearance, tokens, and shorthands) when migrating components.
 
 ### Data Management
 

@@ -6,7 +6,7 @@ import { RootState } from "../Store/Store";
 import { setLocalSharedStateMessage } from "../Store/actionDialogSlice";
 import { callDialogOpen } from "../../../controller/DialogController";
 import { SharedState } from "../../../App";
-import "../../../styles.scss";
+import "../../Playground.scss";
 import { TabContentProps } from '../ClientSDKPlaygroundModel';
 
 
@@ -24,7 +24,7 @@ export function SharedStateExample(props: TabContentProps) {
         await callDialogOpen(
             workloadClient,
             sampleWorkloadName,
-            '/shared-state-page',
+            '/playground-shared-state-page',
             360 /* width */,
             165 /* height */,
             false /* hasCloseButton */);

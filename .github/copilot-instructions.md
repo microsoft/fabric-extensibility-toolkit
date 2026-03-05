@@ -27,10 +27,10 @@ Use `@fabric` or these keywords for specialized GitHub Copilot assistance:
 ### Enhanced Capabilities
 GitHub Copilot provides additional features beyond generic AI tools:
 - 🔮 **Predictive Coding**: Auto-completion for Fabric patterns and TypeScript interfaces
-- � **Context-Aware Suggestions**: Smart suggestions based on current file and cursor position
+- 🧠 **Context-Aware Suggestions**: Smart suggestions based on current file and cursor position
 - ⚡ **Real-time Validation**: Immediate feedback on code quality and Fabric compliance
-- � **Pattern Recognition**: Learns from existing codebase patterns for consistent suggestions
-- � **Inline Documentation**: Generates JSDoc comments following Fabric conventions
+- 🎯 **Pattern Recognition**: Learns from existing codebase patterns for consistent suggestions
+- 📚 **Inline Documentation**: Generates JSDoc comments following Fabric conventions
 
 ## 🎯 GitHub Copilot Integration
 
@@ -59,7 +59,10 @@ Beyond the generic `.ai/context/` files, GitHub Copilot provides:
 - **File Creation**: When creating items, automatically suggests the 4-file pattern structure
 - **Import Resolution**: Auto-imports Fabric platform types and client libraries
 - Prefer components from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`. Verify API and prop differences (appearance, tokens, and shorthands) when migrating components.
+- **Ribbon Pattern**: ALWAYS suggests `homeToolbarActions` (mandatory) + optional `additionalToolbars` pattern. Use `createSaveAction()`, `createSettingsAction()` factories from components/ItemEditor
 - **Toolbar Components**: ALWAYS suggests `Tooltip` + `ToolbarButton` pattern for toolbar actions. Auto-imports both from `@fluentui/react-components` and wraps ToolbarButtons in Tooltips with proper accessibility attributes
+- **OneLakeStorageClient**: ALWAYS use `createItemWrapper()` when working with OneLake storage in an item context. Never use direct OneLakeStorageClient methods with manual path construction
+- **OneLakeView**: ALWAYS use component from `components/OneLakeView`, not sample code. Initialize with `initialItem` config for content display
 - **Error Recovery**: Provides specific fixes for common Fabric authentication and manifest issues
 - **Code Completion**: Understands Fabric-specific patterns like `callNotificationOpen()` and `saveItemDefinition()`
 
@@ -99,7 +102,24 @@ fabric deploy prod   # Uses .env.prod for environment-specific manifests
 ### Auto-completion Patterns
 GitHub Copilot recognizes Fabric patterns and suggests:
 - **API Calls**: Complete authentication and error handling
-- **Component Structure**: Fluent UI patterns with proper TypeScript, including mandatory `Tooltip` + `ToolbarButton` patterns for all toolbar implementations
+- **Component Structure**: Fluent UI patterns with proper TypeScript
+- **Ribbon Components**: Always creates `homeToolbarActions` array (mandatory) with `createSaveAction()`, `createSettingsAction()` factories, plus optional `additionalToolbars` array for complex items
+- **Toolbar Integration**: Mandatory `Tooltip` + `ToolbarButton` patterns for all toolbar implementations
+- **OneLake Storage**: Always creates `itemWrapper = oneLakeClient.createItemWrapper({id, workspaceId})` for item-scoped operations
+- **OneLake Explorer**: Always use component from `components/OneLakeView`, not sample code
+- **ItemEditor View Registration**: ALWAYS use static view registration pattern with `useViewNavigation()` hook. Define views as static array like ribbon actions
+- **ItemEditor Initial View**: ALWAYS use `getInitialView` function for data-dependent view determination instead of static `initialView`. Called automatically when loading completes
+- **ItemEditor Scrolling**: NEVER implement scrolling in item views. ItemEditor center panel handles ALL overflow with automatic vertical scrolling. Items should use `height: auto` for natural growth
+- **ItemEditor Notification Registration**: ALWAYS use static messageBar registration pattern. Define messageBar as static array with `showInViews` to control visibility
+- **View Navigation**: ALWAYS suggests `const { setCurrentView, goBack } = useViewNavigation()` in view wrapper components for navigation between views (hook is part of ItemEditorDefaultView module)
+- **ItemEditorDefaultView**: Always suggests two-panel layouts with proper `left`/`center` panel configurations, resizable splitters, and collapsible panels when appropriate
+- **Panel Usage Patterns**: 
+  - **Left Panel (Optional)**: For navigation trees, OneLakeView, file explorers, and secondary views (list views, catalog browsers, workspace explorers)
+  - **Center Panel (Required)**: For main content, editors, and primary workspace
+- **Detail View Navigation**: Always use ItemEditorDetailView component with `isDetailView: true` for L2 drill-down pages (detail records, item properties, configuration screens)
+- **Empty View Pattern**: Use ItemEditorEmptyView for items used for the first time (no definition/state) with initial call-to-action buttons to guide users through setup
+- **Item Properties & Configuration**: Use ItemSettings pattern for general item properties (version, endpoint configuration, descriptions). This creates a separate section in the settings flyout opened through the settings ribbon action. Item names and descriptions are managed there by default.
+- **Panel Configuration**: Suggests `collapsible: true`, proper panel titles, min/max width constraints, and accessibility labels for complex layouts
 - **Manifest Updates**: Template processing with placeholder replacement
 - **Route Configuration**: Automatic route registration
 - **Environment Management**: .env-based configuration patterns

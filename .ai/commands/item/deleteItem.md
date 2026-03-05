@@ -25,9 +25,10 @@ Delete the entire item directory and all its contents:
 
 ```
 Workload/app/items/[ItemName]Item/
-├── [ItemName]ItemModel.ts
+├── [ItemName]ItemEditorDefaultView.tsx
+├── [ItemName]ItemDefinition.ts
 ├── [ItemName]ItemEditor.tsx
-├── [ItemName]ItemEditorEmpty.tsx
+├── [ItemName]ItemEditorEmptyView.tsx
 └── [ItemName]ItemEditorRibbon.tsx
 ```
 
@@ -40,15 +41,15 @@ Workload/app/items/[ItemName]Item/
 
 #### 3.1: Delete XML Manifest Template
 
-Remove: `Workload/Manifest/items/[ItemName]/[ItemName]Item.xml`
+Remove: `Workload/Manifest/items/[ItemName]Item/[ItemName]Item.xml`
 
 #### 3.2: Delete JSON Manifest
 
-Remove: `Workload/Manifest/items/[ItemName]/[ItemName]Item.json`
+Remove: `Workload/Manifest/items/[ItemName]Item/[ItemName]Item.json`
 
 #### 3.3: Remove Item Directory
 
-Delete the entire manifest directory: `Workload/Manifest/items/[ItemName]/`
+Delete the entire manifest directory: `Workload/Manifest/items/[ItemName]Item/`
 
 #### 3.4: Update Product.json (if needed)
 
@@ -219,7 +220,7 @@ After deletion, verify all these components have been removed:
 - [ ] No TypeScript errors about missing modules
 
 **Manifest Files**:
-- [ ] `Workload/Manifest/items/[ItemName]/` directory completely removed
+- [ ] `Workload/Manifest/items/[ItemName]Item/` directory completely removed
 - [ ] Product.json cleaned of any item-specific references
 - [ ] No manifest generation errors
 

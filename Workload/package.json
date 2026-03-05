@@ -4,9 +4,9 @@
   "description": "Microsoft Fabric - Developer Sample App",
   "scripts": {
     "start": "npm run start:devServer",
-    "start:devServer": "env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.dev.js",
+    "start:devServer": "set NODE_OPTIONS=--max-old-space-size=8192 && env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.dev.js",
     "start:devGateway": "node ./devServer/start-devGateway.js",
-    "start:codespace": "node --max-old-space-size=4096 ./node_modules/.bin/env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.dev.js --no-hot",
+    "start:codespace": "node --max-old-space-size=8192 ./node_modules/.bin/env-cmd -f .env.dev webpack serve --open --config ./devServer/webpack.dev.js --no-hot",
     "build:test": "env-cmd -f .env.test webpack --config ./webpack.config.js --output-path ../build/Frontend --progress",
     "build:prod": "env-cmd -f .env.prod webpack --config ./webpack.config.js --output-path ../build/Frontend --mode production --progress"
   },
@@ -22,6 +22,7 @@
     "i18next": "^25.4.1",
     "i18next-http-backend": "^2.4.2",
     "jwt-decode": "^3.1.2",
+    "process": "^0.11.10",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-i18next": "^15.0.1",
@@ -40,6 +41,7 @@
     "css-loader": "^6.5.1",
     "dotenv": "^16.4.5",
     "env-cmd": "^10.1.0",
+    "express-rate-limit": "^8.2.1",
     "html-webpack-plugin": "^5.5.0",
     "nuget-bin": "^4.0.0",
     "sass": "^1.79.3",
