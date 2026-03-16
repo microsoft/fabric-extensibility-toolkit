@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IntuigenceAI Industrial Workers – Documentation</title>
+<style>
+  :root{--brand:#00897b;--brand-light:#e0f2f1;--brand-dark:#00695c;--text:#1a1a2e;--muted:#555;--border:#e0e0e0;--bg:#fafafa;--code-bg:#f4f4f4;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.7;font-size:15px;}
+
+  /* Header */
+  header{background:var(--brand);color:#fff;padding:0 2rem;}
+  .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;}
+  .logo{font-size:1.2rem;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:.6rem;}
+  .logo-badge{background:rgba(255,255,255,.2);border-radius:4px;padding:2px 8px;font-size:.7rem;letter-spacing:1px;text-transform:uppercase;}
+  nav a{color:rgba(255,255,255,.85);text-decoration:none;margin-left:1.5rem;font-size:.9rem;}
+  nav a:hover{color:#fff;}
+
+  /* Hero */
+  .hero{background:linear-gradient(120deg,var(--brand-dark) 0%,var(--brand) 60%,#26a69a 100%);color:#fff;padding:3.5rem 2rem;}
+  .hero-inner{max-width:1100px;margin:0 auto;}
+  .hero h1{font-size:2rem;font-weight:700;margin-bottom:.5rem;}
+  .hero .subtitle{font-size:1.05rem;opacity:.9;margin-bottom:1rem;}
+  .hero .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);border-radius:20px;padding:3px 14px;font-size:.78rem;letter-spacing:.5px;}
+
+  /* Layout */
+  .layout{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:240px 1fr;gap:2.5rem;padding:2.5rem 2rem;}
+
+  /* Sidebar */
+  .sidebar{position:sticky;top:1rem;align-self:start;}
+  .sidebar-section{margin-bottom:1.5rem;}
+  .sidebar-section h4{font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:.5rem;font-weight:600;}
+  .sidebar-section a{display:block;padding:4px 0;color:var(--brand-dark);text-decoration:none;font-size:.9rem;}
+  .sidebar-section a:hover{color:var(--brand);text-decoration:underline;}
+
+  /* Content */
+  .content h2{font-size:1.5rem;font-weight:700;margin:2.5rem 0 .8rem;padding-bottom:.4rem;border-bottom:2px solid var(--brand-light);color:var(--brand-dark);}
+  .content h3{font-size:1.1rem;font-weight:600;margin:1.8rem 0 .6rem;color:var(--text);}
+  .content h4{font-size:.95rem;font-weight:600;margin:1.2rem 0 .4rem;color:var(--brand-dark);}
+  .content p{margin-bottom:.9rem;color:#333;}
+  .content ul,.content ol{margin:.5rem 0 1rem 1.5rem;}
+  .content li{margin-bottom:.4rem;color:#333;}
+  .content a{color:var(--brand);}
+
+  /* Info box */
+  .info-box{background:var(--brand-light);border-left:4px solid var(--brand);border-radius:0 6px 6px 0;padding:.8rem 1rem;margin:1rem 0;font-size:.9rem;}
+  .info-box strong{color:var(--brand-dark);}
+  .warning-box{background:#fff8e1;border-left:4px solid #ffa000;border-radius:0 6px 6px 0;padding:.8rem 1rem;margin:1rem 0;font-size:.9rem;}
+
+  /* Step cards */
+  .steps{display:grid;gap:1rem;margin:1rem 0;}
+  .step{display:flex;gap:1rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1rem;}
+  .step-num{min-width:32px;height:32px;background:var(--brand);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;flex-shrink:0;}
+  .step-body h4{margin-top:0;margin-bottom:.3rem;}
+  .step-body p{margin:0;font-size:.9rem;color:var(--muted);}
+
+  /* Feature grid */
+  .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+  .feature-card{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:1.2rem;}
+  .feature-card .icon{font-size:1.6rem;margin-bottom:.5rem;}
+  .feature-card h4{margin:0 0 .4rem;color:var(--brand-dark);}
+  .feature-card p{margin:0;font-size:.88rem;color:var(--muted);}
+
+  /* Item type cards */
+  .item-cards{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0;}
+  .item-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .item-card-header{background:var(--brand);color:#fff;padding:.7rem 1rem;font-weight:600;display:flex;align-items:center;gap:.5rem;}
+  .item-card-body{padding:1rem;font-size:.9rem;color:#333;}
+  .item-card-body ul{margin:.4rem 0 0 1.2rem;}
+
+  /* Numbered list with details */
+  .detail-list{list-style:none;margin:0;padding:0;}
+  .detail-list li{display:flex;gap:.8rem;padding:.6rem 0;border-bottom:1px solid var(--border);}
+  .detail-list li:last-child{border:none;}
+  .detail-list .num{min-width:24px;height:24px;background:var(--brand-light);color:var(--brand-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;flex-shrink:0;margin-top:2px;}
+  .detail-list .body strong{display:block;font-size:.9rem;margin-bottom:.2rem;}
+  .detail-list .body p{margin:0;font-size:.85rem;color:var(--muted);}
+
+  /* Code / field */
+  code{background:var(--code-bg);padding:1px 5px;border-radius:3px;font-size:.88em;font-family:monospace;}
+  .field-pill{display:inline-block;background:var(--brand-light);color:var(--brand-dark);border-radius:4px;padding:1px 8px;font-size:.8rem;font-weight:600;margin-bottom:.3rem;}
+  .required{color:#c62828;font-size:.8rem;margin-left:2px;}
+
+  /* Dialog mock */
+  .dialog-mock{background:#fff;border:1px solid #ccc;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,.12);padding:1.5rem;max-width:480px;margin:1rem 0;}
+  .dialog-mock h5{font-size:1rem;font-weight:700;margin-bottom:1rem;color:var(--text);}
+  .dialog-field{margin-bottom:.8rem;}
+  .dialog-field label{display:block;font-size:.82rem;font-weight:600;margin-bottom:.3rem;color:var(--muted);}
+  .dialog-field .field-val{border:2px solid var(--brand);border-radius:4px;padding:.4rem .6rem;font-size:.9rem;color:#333;}
+  .dialog-field .select-val{border:1px solid #ccc;border-radius:4px;padding:.4rem .6rem;font-size:.9rem;display:flex;align-items:center;justify-content:space-between;}
+  .dialog-actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:1rem;}
+  .btn-primary{background:var(--brand);color:#fff;border:none;border-radius:4px;padding:.45rem 1.1rem;font-size:.9rem;cursor:pointer;font-weight:500;}
+  .btn-secondary{background:#fff;color:#333;border:1px solid #ccc;border-radius:4px;padding:.45rem 1.1rem;font-size:.9rem;cursor:pointer;}
+
+  /* PAM section */
+  .chat-preview{background:#f5f5f5;border-radius:10px;padding:1.2rem;margin:1rem 0;}
+  .chat-bubble{background:#fff;border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:.88rem;margin-bottom:.6rem;position:relative;}
+  .chat-bubble.pam{border-left:4px solid var(--brand);}
+  .chat-bubble .label{font-size:.72rem;font-weight:700;color:var(--muted);margin-bottom:.3rem;}
+  .chat-bubble.pam .label{color:var(--brand);}
+
+  /* Responsive */
+  @media(max-width:700px){
+    .layout{grid-template-columns:1fr;}
+    .sidebar{display:none;}
+    .feature-grid,.item-cards{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      IntuigenceAI
+      <span class="logo-badge">Preview</span>
+    </div>
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#getting-started">Get Started</a>
+      <a href="#items">Item Types</a>
+      <a href="#pam">PAM</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="badge">Microsoft Fabric Workload · IntuigenceAI</div>
+    <h1 style="margin-top:.8rem;">IntuigenceAI Industrial Workers</h1>
+    <p class="subtitle">PhD-level AI Engineers for your industrial operations — built natively on Microsoft Fabric.</p>
+    <p style="font-size:.88rem;opacity:.8;">Publisher: IntuigenceAI &nbsp;·&nbsp; Compatible with: Lakehouse, Eventhouse &nbsp;·&nbsp; Available in all workspaces</p>
+  </div>
+</div>
+
+<!-- Main layout -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <h4>Getting Started</h4>
+      <a href="#overview">Overview</a>
+      <a href="#getting-started">How to start the workload</a>
+      <a href="#data-catalog">Creating a Data Catalog</a>
+      <a href="#intelligent-board">Creating an Intelligent Board</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Features</h4>
+      <a href="#pam">Chat with PAM</a>
+      <a href="#pid">Analyze P&amp;ID Diagrams</a>
+      <a href="#telemetry">Real-Time Telemetry</a>
+      <a href="#grounded">Grounded Responses</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Item Types</h4>
+      <a href="#data-catalog">Data Catalog</a>
+      <a href="#intelligent-board">Intelligent Board</a>
+    </div>
+    <div class="sidebar-section">
+      <h4>Reference</h4>
+      <a href="#faq">FAQ</a>
+      <a href="#compatibility">Compatibility</a>
+    </div>
+  </aside>
+
+  <!-- Content -->
+  <main class="content">
+
+    <!-- Overview -->
+    <h2 id="overview">Overview</h2>
+    <p><strong>IntuigenceAI Industrial Workers</strong> is a Microsoft Fabric workload published by IntuigenceAI. It brings AI-powered Synthetic Engineers directly into your Fabric environment, enabling industrial teams to analyze P&amp;ID diagrams, query plant data in real time, and get expert-level insights — all without leaving Fabric.</p>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">AI</div>
+        <h4>AI Synthetic Engineers</h4>
+        <p>Deploy PhD-level AI engineers trained on industrial knowledge directly inside your workspace.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">P&amp;ID</div>
+        <h4>P&amp;ID Analysis</h4>
+        <p>Analyze piping &amp; instrumentation diagrams and understand equipment connections automatically.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">RT</div>
+        <h4>Real-Time Telemetry</h4>
+        <p>Query live sensor and operational data directly from Eventhouse within your conversations.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">GR</div>
+        <h4>Grounded Responses</h4>
+        <p>Every answer is backed by source citations from your own documents and plant data.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Preview Notice:</strong> This workload is currently in preview. Features and UI may change. Contact your admin to configure the workload for your organization.
+    </div>
+
+    <!-- Getting Started -->
+    <h2 id="getting-started">How to Start the Workload</h2>
+    <p>After logging in to <strong>Microsoft Fabric</strong>, navigate to <strong>Workloads</strong> in the left sidebar to find the IntuigenceAI workload. Click <strong>Learn more</strong> to open the workload detail page.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Open the Workloads page</h4>
+          <p>In the left sidebar of Microsoft Fabric, click <strong>Workloads</strong>. Locate the <em>IntuigenceAI (preview)</em> card and click <strong>Learn more</strong>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Review and open the workload</h4>
+          <p>The IntuigenceAI Industrial Workers detail page shows item types, compatible resources, and the publisher description. Click <strong>Open</strong> in the "Get Started" panel on the right to begin.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Select your workspace</h4>
+          <p>If you are not in the correct workspace, click <strong>Workspaces</strong> in the left sidebar and choose a workspace with a valid Fabric capacity. The workload is available in all workspaces.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Create your first Agent Session</h4>
+          <p>Follow the <strong>Get Started</strong> guide to create your first Agent Session. You will need to create at least one <em>Data Catalog</em> or <em>Intelligent Board</em> item to proceed.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <strong>Admin configuration required:</strong> The IntuigenceAI workload must be enabled by your Fabric administrator before it becomes available to end users. If you see the message <em>"Contact your admin to configure this workload"</em>, reach out to your IT or Fabric admin.
+    </div>
+
+    <!-- Item Types -->
+    <h2 id="items">Item Types</h2>
+    <p>IntuigenceAI Industrial Workers introduces two custom Fabric item types to your workspace:</p>
+
+    <div class="item-cards">
+      <div class="item-card">
+        <div class="item-card-header">Data Catalog</div>
+        <div class="item-card-body">
+          <p>A structured repository for all your industrial data assets — documents, P&amp;ID diagrams, equipment specs, and more. The AI workers use the Data Catalog as their grounded knowledge base.</p>
+          <ul>
+            <li>Upload and index plant documents</li>
+            <li>Link to Lakehouse data sources</li>
+            <li>Enable source-cited responses from PAM</li>
+          </ul>
+        </div>
+      </div>
+      <div class="item-card">
+        <div class="item-card-header">Intelligent Board</div>
+        <div class="item-card-body">
+          <p>An interactive workspace where your team collaborates with AI workers, runs agent sessions, and visualizes insights derived from plant data and telemetry.</p>
+          <ul>
+            <li>Create and manage agent sessions</li>
+            <li>Chat with PAM, your Plant AI Manager</li>
+            <li>Track insights and decisions over time</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Catalog -->
+    <h2 id="data-catalog">Creating a Data Catalog</h2>
+    <p>A <strong>Data Catalog</strong> is the foundation of your IntuigenceAI deployment. It stores and indexes all the industrial knowledge your AI workers will reference when answering questions.</p>
+
+    <h3>How to create a Data Catalog</h3>
+    <p>From the IntuigenceAI workload detail page, click the <strong>Data Catalog</strong> link under <em>Item Types</em>. A creation dialog will appear:</p>
+
+    <div class="dialog-mock">
+      <h5>New Data Catalog</h5>
+      <div class="dialog-field">
+        <label>Name <span class="required">*</span></label>
+        <div class="field-val">my-plant-catalog</div>
+      </div>
+      <div class="dialog-field">
+        <label>Location <span class="required">*</span></label>
+        <div class="select-val">
+          <span>Intuigence AI Dev</span>
+          <span>&#9662;</span>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn-primary">Create</button>
+        <button class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+
+    <ul class="detail-list">
+      <li>
+        <div class="num">1</div>
+        <div class="body"><strong>Name <span class="required">*</span></strong><p>Enter a descriptive name for your catalog. Use lowercase letters, numbers, and hyphens (e.g., <code>refinery-unit-4</code>). The name must be unique within the workspace.</p></div>
+      </li>
+      <li>
+        <div class="num">2</div>
+        <div class="body"><strong>Location <span class="required">*</span></strong><p>Select the Fabric workspace where this Data Catalog will reside. You can also click the external link icon to open the workspace picker in OneLake.</p></div>
+      </li>
+      <li>
+        <div class="num">3</div>
+        <div class="body"><strong>Create</strong><p>Click <strong>Create</strong> to provision the Data Catalog. The item will appear in your workspace and be ready for document upload and indexing.</p></div>
+      </li>
+    </ul>
+
+    <div class="info-box">
+      <strong>Compatibility:</strong> The Data Catalog is compatible with <strong>Lakehouse</strong>. It is recommended to connect your Data Catalog to an existing Fabric Lakehouse to enable seamless data ingestion.
+    </div>
+
+    <!-- Intelligent Board -->
+    <h2 id="intelligent-board">Creating an Intelligent Board</h2>
+    <p>An <strong>Intelligent Board</strong> is where your team interacts with the AI workers. Think of it as a persistent, AI-powered command center for your plant operations.</p>
+
+    <h3>How to create an Intelligent Board</h3>
+    <p>From the IntuigenceAI workload detail page, click the <strong>Intelligent Board</strong> link under <em>Item Types</em>. A creation dialog will appear:</p>
+
+    <div class="dialog-mock">
+      <h5>New Intelligent Board</h5>
+      <div class="dialog-field">
+        <label>Name <span class="required">*</span></label>
+        <div class="field-val">operations-board-1</div>
+      </div>
+      <div class="dialog-field">
+        <label>Location <span class="required">*</span></label>
+        <div class="select-val">
+          <span>Intuigence AI Dev</span>
+          <span>&#9662;</span>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn-primary">Create</button>
+        <button class="btn-secondary">Cancel</button>
+      </div>
+    </div>
+
+    <ul class="detail-list">
+      <li>
+        <div class="num">1</div>
+        <div class="body"><strong>Name <span class="required">*</span></strong><p>Give the board a meaningful name reflecting its purpose or plant area (e.g., <code>compressor-unit-b</code>, <code>daily-ops-review</code>). Must be unique in the workspace.</p></div>
+      </li>
+      <li>
+        <div class="num">2</div>
+        <div class="body"><strong>Location <span class="required">*</span></strong><p>Select the workspace where the Intelligent Board will be created. Use the same workspace as your associated Data Catalog for best results.</p></div>
+      </li>
+      <li>
+        <div class="num">3</div>
+        <div class="body"><strong>Create</strong><p>Click <strong>Create</strong>. The Intelligent Board item opens automatically, ready for your first agent session.</p></div>
+      </li>
+    </ul>
+
+    <!-- PAM -->
+    <h2 id="pam">Chatting with PAM — Your Plant AI Manager</h2>
+    <p><strong>PAM (Plant AI Manager)</strong> is the primary AI worker you interact with inside an Intelligent Board. PAM has access to your Data Catalog documents and can query real-time telemetry from Eventhouse, allowing it to answer complex operational questions instantly.</p>
+
+    <h3>What you can ask PAM</h3>
+    <div class="chat-preview">
+      <div class="chat-bubble">
+        <div class="label">You</div>
+        What is the current status of the heat exchanger on line 3?
+      </div>
+      <div class="chat-bubble pam">
+        <div class="label">PAM</div>
+        Based on real-time telemetry from Eventhouse (as of 14:32 UTC), the heat exchanger on Line 3 — HX-301 — is operating at 87°C inlet temperature with a differential pressure of 0.4 bar, within normal parameters. <em>[Source: Live telemetry · P&amp;ID HX-301 diagram]</em>
+      </div>
+      <div class="chat-bubble">
+        <div class="label">You</div>
+        Show me the upstream and downstream connections for HX-301.
+      </div>
+      <div class="chat-bubble pam">
+        <div class="label">PAM</div>
+        HX-301 receives feed from pump P-210 and discharges to separator V-402. The connecting lines are 6"-CS-3021 and 4"-CS-3022 respectively. <em>[Source: P&amp;ID Sheet 12-A, Rev 4]</em>
+      </div>
+    </div>
+
+    <h3>PAM's capabilities</h3>
+    <ul class="detail-list">
+      <li>
+        <div class="num">&#10022;</div>
+        <div class="body"><strong>Instant plant answers</strong><p>Ask any question about your plant in natural language. PAM draws from your indexed Data Catalog for grounded, accurate answers.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10022;</div>
+        <div class="body"><strong>P&amp;ID diagram analysis</strong><p>Upload or connect P&amp;ID diagrams. PAM can identify equipment, trace connections, and answer layout questions directly from the diagram content.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10022;</div>
+        <div class="body"><strong>Real-time telemetry queries</strong><p>PAM connects to <strong>Eventhouse</strong> within Fabric to pull live sensor readings, alarms, and KPIs into the conversation in real time.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10022;</div>
+        <div class="body"><strong>Source citations</strong><p>Every response includes references to the specific document, diagram sheet, or telemetry stream it used, making answers auditable and trustworthy.</p></div>
+      </li>
+    </ul>
+
+    <!-- P&ID -->
+    <h2 id="pid">Analyzing P&amp;ID Diagrams</h2>
+    <p>Piping and Instrumentation Diagrams (P&amp;IDs) are core to any industrial operation. IntuigenceAI workers can parse and understand P&amp;ID content to answer equipment and flow questions without manual interpretation.</p>
+
+    <h3>How to add P&amp;ID documents</h3>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Open your Data Catalog</h4>
+          <p>Navigate to the Data Catalog item in your workspace and open it.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Upload P&amp;ID files</h4>
+          <p>Upload PDF or image-format P&amp;ID sheets. The AI will automatically index equipment tags, lines, and connections.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Ask PAM</h4>
+          <p>Switch to your Intelligent Board and ask PAM questions about equipment connections, instrument tags, or process flows.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Telemetry -->
+    <h2 id="telemetry">Querying Real-Time Telemetry</h2>
+    <p>IntuigenceAI Industrial Workers integrates natively with <strong>Microsoft Fabric Eventhouse</strong> to bring live operational data into your AI conversations.</p>
+
+    <div class="info-box">
+      <strong>Prerequisite:</strong> A Fabric <strong>Eventhouse</strong> must be configured and streaming plant telemetry data before PAM can query it. Work with your Fabric admin to set up the Eventhouse connection.
+    </div>
+
+    <p>Once connected, PAM can:</p>
+    <ul>
+      <li>Retrieve the current value of any tagged sensor or KPI</li>
+      <li>Identify anomalies and deviations from normal operating ranges</li>
+      <li>Correlate telemetry data with P&amp;ID diagrams and document references</li>
+      <li>Surface real-time context in every grounded response</li>
+    </ul>
+
+    <!-- Grounded -->
+    <h2 id="grounded">Grounded Responses &amp; Source Citations</h2>
+    <p>Unlike generic AI tools, every answer PAM gives is <strong>grounded</strong> — meaning it is directly traceable back to your own industrial data. This is critical for safety, compliance, and operational accuracy.</p>
+    <p>Each response will include one or more citations in the format:</p>
+    <div style="background:var(--code-bg);border-radius:6px;padding:.8rem 1rem;font-size:.88rem;font-family:monospace;margin:.8rem 0;">[Source: P&amp;ID Sheet 07-B, Rev 2 · Live telemetry tag TI-2041]</div>
+    <p>You can click on citation references within the Intelligent Board to jump directly to the source document or telemetry record.</p>
+
+    <!-- Compatibility -->
+    <h2 id="compatibility">Compatibility &amp; Requirements</h2>
+    <ul class="detail-list">
+      <li>
+        <div class="num">&#10003;</div>
+        <div class="body"><strong>Microsoft Fabric (with valid capacity)</strong><p>The workload requires a Microsoft Fabric capacity. Free or trial capacities may have limitations.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10003;</div>
+        <div class="body"><strong>Lakehouse</strong><p>Data Catalog items are compatible with Fabric Lakehouse for structured data ingestion and storage.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10003;</div>
+        <div class="body"><strong>Eventhouse</strong><p>Required for real-time telemetry querying within PAM conversations.</p></div>
+      </li>
+      <li>
+        <div class="num">&#10003;</div>
+        <div class="body"><strong>All workspaces</strong><p>The IntuigenceAI workload can be used in any Fabric workspace, provided the workload is enabled by your admin.</p></div>
+      </li>
+    </ul>
+
+    <!-- FAQ -->
+    <h2 id="faq">Frequently Asked Questions</h2>
+    <ul class="detail-list">
+      <li>
+        <div class="num">?</div>
+        <div class="body"><strong>Why do I see "Contact your admin to configure this workload"?</strong><p>The IntuigenceAI workload must be explicitly enabled by a Fabric administrator for your organization. Ask your IT admin to enable it in Fabric Admin settings.</p></div>
+      </li>
+      <li>
+        <div class="num">?</div>
+        <div class="body"><strong>Can I use IntuigenceAI without a Lakehouse?</strong><p>A Lakehouse is recommended but not strictly required to start. However, connecting one significantly improves the Data Catalog's ability to index and retrieve structured data.</p></div>
+      </li>
+      <li>
+        <div class="num">?</div>
+        <div class="body"><strong>What does "preview" mean for this workload?</strong><p>Preview means the workload is feature-complete enough for real-world testing but may still have changes before general availability. It is subject to the IntuigenceAI preview terms of use.</p></div>
+      </li>
+      <li>
+        <div class="num">?</div>
+        <div class="body"><strong>Where can I find documentation and support?</strong><p>Official documentation is linked from the workload detail page in Fabric under <em>Publisher support &rarr; Documentation</em>. For licensing questions, view purchasing details from the same page.</p></div>
+      </li>
+    </ul>
+
+    <div style="margin-top:3rem;padding:1.5rem;background:var(--brand-light);border-radius:10px;text-align:center;">
+      <p style="font-weight:600;color:var(--brand-dark);margin-bottom:.4rem;">Ready to get started?</p>
+      <p style="color:var(--muted);font-size:.9rem;margin-bottom:1rem;">Open the IntuigenceAI workload in Microsoft Fabric and create your first Agent Session.</p>
+      <a href="https://app.fabric.microsoft.com" style="background:var(--brand);color:#fff;padding:.5rem 1.4rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.9rem;">Open Microsoft Fabric &rarr;</a>
+    </div>
+
+  </main>
+</div>
+
+<footer style="background:#f5f5f5;border-top:1px solid var(--border);padding:2rem;text-align:center;font-size:.85rem;color:var(--muted);margin-top:2rem;">
+  IntuigenceAI Industrial Workers (preview) &middot; Published by IntuigenceAI &middot; Hosted on Microsoft Fabric<br/>
+  <span style="font-size:.78rem;">By using this workload you agree to the IntuigenceAI privacy policy and terms of use.</span>
+</footer>
+
+</body>
+</html>
