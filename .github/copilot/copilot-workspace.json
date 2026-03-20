@@ -1,17 +1,19 @@
 {
-  "version": "1.0",
+  "version": "2.0",
   "agents": [
     {
       "name": "fabric",
-      "description": "Microsoft Fabric Development Expert - Specialized assistant for Fabric platform development, Extensibility Toolkit implementation, and workload creation",
+      "description": "Microsoft Fabric Development Expert -- Specialized assistant for Fabric platform development, Extensibility Toolkit implementation, and workload creation",
       "prompt_file": "fabric-agent.md",
       "knowledge_files": [
-        "../.ai/context/fabric.md",
-        "../.ai/context/fabric_workload.md"
+        "../../.ai/references/fabric-platform.md",
+        "../../.ai/skills/fabric-items/SKILL.md",
+        "../../.ai/skills/fabric-items/references/item-components.md",
+        "../../.ai/skills/fabric-workloads/SKILL.md"
       ],
       "capabilities": [
         "code_generation",
-        "architecture_guidance", 
+        "architecture_guidance",
         "security_implementation",
         "api_integration",
         "testing_strategies",
@@ -28,8 +30,8 @@
       "context_patterns": [
         "Workload/app/**/*.ts",
         "Workload/app/**/*.tsx",
-        "config/Manifest/**/*.xml",
-        "config/Manifest/**/*.json",
+        "Workload/Manifest/**/*.xml",
+        "Workload/Manifest/**/*.json",
         "scripts/**/*.ps1"
       ],
       "activation_keywords": [
@@ -48,16 +50,17 @@
     }
   ],
   "default_context": [
-    ".ai/context/fabric.md",
-    ".ai/context/fabric_workload.md"
+    ".ai/references/fabric-platform.md",
+    ".ai/skills/fabric-items/SKILL.md",
+    ".ai/skills/fabric-workloads/SKILL.md"
   ],
   "workspace_patterns": {
     "include": [
       "Workload/app/**",
-      "config/Manifest/**",
+      "Workload/Manifest/**",
       "scripts/**",
-      ".ai/context/**",
-      ".ai/agents/fabric/**"
+      ".ai/references/**",
+      ".ai/skills/**"
     ],
     "exclude": [
       "node_modules/**",

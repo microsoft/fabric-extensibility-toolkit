@@ -1,148 +1,105 @@
-# GitHub Copilot Instructions for Microsoft Fabric Extensibility Toolkit
+# GitHub Copilot instructions for Microsoft Fabric Extensibility Toolkit
 
-## 📋 Overview
+## Overview
 
-This file contains **GitHub Copilot-specific** instructions that extend the generic AI guidance found in the `.ai/` folder. All AI tools should first reference the generic instructions, then apply the Copilot-specific enhancements below.
+This file contains GitHub Copilot-specific instructions that extend the platform-agnostic AI skills in the `.ai/` folder. Copilot should reference the skills first, then apply the enhancements below.
 
-## 🔗 Base AI Instructions
+## AI skills and references
 
-**REQUIRED**: Before using these instructions, always reference the generic AI guidance:
+Reference the platform-agnostic skills for all procedures and context:
 
-- **Primary Context**: `.ai/context/fabric-workload.md` - Project structure and conventions
-- **Platform Knowledge**: `.ai/context/fabric.md` - Microsoft Fabric platform understanding  
-- **Available Commands**: `.ai/commands/` - All automation tasks and procedures
-  - Item Operations: `.ai/commands/item/` (createItem.md, deleteItem.md)
-  - Workload Operations: `.ai/commands/workload/` (runWorkload.md, updateWorkload.md, deployWorkload.md, publishworkload.md)
+- **Item development**: `.ai/skills/fabric-items/SKILL.md` -- create, delete, rename items
+- **Item code templates**: `.ai/skills/fabric-items/examples.md` -- all implementation templates
+- **Component APIs**: `.ai/skills/fabric-items/references/item-components.md` -- ItemEditor, Ribbon, layout components
+- **Workload operations**: `.ai/skills/fabric-workloads/SKILL.md` -- run, deploy, publish, configure
+- **Platform context**: `.ai/references/fabric-platform.md` -- Microsoft Fabric platform overview
+- **Formatting rules**: `.ai/references/markdown-formatting.md` -- Markdown linting standards
 
-## 🤖 GitHub Copilot Enhanced Features
+## GitHub Copilot enhanced features
 
-### Agent Activation
-Use `@fabric` or these keywords for specialized GitHub Copilot assistance:
-- `fabric workload` - Extensibility Toolkit-specific development help with autocomplete
-- `fabric item` - Item creation with intelligent code generation
-- `fabric auth` - Authentication patterns with secure defaults
-- `fabric api` - API integration with type inference
-- `fabric deploy` - Deployment automation with validation
+### Agent activation
 
-### Enhanced Capabilities
-GitHub Copilot provides additional features beyond generic AI tools:
-- 🔮 **Predictive Coding**: Auto-completion for Fabric patterns and TypeScript interfaces
-- 🧠 **Context-Aware Suggestions**: Smart suggestions based on current file and cursor position
-- ⚡ **Real-time Validation**: Immediate feedback on code quality and Fabric compliance
-- 🎯 **Pattern Recognition**: Learns from existing codebase patterns for consistent suggestions
-- 📚 **Inline Documentation**: Generates JSDoc comments following Fabric conventions
+Use `@fabric` or these keywords for specialized assistance:
 
-## 🎯 GitHub Copilot Integration
+- `fabric workload` -- Extensibility Toolkit development help
+- `fabric item` -- Item creation with code generation
+- `fabric auth` -- Authentication patterns
+- `fabric api` -- API integration
+- `fabric deploy` -- Deployment automation
 
-### Command Reference System
-GitHub Copilot integrates with the generic `.ai/commands/` structure:
+### Skill integration
 
-| **Generic Command** | **GitHub Copilot Enhancement** |
-|-------------------|-------------------------------|
-| `.ai/commands/item/createItem.md` | Auto-generates 4-file structure with intelligent TypeScript interfaces |
-| `.ai/commands/item/deleteItem.md` | Validates dependencies before suggesting removal |
-| `.ai/commands/workload/runWorkload.md` | Provides environment validation and startup optimization |
-| `.ai/commands/workload/updateWorkload.md` | Suggests configuration updates with impact analysis |
-| `.ai/commands/workload/deployWorkload.md` | Validates deployment readiness with security checks |
-| `.ai/commands/workload/publishworkload.md` | Ensures production-ready manifest compliance |
+| Skill | Copilot enhancement |
+| ----- | ------------------- |
+| `.ai/skills/fabric-items/SKILL.md` | Auto-generates 5-file structure with TypeScript interfaces |
+| `.ai/skills/fabric-items/references/delete-item.md` | Validates dependencies before suggesting removal |
+| `.ai/skills/fabric-workloads/references/run-workload.md` | Provides environment validation and startup optimization |
+| `.ai/skills/fabric-workloads/SKILL.md` (update) | Suggests configuration updates with impact analysis |
+| `.ai/skills/fabric-workloads/references/deploy-workload.md` | Validates deployment readiness with security checks |
+| `.ai/skills/fabric-workloads/references/publish-workload.md` | Ensures production-ready manifest compliance |
 
-### Context Enhancement
-Beyond the generic `.ai/context/` files, GitHub Copilot provides:
-- **Real-time IntelliSense**: Auto-completion for Fabric APIs and TypeScript definitions
-- **Error Prevention**: Immediate feedback on common Fabric development pitfalls
-- **Pattern Matching**: Suggests code based on similar implementations in the workspace
-- **Dependency Tracking**: Understands relationships between manifest and implementation files
+## Behavioral rules
 
-## 🧠 GitHub Copilot Behavioral Enhancements
+### Smart suggestions
 
-### Smart Suggestions
-- **File Creation**: When creating items, automatically suggests the 4-file pattern structure
-- **Import Resolution**: Auto-imports Fabric platform types and client libraries
-- Prefer components from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`. Verify API and prop differences (appearance, tokens, and shorthands) when migrating components.
-- **Ribbon Pattern**: ALWAYS suggests `homeToolbarActions` (mandatory) + optional `additionalToolbars` pattern. Use `createSaveAction()`, `createSettingsAction()` factories from components/ItemEditor
-- **Toolbar Components**: ALWAYS suggests `Tooltip` + `ToolbarButton` pattern for toolbar actions. Auto-imports both from `@fluentui/react-components` and wraps ToolbarButtons in Tooltips with proper accessibility attributes
-- **OneLakeStorageClient**: ALWAYS use `createItemWrapper()` when working with OneLake storage in an item context. Never use direct OneLakeStorageClient methods with manual path construction
-- **OneLakeView**: ALWAYS use component from `components/OneLakeView`, not sample code. Initialize with `initialItem` config for content display
-- **Error Recovery**: Provides specific fixes for common Fabric authentication and manifest issues
-- **Code Completion**: Understands Fabric-specific patterns like `callNotificationOpen()` and `saveItemDefinition()`
+- **File creation**: When creating items, suggest the 5-file pattern structure (Definition, Editor, EmptyView, DefaultView, Ribbon)
+- **Import resolution**: Auto-import Fabric platform types and client libraries
+- **Fluent UI**: Prefer components from `@fluentui/react-components` (v9) over `@fluentui/react` (v8). Replace imports like `import { DefaultButton } from '@fluentui/react'` with `import { Button } from '@fluentui/react-components'`
+- **Ribbon pattern**: Always suggest `Ribbon` + `RibbonToolbar` with `createSaveAction()`, `createSettingsAction()` factories from `components/ItemEditor`
+- **Toolbar components**: Always use `Tooltip` + `ToolbarButton` pattern for toolbar actions with proper accessibility attributes
+- **OneLakeStorageClient**: Always use `createItemWrapper()` for item-scoped OneLake operations. Never use direct client methods with manual path construction
+- **OneLakeView**: Always use component from `components/OneLakeView`, not sample code. Initialize with `initialItem` config for content display
+- **Error recovery**: Provide specific fixes for common Fabric authentication and manifest issues
+- **Code completion**: Understand Fabric-specific patterns like `callNotificationOpen()` and `saveItemDefinition()`
 
-### Workspace Intelligence
-- **Manifest Sync**: Detects when implementation changes require manifest updates
-- **Environment Awareness**: Suggests appropriate `.env` configurations based on current context
-- **Build Validation**: Predicts build issues before they occur
-- **Routing Updates**: Automatically suggests route additions when new items are created
+### Workspace intelligence
 
-## 🚀 GitHub Copilot Quick Actions
+- **Manifest sync**: Detect when implementation changes require manifest updates
+- **Environment awareness**: Suggest appropriate `.env` configurations based on current context
+- **Build validation**: Predict build issues before they occur
+- **Routing updates**: Automatically suggest route additions when new items are created
 
-### Smart Code Generation
-Instead of manual file creation, GitHub Copilot can generate complete structures:
+## Auto-completion patterns
 
-```typescript
-// Type "fabric item create MyCustom" to generate:
-// - MyCustomItemModel.ts with intelligent interface
-// - MyCustomItemEditor.tsx with Fluent UI components
-// - MyCustomItemEditorEmpty.tsx with onboarding flow
-// - MyCustomItemEditorRibbon.tsx with action buttons
-```
+Copilot recognizes Fabric patterns and suggests:
 
-### Enhanced Development Commands
-GitHub Copilot understands context-aware shortcuts:
+- **Ribbon components**: `homeToolbarActions` array (mandatory) with `createSaveAction()`, `createSettingsAction()` factories, plus optional `additionalToolbars` for complex items
+- **Toolbar integration**: Mandatory `Tooltip` + `ToolbarButton` patterns for all toolbar implementations
+- **OneLake storage**: `itemWrapper = oneLakeClient.createItemWrapper({id, workspaceId})` for item-scoped operations
+- **OneLake explorer**: Component from `components/OneLakeView`, not sample code
+- **ItemEditor view registration**: Static view registration pattern with `views` prop. Define views as static array
+- **ItemEditor initial view**: Use `initialView` prop for data-dependent view determination
+- **ItemEditor scrolling**: Never implement scrolling in item views. ItemEditor center panel handles all overflow with automatic vertical scrolling
+- **View navigation**: `setCurrentView()` in view wrapper components for navigation between views
+- **ItemEditorDefaultView**: Two-panel layouts with `left`/`center` panel configurations, resizable splitters, and collapsible panels
+- **Panel usage**:
+  - Left panel (optional): Navigation trees, OneLakeView, file explorers, catalog browsers
+  - Center panel (required): Main content, editors, primary workspace
+- **Detail view navigation**: `ItemEditorDetailView` with `isDetailView: true` for L2 drill-down pages
+- **Empty view pattern**: `ItemEditorEmptyView` for items without definition/state, with call-to-action buttons
+- **Item properties**: `ItemSettings` pattern for general item properties (version, endpoint configuration, descriptions) through the settings flyout
+- **Panel configuration**: `collapsible: true`, panel titles, min/max width constraints, accessibility labels
+- **Manifest updates**: Template processing with `{{PLACEHOLDER}}` replacement
+- **Route configuration**: Automatic route registration matching `editor.path` in JSON manifest
+- **Environment management**: `.env`-based configuration patterns
 
-```powershell
-# Smart environment detection with .env-based configuration
-fabric dev start    # Automatically uses .env.dev configuration
+### Workspace-aware features
 
-# Intelligent build with validation
-fabric build check  # Pre-validates templates and manifest generation
+- **File relationships**: Understand manifest template to implementation dependencies
+- **Environment detection**: Suggest appropriate configurations for dev/test/prod
+- **Template processing**: Recognize placeholder patterns like `{{WORKLOAD_NAME}}`
+- **Error resolution**: Provide specific fixes for Fabric development issues
+- **Pattern learning**: Adapt suggestions based on existing codebase patterns
 
-# Context-aware deployment
-fabric deploy prod   # Uses .env.prod for environment-specific manifests
-```
+## Reference architecture
 
-### Auto-completion Patterns
-GitHub Copilot recognizes Fabric patterns and suggests:
-- **API Calls**: Complete authentication and error handling
-- **Component Structure**: Fluent UI patterns with proper TypeScript
-- **Ribbon Components**: Always creates `homeToolbarActions` array (mandatory) with `createSaveAction()`, `createSettingsAction()` factories, plus optional `additionalToolbars` array for complex items
-- **Toolbar Integration**: Mandatory `Tooltip` + `ToolbarButton` patterns for all toolbar implementations
-- **OneLake Storage**: Always creates `itemWrapper = oneLakeClient.createItemWrapper({id, workspaceId})` for item-scoped operations
-- **OneLake Explorer**: Always use component from `components/OneLakeView`, not sample code
-- **ItemEditor View Registration**: ALWAYS use static view registration pattern with `useViewNavigation()` hook. Define views as static array like ribbon actions
-- **ItemEditor Initial View**: ALWAYS use `getInitialView` function for data-dependent view determination instead of static `initialView`. Called automatically when loading completes
-- **ItemEditor Scrolling**: NEVER implement scrolling in item views. ItemEditor center panel handles ALL overflow with automatic vertical scrolling. Items should use `height: auto` for natural growth
-- **ItemEditor Notification Registration**: ALWAYS use static messageBar registration pattern. Define messageBar as static array with `showInViews` to control visibility
-- **View Navigation**: ALWAYS suggests `const { setCurrentView, goBack } = useViewNavigation()` in view wrapper components for navigation between views (hook is part of ItemEditorDefaultView module)
-- **ItemEditorDefaultView**: Always suggests two-panel layouts with proper `left`/`center` panel configurations, resizable splitters, and collapsible panels when appropriate
-- **Panel Usage Patterns**: 
-  - **Left Panel (Optional)**: For navigation trees, OneLakeView, file explorers, and secondary views (list views, catalog browsers, workspace explorers)
-  - **Center Panel (Required)**: For main content, editors, and primary workspace
-- **Detail View Navigation**: Always use ItemEditorDetailView component with `isDetailView: true` for L2 drill-down pages (detail records, item properties, configuration screens)
-- **Empty View Pattern**: Use ItemEditorEmptyView for items used for the first time (no definition/state) with initial call-to-action buttons to guide users through setup
-- **Item Properties & Configuration**: Use ItemSettings pattern for general item properties (version, endpoint configuration, descriptions). This creates a separate section in the settings flyout opened through the settings ribbon action. Item names and descriptions are managed there by default.
-- **Panel Configuration**: Suggests `collapsible: true`, proper panel titles, min/max width constraints, and accessibility labels for complex layouts
-- **Manifest Updates**: Template processing with placeholder replacement
-- **Route Configuration**: Automatic route registration
-- **Environment Management**: .env-based configuration patterns
+For complete understanding, reference:
 
-### Workspace-Aware Features
-- **File Relationships**: Understands manifest template ↔ implementation dependencies
-- **Environment Detection**: Suggests appropriate configurations for dev/test/prod
-- **Template Processing**: Recognizes placeholder patterns like `{{WORKLOAD_NAME}}`
-- **Error Resolution**: Provides specific fixes for Fabric development issues
-- **Pattern Learning**: Adapts suggestions based on existing codebase patterns
+- **Platform-agnostic skills**: All files in `.ai/skills/` and `.ai/references/`
+- **Copilot enhancements**: This file's specific Copilot features
+- **Live workspace**: Current implementation patterns and recent changes
 
----
+## Response guidelines
 
-## � Reference Architecture
-
-For complete understanding, GitHub Copilot users should reference:
-- **Generic Foundation**: All files in `.ai/context/` and `.ai/commands/`
-- **Copilot Enhancements**: This file's specific GitHub Copilot features
-- **Live Workspace**: Current implementation patterns and recent changes
-
-This dual approach ensures consistency across all AI tools while providing GitHub Copilot users with enhanced, context-aware development assistance.
-
-## Response Guidelines
-- Add a timestamp (format: `YYYY-MM-DD HH:MM UTC`) at the end of each response
 - Clean up unsuccessful code attempts immediately when finding the correct solution
 - Only leave changes that actually contribute to the working solution

@@ -2,19 +2,20 @@
   "name": "fabric",
   "displayName": "Microsoft Fabric Expert",
   "description": "Specialized assistant for Microsoft Fabric platform development, Extensibility Toolkit implementation, and workload creation",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "author": "Microsoft Fabric Team",
   "instructions": {
     "systemMessage": "You are an expert Microsoft Fabric development assistant with comprehensive knowledge of the Fabric platform and specialized expertise in Extensibility Toolkit implementation. You combine public Microsoft Fabric knowledge with project-specific context to provide accurate, implementation-ready guidance.",
     "contextFiles": [
-      "../.ai/context/fabric.md",
-      "../.ai/context/fabric_workload.md"
+      "../../.ai/references/fabric-platform.md",
+      "../../.ai/skills/fabric-items/SKILL.md",
+      "../../.ai/skills/fabric-workloads/SKILL.md"
     ]
   },
   "capabilities": {
     "codeGeneration": {
       "languages": ["typescript", "tsx", "javascript", "jsx", "json", "xml"],
-      "frameworks": ["react", "fluent-ui"],
+      "frameworks": ["react", "fluent-ui-v9"],
       "patterns": ["extensibility-toolkit-item-pattern", "authentication", "api-clients"]
     },
     "architecture": {
@@ -29,7 +30,7 @@
     "keywords": [
       "fabric",
       "workload",
-      "extensibility-toolkit", 
+      "extensibility-toolkit",
       "onelake",
       "powerbi",
       "entra",
@@ -41,25 +42,28 @@
     ],
     "filePatterns": [
       "Workload/app/**/*.ts",
-      "Workload/app/**/*.tsx", 
-      "config/Manifest/**/*.xml",
-      "config/Manifest/**/*.json",
+      "Workload/app/**/*.tsx",
+      "Workload/Manifest/**/*.xml",
+      "Workload/Manifest/**/*.json",
       "scripts/**/*.ps1"
     ]
   },
   "knowledgeBase": {
-    "publicKnowledge": [
-      "Microsoft Fabric platform documentation",
-      "Extensibility Toolkit specifications",
-      "Azure authentication and security",
-      "Power BI embedding and integration",
-      "OneLake data storage patterns"
+    "skills": [
+      ".ai/skills/fabric-items/SKILL.md",
+      ".ai/skills/fabric-items/examples.md",
+      ".ai/skills/fabric-items/references/item-components.md",
+      ".ai/skills/fabric-workloads/SKILL.md",
+      ".ai/skills/fabric-workloads/examples.md"
+    ],
+    "references": [
+      ".ai/references/fabric-platform.md",
+      ".ai/references/markdown-formatting.md"
     ],
     "projectContext": [
-      "Extensibility Toolkit implementation patterns",
-      "Authentication client patterns",
-      "Manifest configuration examples",
-      "Build and deployment scripts"
+      "Workload/app/",
+      "Workload/Manifest/",
+      "scripts/"
     ]
   },
   "qualityStandards": {
@@ -71,15 +75,15 @@
   "examples": [
     {
       "query": "How do I create a new custom item type?",
-      "response": "Provides step-by-step Extensibility Toolkit item creation with 4-component pattern"
+      "response": "Provides step-by-step Extensibility Toolkit item creation with 5-file pattern"
     },
     {
-      "query": "Show me OAuth scope selection implementation",
-      "response": "Demonstrates method-based scope selection with code examples"
+      "query": "Show me how to implement OAuth authentication in my workload",
+      "response": "Demonstrates Entra ID authentication with WorkloadClientAPI"
     },
     {
       "query": "How to integrate with OneLake for data storage?",
-      "response": "Explains OneLake patterns with authentication and security"
+      "response": "Explains OneLake patterns with createItemWrapper and OneLakeView component"
     }
   ]
 }

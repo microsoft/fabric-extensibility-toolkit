@@ -96,20 +96,29 @@ If you use a codespace please make sure that you select at least an 8 core machi
 
 Use the [Project structure](./docs/Project_Structure.md) to get a better understanding about Extensibility projects are structured and where you can find and change it to your needs.
 
-### 🤖 AI Assistance
+### AI Assistance
 
-If you are using GitHub Copilot or other AI assistants, please refer to the **[AI Instructions](.github/copilot-instructions.md)**. This file contains critical architectural rules and context that will help the AI generate correct code for this repository.
+This repository includes AI development support for multiple tools. Each tool automatically loads its configuration when you open the project.
 
-**Key Resources for AI:**
+**GitHub Copilot**: Loads `.github/copilot-instructions.md` automatically in VS Code. Use `@fabric` for specialized Fabric development assistance. Configuration and agent files are in `.github/copilot/`.
 
-- `.github/copilot-instructions.md` - Main entry point for AI github copilot
-- `.ai/` folder - Detailed context and command references for any AI assistant
+**Claude Code**: Loads `CLAUDE.md` at the project root automatically. References shared knowledge and skills via `@` imports. Use `.ai/skills/` for detailed procedures.
+
+**Cursor**: Loads `AGENTS.md` at the project root automatically. References `.ai/skills/` for detailed item and workload procedures.
+
+**Other AI tools**: The `.ai/skills/` folder contains platform-agnostic skills following the Claude Code SKILL.md pattern. These work with any AI tool that can read markdown files.
+
+**Key Resources:**
+
+- `.ai/skills/fabric-items/` -- Item development patterns, code templates, component APIs
+- `.ai/skills/fabric-workloads/` -- Workload lifecycle (run, deploy, publish, configure)
+- `.ai/references/` -- Shared Fabric platform context and formatting standards
 
 ### Available Components
 
 The toolkit includes pre-built components to accelerate your workload development. These components follow Fabric Design System guidelines for consistent user experiences.
 
-**[📋 View All Components →](./docs/components/README.md)**
+**[View All Components](./docs/components/README.md)**
 
 Key highlights:
 - **ItemEditor Component** - Foundation for all item editors (mandatory)
