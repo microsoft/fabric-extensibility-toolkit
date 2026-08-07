@@ -1,31 +1,30 @@
-# GitHub Copilot Workspace Configuration
-# This file configures GitHub Copilot for the Microsoft Fabric Extensibility Toolkit project
+# GitHub Copilot workspace configuration
+# Configures GitHub Copilot for the Microsoft Fabric Extensibility Toolkit
 
-# Fabric AI Agent Integration
-# The Fabric agent provides specialized assistance for Microsoft Fabric development
-
-# Context Files - These files provide essential project knowledge
+# Context files -- essential project knowledge
 context_files:
-  - .ai/context/fabric.md                    # Microsoft Fabric platform overview
-  - .ai/context/fabric_workload.md           # Extensibility Toolkit-specific development guidance
+  - .ai/references/fabric-platform.md
+  - .ai/skills/fabric-items/SKILL.md
+  - .ai/skills/fabric-items/references/item-components.md
+  - .ai/skills/fabric-workloads/SKILL.md
 
-# Agent Configuration
+# Agent configuration
 agent_config:
-  - .github/copilot/fabric-agent.json        # Fabric agent JSON configuration
-  - .github/copilot/fabric-agent.md          # Fabric agent prompt and instructions
+  - .github/copilot/fabric-agent.json
+  - .github/copilot/fabric-agent.md
 
 # File Patterns for Context-Aware Assistance
 relevant_patterns:
   - "Workload/app/**/*.ts"                   # TypeScript source files
   - "Workload/app/**/*.tsx"                  # React components
-  - "config/Manifest/**/*.xml"               # Workload manifest definitions
-  - "config/Manifest/**/*.json"              # Metadata and configuration
+  - "Workload/Manifest/**/*.xml"             # Workload manifest definitions
+  - "Workload/Manifest/**/*.json"            # Metadata and configuration
   - "scripts/**/*.ps1"                       # PowerShell automation scripts
 
 # Keywords that trigger Fabric-specific assistance
 activation_keywords:
   - fabric
-  - workload  
+  - workload
   - extensibility-toolkit
   - onelake
   - powerbi
@@ -71,12 +70,12 @@ knowledge_integration:
     - Azure integration patterns and security best practices
     - Power BI embedding and customization techniques
     - OneLake data storage and access patterns
-  
+
   project_context:
     - Current Extensibility Toolkit implementation patterns in Workload/app/
-    - Authentication client examples and scope selection patterns
-    - Manifest configuration templates and validation
-    - Build and deployment automation scripts
+    - Item development skills and component APIs in .ai/skills/fabric-items/
+    - Workload lifecycle procedures in .ai/skills/fabric-workloads/
+    - Build and deployment automation scripts in scripts/
 
 # Agent Behavior Guidelines
 behavior_guidelines:
