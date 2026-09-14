@@ -1,0 +1,12 @@
+{
+  "status": "provisional",
+  "purpose": "Policy regression hypotheses, not adjudicated customer-resolution ground truth. The scripted adapter does not measure model quality.",
+  "cases": {
+    "case-01": "suggest",
+    "case-02": "clarify",
+    "case-03": "escalate",
+    "case-04": "escalate",
+    "case-05": "clarify",
+    "case-06": "abstain"
+  }
+}

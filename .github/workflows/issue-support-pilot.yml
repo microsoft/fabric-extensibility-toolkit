@@ -1,0 +1,89 @@
+name: Issue support pilot (manual, report only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_models:
+        description: Run two billed, tool-disabled Copilot sessions on the selected reviewed case
+        type: boolean
+        required: true
+        default: false
+      case:
+        description: Reviewed evidence route (no arbitrary issue URLs)
+        type: choice
+        required: true
+        default: startup-smoke
+        options:
+          - startup-smoke
+          - issue-64
+
+permissions:
+  contents: read
+
+concurrency:
+  group: issue-support-pilot
+  cancel-in-progress: false
+
+jobs:
+  fixtures:
+    # Reports contain only public evidence; forks cannot run this pilot.
+    if: github.repository == 'microsoft/fabric-extensibility-toolkit'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          path: support-code
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Test offline guardrails
+        working-directory: support-code
+        run: node --test tools/issue-support/test
+      - name: Evaluate scripted fixtures (not model accuracy)
+        run: node support-code/tools/issue-support/run.mjs --adapter fixture --output reports/fixtures
+      - name: Prepare selected public evidence without inference
+        run: node support-code/tools/issue-support/run.mjs --adapter prepare --case "$SUPPORT_CASE" --output reports/prepare
+        env:
+          SUPPORT_CASE: ${{ inputs.case }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: issue-support-fixtures
+          path: |
+            reports/fixtures/*.json
+            reports/prepare/*
+          retention-days: 3
+          if-no-files-found: error
+
+  model-smoke:
+    needs: fixtures
+    if: github.repository == 'microsoft/fabric-extensibility-toolkit' && inputs.run_models
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      copilot-requests: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+          path: support-code
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+      - name: Install pinned CLI (no GITHUB_TOKEN supplied to install scripts)
+        run: npm install --global @github/copilot@1.0.83
+      - name: Retrieve fixed public evidence and run two read-only analysts
+        run: node support-code/tools/issue-support/run.mjs --adapter copilot --case "$SUPPORT_CASE" --output reports/model
+        env:
+          SUPPORT_CASE: ${{ inputs.case }}
+          GITHUB_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: issue-support-model-smoke
+          path: reports/model/*.json
+          retention-days: 3
+          if-no-files-found: error

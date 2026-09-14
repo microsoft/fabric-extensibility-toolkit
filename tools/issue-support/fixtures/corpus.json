@@ -1,0 +1,31 @@
+{
+  "case-01": [
+    {
+      "id": "startup",
+      "version": "dacab1b391d03010ba61a0446126d05515c487f0",
+      "text": "# Synthetic startup contract\nFor this fixture version, use StartDevServer.ps1 to start the development server.\nThis is a policy-test contract, not independently validated product documentation."
+    }
+  ],
+  "case-02": [
+    {
+      "id": "current-build",
+      "version": "dacab1b391d03010ba61a0446126d05515c487f0",
+      "text": "# Synthetic current-build contract\nIn this synthetic current version, FRONTEND_REDIRECT_URI is derived from FRONTEND_URL when absent.\nThis does not establish the behavior of any older checkout."
+    }
+  ],
+  "case-03": [
+    {
+      "id": "control-doc",
+      "version": "synthetic-v1",
+      "text": "# Synthetic documentation\nThis fictional fixture says ShortcutCreationControl accepts mode A."
+    },
+    {
+      "id": "control-discussion",
+      "version": "synthetic-v1",
+      "text": "# Synthetic historical response\nThis fictional fixture says ShortcutCreationControl rejects mode A.\nThis is not a quotation from any real maintainer."
+    }
+  ],
+  "case-04": [],
+  "case-05": [],
+  "case-06": []
+}
