@@ -59,6 +59,9 @@ export const FABRIC_BASE_SCOPES = {
   GATEWAY_READ: "https://api.fabric.microsoft.com/Gateway.Read.All",
   GATEWAY_READWRITE: "https://api.fabric.microsoft.com/Gateway.ReadWrite.All",
 
+  // Azure Resource Manager (control plane, used to read Stream Analytics jobs)
+  AZURE_RESOURCE_MANAGER: "https://management.azure.com/user_impersonation",
+
 };
 
 // Predefined scope combinations for different clients
@@ -144,6 +147,12 @@ export const SCOPES = {
     FABRIC_BASE_SCOPES.WORKSPACE_READ
   ].join(" "),
   
+  // Azure Resource Manager Client - reads Stream Analytics jobs from Azure.
+  // Not a Fabric audience: this token is issued for management.azure.com and
+  // requires the Azure Service Management user_impersonation permission on the
+  // workload Entra app.
+  AZURE_RESOURCE_MANAGER: FABRIC_BASE_SCOPES.AZURE_RESOURCE_MANAGER,
+
   // Long Running Operations Client - focused on operation monitoring
   OPERATIONS: [
     FABRIC_BASE_SCOPES.ITEM_READ,

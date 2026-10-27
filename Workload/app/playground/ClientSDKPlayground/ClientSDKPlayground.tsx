@@ -19,6 +19,7 @@ import { UIComponentsExample } from './UIComponents';
 import { ApiAuthenticationFrontend } from './ApiAuthenticationFrontend';
 import { ApiAuthentication } from './ApiAuthentication';
 import { ApiVariableLibrary } from './ApiVariableLibrary';
+import { AsaMigrationSmokeTest } from './AsaMigrationSmokeTest';
 import { PageProps } from '../../App';
 import { callNavigationBeforeNavigateAway, callNavigationNavigate } from "../../controller/NavigationController";
 import "../Playground.scss";
@@ -57,6 +58,7 @@ export function ClientSDKPlayground(props: TabContentProps) {
         <Tab value="variableLibrary">Variable Library</Tab>
         <Tab value="uiComponents">UI Components</Tab>
         <Tab value="authenticationFrontend">Frontend Authentication</Tab>
+        <Tab value="asaMigration">ASA Migration (1a)</Tab>
       </TabList>
 
       <Stack className="main">
@@ -95,6 +97,9 @@ export function ClientSDKPlayground(props: TabContentProps) {
         )}
         {selectedApiTab === 'authenticationFrontend' && (
           <ApiAuthenticationFrontend workloadClient={workloadClient} />
+        )}
+        {selectedApiTab === 'asaMigration' && (
+          <AsaMigrationSmokeTest workloadClient={workloadClient} />
         )}
       </Stack>
     </Stack>

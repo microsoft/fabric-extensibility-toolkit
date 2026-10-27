@@ -17,5 +17,9 @@ export { ExternalDataSharesProviderClient } from './ExternalDataSharesProviderCl
 export { ExternalDataSharesRecipientClient } from './ExternalDataSharesRecipientClient';
 export { GatewayClient } from './GatewayClient';
 
+// Azure control plane (non-Fabric audience)
+export { AzureResourceManagerClient, AzureResourceManagerError, ARM_API_VERSIONS } from './AzureResourceManagerClient';
+export * from './AzureResourceManagerTypes';
+
 // Re-export WorkloadClientAPI for convenience
 export { WorkloadClientAPI } from '@ms-fabric/workload-client';

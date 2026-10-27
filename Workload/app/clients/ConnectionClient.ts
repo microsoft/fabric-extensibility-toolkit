@@ -3,9 +3,12 @@ import { FabricPlatformClient } from "./FabricPlatformClient";
 import { SCOPE_PAIRS } from "./FabricPlatformScopes";
 import { 
   Connection, 
+  ConnectionCreationMetadata,
+  CreateCloudConnectionRequest,
   CreateConnectionRequest, 
   UpdateConnectionRequest, 
   ListConnectionsResponse,
+  ListSupportedConnectionTypesResponse,
   AuthenticationConfig
 } from "./FabricPlatformTypes";
 
@@ -25,6 +28,60 @@ export class ConnectionClient extends FabricPlatformClient {
     // Use scope pairs for method-based scope selection
     // GET operations will use CONNECTION_READ scopes, other operations will use CONNECTION scopes
     super(workloadClientOrAuth, SCOPE_PAIRS.CONNECTION);
+  }
+
+  /**
+   * Lists the connection types this tenant supports, including the parameters
+   * each creation method requires and the credential types it accepts.
+   *
+   * Use this rather than hardcoding a connector's shape: the set of supported
+   * types and their parameters differ per connector and change over time.
+   * @param options showAllCreationMethods returns non-recommended methods too
+   */
+  async listSupportedConnectionTypes(options?: {
+    gatewayId?: string;
+    showAllCreationMethods?: boolean;
+    continuationToken?: string;
+  }): Promise<ListSupportedConnectionTypesResponse> {
+    const params: string[] = [];
+    if (options?.gatewayId) {
+      params.push(`gatewayId=${encodeURIComponent(options.gatewayId)}`);
+    }
+    if (options?.showAllCreationMethods !== undefined) {
+      params.push(`showAllCreationMethods=${options.showAllCreationMethods}`);
+    }
+    if (options?.continuationToken) {
+      params.push(`continuationToken=${encodeURIComponent(options.continuationToken)}`);
+    }
+
+    const query = params.length ? `?${params.join("&")}` : "";
+    return this.get<ListSupportedConnectionTypesResponse>(
+      `/connections/supportedConnectionTypes${query}`
+    );
+  }
+
+  /** Supported connection types, following pagination. */
+  async getAllSupportedConnectionTypes(options?: {
+    gatewayId?: string;
+    showAllCreationMethods?: boolean;
+  }): Promise<ConnectionCreationMetadata[]> {
+    const all: ConnectionCreationMetadata[] = [];
+    let continuationToken: string | undefined;
+
+    do {
+      const page = await this.listSupportedConnectionTypes({ ...options, continuationToken });
+      if (page?.value?.length) {
+        all.push(...page.value);
+      }
+      continuationToken = page?.continuationToken;
+    } while (continuationToken);
+
+    return all;
+  }
+
+  /** Creates a cloud connection using the accurate request shape. */
+  async createCloudConnection(request: CreateCloudConnectionRequest): Promise<Connection> {
+    return this.post<Connection>("/connections", request);
   }
 
   /**

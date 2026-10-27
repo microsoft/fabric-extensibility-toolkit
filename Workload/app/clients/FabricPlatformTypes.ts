@@ -765,12 +765,17 @@ export interface CreateConnectionRequest {
   connectivityType: 'ShareableCloud' | 'OnPremisesGateway' | 'VirtualNetworkGateway';
   connectionDetails: {
     type: string;
-    path: string;
+    /**
+     * Legacy field. The create API takes `creationMethod` plus `parameters`
+     * instead; see CreateCloudConnectionRequest.
+     */
+    path?: string;
     [key: string]: any;
   };
   privacyLevel: 'None' | 'Private' | 'Organizational' | 'Public';
   credentialDetails: {
-    credentialType: string;
+    /** Legacy. The create API nests this inside `credentials`. */
+    credentialType?: string;
     singleSignOnType: 'None' | 'OAuth2' | 'Windows';
     connectionEncryption: 'NotEncrypted' | 'Encrypted';
     skipTestConnection: boolean;
@@ -778,6 +783,61 @@ export interface CreateConnectionRequest {
   };
   description?: string;
   gatewayId?: string;
+}
+
+/**
+ * Connection creation metadata, as returned by
+ * GET /v1/connections/supportedConnectionTypes.
+ *
+ * Connection shapes are discovered at runtime rather than hardcoded: which types
+ * exist, which parameters each creation method takes, and which credential types
+ * are accepted all vary by connector and change over time.
+ */
+export interface ConnectionCreationParameter {
+  name: string;
+  dataType: 'Text' | 'Number' | 'Boolean' | 'Duration' | 'Date' | 'DateTime' | 'DateTimeZone' | 'Time' | string;
+  required?: boolean;
+  allowedValues?: string[];
+}
+
+export interface ConnectionCreationMethod {
+  name: string;
+  parameters?: ConnectionCreationParameter[];
+}
+
+export interface ConnectionCreationMetadata {
+  type: string;
+  creationMethods?: ConnectionCreationMethod[];
+  supportedCredentialTypes?: string[];
+  supportedConnectionEncryptionTypes?: string[];
+  supportsSkipTestConnection?: boolean;
+}
+
+export interface ListSupportedConnectionTypesResponse {
+  value: ConnectionCreationMetadata[];
+  continuationToken?: string;
+  continuationUri?: string;
+}
+
+/**
+ * The accurate request body for creating a cloud connection.
+ * Note that credentialType lives inside `credentials`, not beside it.
+ */
+export interface CreateCloudConnectionRequest {
+  displayName: string;
+  connectivityType: 'ShareableCloud';
+  connectionDetails: {
+    type: string;
+    creationMethod: string;
+    parameters: { name: string; dataType: string; value: string }[];
+  };
+  privacyLevel?: 'None' | 'Private' | 'Organizational' | 'Public';
+  credentialDetails: {
+    singleSignOnType?: string;
+    connectionEncryption?: string;
+    skipTestConnection?: boolean;
+    credentials: { credentialType: string; [key: string]: any };
+  };
 }
 
 export interface UpdateConnectionRequest {

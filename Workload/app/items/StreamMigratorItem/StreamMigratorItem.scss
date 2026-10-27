@@ -1,0 +1,140 @@
+/**
+ * Stream Migrator item styles.
+ *
+ * Item-specific overrides only. Layout, scrolling and ribbon styling belong to
+ * the shared ItemEditor and Wizard components and must not be redefined here.
+ */
+
+.stream-migrator {
+  &__step {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+  }
+
+  &__field {
+    max-width: 560px;
+  }
+
+  &__row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    > :first-child {
+      flex: 1 1 auto;
+    }
+  }
+
+  &__summary {
+    padding: 12px;
+    border-radius: 4px;
+    background-color: var(--colorNeutralBackground2);
+  }
+
+  &__target {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--colorNeutralStroke2);
+    border-radius: 4px;
+  }
+
+  &__muted {
+    color: var(--colorNeutralForeground3);
+    font-size: 12px;
+  }
+
+  &__problems {
+    margin: 4px 0 0;
+    padding-left: 20px;
+  }
+
+  &__query {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--colorNeutralStroke2);
+  }
+
+  &__query-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__query-counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  // Wide queries scroll inside their own container.
+  &__query-code {
+    margin: 0;
+    max-height: 360px;
+    overflow: auto;
+    border: 1px solid var(--colorNeutralStroke2);
+    border-radius: 4px;
+    background-color: var(--colorNeutralBackground3);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  &__query-line {
+    display: flex;
+    white-space: pre;
+    border-left: 3px solid transparent;
+
+    &--Supported {
+      border-left-color: var(--colorPaletteGreenBorder2);
+    }
+
+    &--NeedsReview {
+      border-left-color: var(--colorPaletteYellowBorder2);
+      background-color: var(--colorPaletteYellowBackground1);
+    }
+
+    &--Unsupported {
+      border-left-color: var(--colorPaletteRedBorder2);
+      background-color: var(--colorPaletteRedBackground1);
+    }
+
+    &--selected {
+      outline: 2px solid var(--colorBrandStroke1);
+      outline-offset: -2px;
+    }
+  }
+
+  &__query-gutter {
+    flex: 0 0 40px;
+    padding-right: 12px;
+    text-align: right;
+    color: var(--colorNeutralForeground4);
+    user-select: none;
+  }
+
+  &__query-row--selected {
+    background-color: var(--colorNeutralBackground1Selected);
+  }
+
+  // Wide content scrolls inside its own container so the page never scrolls sideways.
+  &__json {
+    margin: 0;
+    padding: 12px;
+    max-height: 420px;
+    overflow: auto;
+    border: 1px solid var(--colorNeutralStroke2);
+    border-radius: 4px;
+    background-color: var(--colorNeutralBackground3);
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 12px;
+    white-space: pre;
+  }
+}

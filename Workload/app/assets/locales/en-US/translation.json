@@ -20,6 +20,16 @@
     "HelloWorldItemEditor_Title": "Hello World Item Editor",
     "HelloWorldItemEditor_Definition_Message_Label": "Item Definition",
     "HelloWorldItemEditorEmpty_Message": "Let's say hello to {{itemName}}!",
-    "HelloWorldItemEditorEmpty_Button": "Save item"
+    "HelloWorldItemEditorEmpty_Button": "Save item",
+    "StreamMigratorItemEditor_Loading": "Loading item...",
+    "StreamMigratorItemEmptyView_Title": "Stream Analytics migrator",
+    "StreamMigratorItemEmptyView_Description": "Migrate Azure Stream Analytics jobs to Fabric Eventstreams. The migrator reports exactly which inputs, outputs and query constructs convert before anything is created.",
+    "StreamMigratorItemEmptyView_Start": "Migrate a job",
+    "StreamMigratorItemEmptyView_Start_Description": "Read a Stream Analytics job from Azure, see what converts, and build the matching Eventstream.",
+    "StreamMigrator_Status_Saving": "Saving migration plan...",
+    "StreamMigrator_Status_Creating": "Creating Eventstream...",
+    "StreamMigrator_Created_Title": "Eventstream created",
+    "StreamMigrator_Created_Text": "{{eventstreamName}} was created in this workspace.",
+    "StreamMigrator_CreateFailed_Title": "Could not create the Eventstream"
 }
   

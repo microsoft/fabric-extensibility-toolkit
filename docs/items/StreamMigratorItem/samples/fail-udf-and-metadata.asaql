@@ -1,0 +1,12 @@
+-- StreamShift demo: a query that cannot migrate as-is.
+-- It calls a JavaScript UDF (no Eventstream equivalent) and reads Event Hub
+-- metadata, which needs rework in Eventstream.
+-- Requires the JavaScript UDF in fail-udf-normalizeReading.js, added to the job
+-- under Functions with the name normalizeReading.
+SELECT
+    deviceId,
+    udf.normalizeReading(temperature) AS temperature,
+    GetMetadataPropertyValue(Source, 'EventId') AS eventId,
+    EventEnqueuedUtcTime AS enqueuedAt
+INTO Dest
+FROM Source

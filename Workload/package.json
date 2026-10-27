@@ -50,7 +50,7 @@
     "style-loader": "^3.3.1",
     "ts-loader": "^9.2.6",
     "typescript": "^5.0.4",
-    "webpack": "^5.90.3",
+    "webpack": "5.90.3",
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.7.0",
     "webpack-merge": "^6.0.1"

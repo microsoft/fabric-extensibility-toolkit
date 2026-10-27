@@ -418,7 +418,10 @@ scripts/Setup/My*
 
 # Fabric Workload files
 Workload/node_modules/*
-Workload/package-lock.json
+# package-lock.json is intentionally tracked: without it the build toolchain
+# floats. webpack drifted from the declared ^5.90.3 to 5.110.2, whose changed
+# ESM barrel resolution broke every @fluentui style import at bundle time.
+!Workload/package-lock.json
 Workload/dist/*
 
 # Fabric environment files

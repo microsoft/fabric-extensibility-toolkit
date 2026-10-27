@@ -1,0 +1,26 @@
+-- StreamShift demo: a query that migrates cleanly.
+-- Per device: per-minute averages, the largest jump between consecutive
+-- readings, and a status flag. Every construct here runs in the Fabric
+-- Eventstream SQL operator.
+WITH Readings AS (
+    SELECT
+        deviceId,
+        CAST(temperature AS float) AS temperature,
+        CAST(humidity AS float) AS humidity,
+        CAST(temperature AS float)
+            - LAG(CAST(temperature AS float)) OVER (PARTITION BY deviceId LIMIT DURATION(minute, 5)) AS temperatureJump
+    FROM Source TIMESTAMP BY eventTime
+)
+SELECT
+    deviceId,
+    System.Timestamp() AS windowEnd,
+    AVG(temperature) AS avgTemperature,
+    MAX(temperature) AS maxTemperature,
+    AVG(humidity) AS avgHumidity,
+    MAX(temperatureJump) AS maxTemperatureJump,
+    COUNT(*) AS readings,
+    CASE WHEN MAX(temperature) > 30 THEN 'Hot' ELSE 'Normal' END AS status
+INTO Dest
+FROM Readings
+GROUP BY deviceId, TumblingWindow(minute, 1)
+HAVING COUNT(*) > 0

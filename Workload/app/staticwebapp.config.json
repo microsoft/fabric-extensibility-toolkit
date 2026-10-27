@@ -1,0 +1,20 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/assets/*", "*.{js,map,css,png,jpg,svg,ico,json,txt,eot,ttf,woff,woff2}"]
+  },
+  "globalHeaders": {
+    "Content-Security-Policy": "frame-ancestors 'self' https://*.analysis.windows-int.net https://*.analysis-df.windows.net https://*.powerbi.com https://teams.microsoft.com https://*.fabric.microsoft.com;"
+  },
+  "routes": [
+    {
+      "route": "/index.html",
+      "headers": { "Cache-Control": "no-cache" }
+    }
+  ],
+  "mimeTypes": {
+    ".json": "application/json",
+    ".woff": "application/font-woff",
+    ".woff2": "application/font-woff2"
+  }
+}

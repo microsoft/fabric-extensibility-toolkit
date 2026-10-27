@@ -3,6 +3,7 @@ import { Route, Router, Switch } from "react-router-dom";
 import { History } from "history";
 import { WorkloadClientAPI } from "@ms-fabric/workload-client";
 import { HelloWorldItemEditor} from "./items/HelloWorldItem";
+import { StreamMigratorItemEditor } from "./items/StreamMigratorItem";
 import { ConditionalPlaygroundRoutes } from "./playground/ConditionalPlaygroundRoutes";
 
 /*
@@ -47,6 +48,12 @@ export function App({ history, workloadClient }: AppProps) {
             <Route path="/HelloWorldItem-editor/:itemObjectId">
                 <HelloWorldItemEditor
                     workloadClient={workloadClient} data-testid="HelloWorldItem-editor" />
+            </Route>
+
+            {/* Routings for the Stream Migrator Item Editor */}
+            <Route path="/StreamMigratorItem-editor/:itemObjectId">
+                <StreamMigratorItemEditor
+                    workloadClient={workloadClient} data-testid="StreamMigratorItem-editor" />
             </Route>
 
             {/* Conditionally loaded playground routes (only in development) */}

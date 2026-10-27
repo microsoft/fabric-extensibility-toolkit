@@ -99,10 +99,70 @@ if ($HostingType -eq "FERemote") {
         identifierUris = @($applicationIdUri)
         requiredResourceAccess = @(
             @{
+                resourceAppId = "797f4846-ba00-4fd7-ba43-dac1f8f63013" # Azure Service Management (ARM)
+                resourceAccess = @(
+                    @{
+                        id = "41094075-9dad-400e-a0bd-54e686782033" # user_impersonation
+                        type = "Scope"
+                    }
+                )
+            },
+            @{
+                resourceAppId = "e406a681-f3d4-42a8-90b6-c2b029497af1" # Azure Storage
+                resourceAccess = @(
+                    @{
+                        id = "03e0da56-190b-40ad-a80c-ea378c433f7f" # user_impersonation
+                        type = "Scope"
+                    }
+                )
+            },
+            @{
+                resourceAppId = "2746ea77-4702-4b45-80ca-3c97e680e8b7" # Azure Data Explorer
+                resourceAccess = @(
+                    @{
+                        id = "00d678f0-da44-4b12-a6d6-c98bcfd1c5fe" # user_impersonation
+                        type = "Scope"
+                    }
+                )
+            },
+            @{
+                resourceAppId = "00000003-0000-0000-c000-000000000000" # Graph
+                resourceAccess = @(
+                    @{
+                        id = "e1fe6dd8-ba31-4d61-89e7-88639da4683d" # User.Read
+                        type = "Scope"
+                    }
+                )
+            },
+            @{
                 resourceAppId  = "00000009-0000-0000-c000-000000000000" # PBI Service
                 resourceAccess = @(
                     @{
                         id   = "7ba630b9-8110-4e27-8d17-81e5f2218787" # Fabric.Extend
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "b2f1b2fa-f35c-407c-979c-a858a808ba85" # Workspace.Read.All
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "d2bc95fc-440e-4b0e-bafd-97182de7aef5" # Item.Read.All
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "7a27a256-301d-4359-b77b-c2b759d2e362" # Item.ReadWrite.All
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "caf40b1a-f10e-4da1-86e4-5fda17eb2b07" # Item.Execute.All
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "9ff18859-b8d5-4a89-9912-448b84dfb097" # Connection.Read.All
+                        type = "Scope"
+                    },
+                    @{
+                        id   = "3be8fe94-2189-4d8b-89c6-dd35c5cea6ef" # Connection.ReadWrite.All
                         type = "Scope"
                     }
                 )
@@ -219,6 +279,15 @@ else {
                 )
             },
             @{
+                resourceAppId = "797f4846-ba00-4fd7-ba43-dac1f8f63013" # Azure Service Management (ARM)
+                resourceAccess = @(
+                    @{
+                        id = "41094075-9dad-400e-a0bd-54e686782033" # user_impersonation
+                        type = "Scope"
+                    }
+                )
+            },
+            @{
                 resourceAppId = "2746ea77-4702-4b45-80ca-3c97e680e8b7" # Azure Data Explorer
                 resourceAccess = @(
                     @{
@@ -273,6 +342,14 @@ else {
                     },
                     @{
                         id = "726667b1-01a6-4be4-b04c-e95eae4023a8" # KQLDatabase.ReadWrite.All
+                        type = "Scope"
+                    },
+                    @{
+                        id = "9ff18859-b8d5-4a89-9912-448b84dfb097" # Connection.Read.All
+                        type = "Scope"
+                    },
+                    @{
+                        id = "3be8fe94-2189-4d8b-89c6-dd35c5cea6ef" # Connection.ReadWrite.All
                         type = "Scope"
                     }
                 )

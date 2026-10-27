@@ -9,5 +9,8 @@
     "Workload_Hub_GetStarted_1_Description": "Card1 description",
     "HelloWorldItem_DisplayName": "Hello World",
     "HelloWorldItem_DisplayName_Plural": "Hello Worlds",
-    "HelloWorldItem_Description": "A Hello World Item to start your Dev Experience"
+    "HelloWorldItem_Description": "A Hello World Item to start your Dev Experience",
+    "StreamMigratorItem_DisplayName": "Stream Migrator",
+    "StreamMigratorItem_DisplayName_Plural": "Stream Migrators",
+    "StreamMigratorItem_Description": "Migrate Azure Stream Analytics jobs to Fabric Eventstreams"
 }
